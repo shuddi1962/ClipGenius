@@ -1,1 +1,195 @@
+# Dependencies
 node_modules
+/package-lock.json
+/yarn.lock
+/pnpm-lock.yaml
+
+# Next.js
+.next
+out
+
+# Vercel
+.vercel
+
+# Environment
+.env
+.env.local
+.env.development
+.env.production
+
+# Misc
+.DS_Thumbs
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Reports
+[Rr]eports
+[Ll]ogs
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Instrumentation
+lib-cov
+*.seed
+*.prof
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+.grunt
+
+# Bower dependency directory (https://bower.io/)
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+
+# Dependency directories
+jspm_packages
+
+# TypeScript v1 declaration files
+typings
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache
+.rts2_cache_CJ
+.rts2_cache_SJ
+.rts2_cache_MJ
+
+# Apple
+*.DS_Store
+
+# Logs and databases
+logs
+*.log
+sql
+*.sqlite
+*.sqlite3
+
+# OS generated files
+ehthumbs.db
+Icon?
+
+# Cache and temporary files
+.cache
+tmp
+temp
+*/tmp
+*/temp
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Misc
+.fuse_hidden*
+*~
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+
+# C#
+*/[Oo]bj/
+*/[Oo]bin/
+
+# Java
+*/[Ll]ib/
+*/[Bb]in/
+
+# Magento
+var/
+vendor/
+
+# Framework7
+/.framework7
+
+# Symfony
+var/
+vendor/
+app/cache/
+app/logs/
+
+# Laravel
+storage/
+bootstrap/cache/
+
+# Symfony
+var/
+vendor/
+app/cache/
+app/logs/
+
+# Ruby
+/.bundle
+/vendor/bundle
+/logs/*
+/tmp/*
+/*.dump
+/*.bundle
+/*.rbc
+/*.rbx
+
+# Java
+*.class
+
+# Mobile Tools
+.jmobile
+ios/
+.android/
+
+# Plugin
+*.exn
+*.ex
+*.libo*
+*.so
+*.dylib
+*.ncb
+*.sdf
+*.suo
+*.pdb
+*.idb
+*.map
+*.ilk
+*.obj
+*.res
+*.tmp
+*.lic
+*.incb
+*.conf
+*.clw
+*.vap
+*.res
+*.map
+*.img
+*.efo
+*.lf
+*.ff
+# End of .gitignore
