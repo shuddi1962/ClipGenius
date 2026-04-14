@@ -150,7 +150,7 @@ function getPostingTime(platform: string, day: number) {
 }
 
 function generateCaption(theme: string, businessName: string, products: string, keyMessage: string, brandVoice: string) {
-  const templates = {
+  const templates: Record<string, string> = {
     'Marine Safety Essentials': `🌊 MARINE SAFETY STARTS HERE 🌊\n\nYour safety is our priority at ${businessName}! We provide top-quality ${products} to keep you safe on the water.\n\n${keyMessage}\n#MarineSafety #BoatSafety`,
     'Boat Equipment Showcase': `🚤 PREMIUM BOAT SOLUTIONS 🚤\n\nDiscover our range of ${products} designed for maximum performance and reliability.\n\nPerfect for all your marine needs!\n\n${keyMessage}`,
     'Safety Tips for Boaters': `🛟 MARINE SAFETY 101 🛟\n\nEssential safety tips for every boater:\n✅ Always wear your life jacket\n✅ Check weather conditions\n✅ Know your limits\n✅ Carry emergency equipment\n\nStay safe with ${businessName}!`,
@@ -166,14 +166,14 @@ function generateCaption(theme: string, businessName: string, products: string, 
 function generateHashtags(theme: string, industry: string) {
   const baseHashtags = ['#SafetyFirst', '#QualityProducts', '#ProfessionalService']
 
-  const industryHashtags = {
+  const industryHashtags: Record<string, string[]> = {
     marine: ['#MarineSafety', '#BoatLife', '#WaterSafety', '#MarineEquipment', '#Boating'],
     safety: ['#SafetyEquipment', '#LifeSafety', '#EmergencyPreparedness', '#WorkplaceSafety'],
     technology: ['#TechSolutions', '#SmartSecurity', '#LatestTechnology', '#Innovation'],
     energy: ['#SolarPower', '#CleanEnergy', '#RenewableEnergy', '#PowerSolutions']
   }
 
-  const themeHashtags = {
+  const themeHashtags: Record<string, string[]> = {
     'Marine Safety Essentials': ['#LifeJacket', '#BoatSafety', '#WaterSafety'],
     'Boat Equipment Showcase': ['#BoatEquipment', '#MarineTech', '#Boating'],
     'Safety Tips': ['#SafetyTips', '#StaySafe', '#Preparedness'],
@@ -190,7 +190,7 @@ function generateHashtags(theme: string, industry: string) {
 }
 
 function generateCTA(theme: string, businessName: string) {
-  const ctas = {
+  const ctas: Record<string, string> = {
     'Marine Safety Essentials': 'DM "SAFETY" for your free marine safety checklist!',
     'Boat Equipment Showcase': 'DM "BOAT" to discuss your marine equipment needs!',
     'Safety Tips': 'DM "TIPS" for more safety advice!',
@@ -203,7 +203,7 @@ function generateCTA(theme: string, businessName: string) {
 }
 
 function getVisualSuggestions(theme: string, industry: string) {
-  const suggestions = {
+  const suggestions: Record<string, string> = {
     'Marine Safety Essentials': 'High-quality photos of life jackets, life buoys, and safety kits. Use bright, contrasting colors. Show products in action on boats.',
     'Boat Equipment Showcase': 'Professional product shots of boat engines, accessories. Include before/after installation photos.',
     'Safety Tips': 'Infographic-style images with safety tips, checklist graphics, real-life safety scenarios.',
