@@ -78,6 +78,97 @@ export default function ContentGenerator() {
             </div>
           </div>
 
+          {/* Roshanal Infotech Business Showcase */}
+          <div className="mt-6 p-6 bg-gradient-to-r from-blue-50 via-white to-blue-50 rounded-lg border border-blue-200 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-xl font-bold text-blue-900 mb-1">🏢 Featured Business: Roshanal Infotech Limited</h3>
+                <p className="text-blue-700">Marine Equipment & Security Solutions • Port Harcourt, Nigeria</p>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold text-blue-600">300%</div>
+                <div className="text-sm text-blue-600">Engagement Increase</div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Business Overview */}
+              <div className="lg:col-span-2">
+                <h4 className="font-semibold text-gray-900 mb-3">📋 Business Overview</h4>
+                <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                  Roshanal Infotech Limited is a technology and marine equipment solutions company based in Port Harcourt, Nigeria.
+                  The business specializes in providing high-quality marine, security, and power solutions for individuals, businesses, and industrial operations.
+                </p>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <div className="text-lg mb-1">🚤</div>
+                    <div className="text-xs font-medium text-blue-900">Marine Equipment</div>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <div className="text-lg mb-1">🛟</div>
+                    <div className="text-xs font-medium text-green-900">Safety Gear</div>
+                  </div>
+                  <div className="text-center p-3 bg-purple-50 rounded-lg">
+                    <div className="text-lg mb-1">📹</div>
+                    <div className="text-xs font-medium text-purple-900">Security Systems</div>
+                  </div>
+                  <div className="text-center p-3 bg-orange-50 rounded-lg">
+                    <div className="text-lg mb-1">☀️</div>
+                    <div className="text-xs font-medium text-orange-900">Power Solutions</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Key Products */}
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-3">🛠️ Core Products</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    <span>Fibre glass boats & engines</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    <span>Life jackets & safety kits</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                    <span>CCTV & smart locks</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                    <span>Solar panels & inverters</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span>
+                    <span>Installation services</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Brand Voice & CTA */}
+            <div className="mt-6 pt-4 border-t border-blue-200">
+              <div className="flex flex-wrap items-center justify-between">
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">🎯 Brand Voice</h4>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">"Safety First, Always"</span>
+                    <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">"Reliable Technology"</span>
+                    <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">"One-Stop Solution"</span>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <Button size="sm" className="mb-2">
+                    Generate Roshanal Content Plan
+                  </Button>
+                  <p className="text-xs text-gray-600">See their 7-day strategy</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Sample Content Strategies */}
           <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
             <h3 className="text-lg font-semibold text-blue-900 mb-2">💡 Featured Content Strategies</h3>
@@ -198,10 +289,15 @@ export default function ContentGenerator() {
             <p className="text-gray-600 mb-4">See what your generated content will look like:</p>
 
             <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="flex items-center mb-3">
-                <span className="bg-blue-500 text-white px-2 py-1 rounded text-xs font-medium mr-2">Day 1</span>
-                <span className="text-sm font-medium text-gray-900">Marine Safety Essentials</span>
-                <span className="ml-auto text-xs text-gray-500">Instagram</span>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center">
+                  <span className="bg-blue-500 text-white px-2 py-1 rounded text-xs font-medium mr-2">Day 1</span>
+                  <span className="text-sm font-medium text-gray-900">Marine Safety Essentials</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-xs text-gray-500">Roshanal Infotech Strategy</span>
+                  <div className="text-xs text-blue-600 font-medium">Instagram Carousel</div>
+                </div>
               </div>
 
               <div className="space-y-3">
@@ -209,23 +305,34 @@ export default function ContentGenerator() {
                   <span className="text-xs font-medium text-gray-700 uppercase tracking-wide">Caption:</span>
                   <p className="text-sm text-gray-900 mt-1">
                     🌊 MARINE SAFETY STARTS HERE 🌊<br/>
-                    Your safety is our priority! We provide top-quality life jackets and safety equipment to keep you safe on the water.<br/>
+                    Your safety is our priority at Roshanal Infotech! We provide top-quality life jackets, life buoys, and marine safety kits for all your water safety needs.<br/>
                     <em>"Safety First, Always"</em><br/>
-                    #MarineSafety #BoatSafety #LifeJacket
+                    #MarineSafety #BoatSafety #LifeJacket #RoshanalInfotech
                   </p>
                 </div>
 
                 <div>
                   <span className="text-xs font-medium text-gray-700 uppercase tracking-wide">Voiceover Script:</span>
                   <p className="text-sm text-blue-800 mt-1 italic">
-                    "Hey everyone! Safety first when you're on the water! At Roshanal Infotech, we provide top-quality marine safety equipment to keep you safe. Don't risk it - stay safe with gear you can trust!"
+                    "Hey everyone! Safety first when you're on the water! At Roshanal Infotech, we provide top-quality marine safety equipment including life jackets, life buoys, and complete safety kits. Don't risk it - stay safe with gear you can trust! Located in Port Harcourt for your convenience."
                   </p>
+                </div>
+
+                <div>
+                  <span className="text-xs font-medium text-gray-700 uppercase tracking-wide">Hashtags:</span>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">#MarineSafety</span>
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">#BoatSafety</span>
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">#LifeJacket</span>
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">#RoshanalInfotech</span>
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">#PortHarcourt</span>
+                  </div>
                 </div>
 
                 <div>
                   <span className="text-xs font-medium text-gray-700 uppercase tracking-wide">Call-to-Action:</span>
                   <p className="text-sm text-green-800 mt-1">
-                    DM "SAFETY" for your free marine safety checklist!
+                    DM "SAFETY" for your free marine safety checklist! 📞 Call 080-XXXX-XXXX | 📍 Port Harcourt, Nigeria
                   </p>
                 </div>
               </div>
@@ -278,6 +385,97 @@ export default function ContentGenerator() {
           </Card>
         </div>
 
+        {/* Roshanal Business Details */}
+        <div className="mb-8">
+          <Card>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">🎯 Roshanal Infotech: Target Audience & Messaging</h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Target Audience */}
+              <div>
+                <h4 className="font-medium text-gray-900 mb-3">👥 Target Audience</h4>
+                <div className="space-y-2 text-sm text-gray-700">
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    <span>Boat owners & marine transport operators</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    <span>Oil & gas companies & offshore workers</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                    <span>Fishermen & waterfront businesses</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                    <span>Homeowners & real estate developers</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span>
+                    <span>Corporate organizations & construction</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Key Messaging */}
+              <div>
+                <h4 className="font-medium text-gray-900 mb-3">💬 Key Messaging & Brand Voice</h4>
+                <div className="space-y-3">
+                  <div className="p-3 bg-blue-50 rounded-lg">
+                    <div className="font-medium text-blue-900 mb-1">"Safety First, Always"</div>
+                    <div className="text-sm text-blue-700">Core brand promise emphasizing safety</div>
+                  </div>
+                  <div className="p-3 bg-green-50 rounded-lg">
+                    <div className="font-medium text-green-900 mb-1">"Reliable Technology You Can Trust"</div>
+                    <div className="text-sm text-green-700">Focus on quality and durability</div>
+                  </div>
+                  <div className="p-3 bg-purple-50 rounded-lg">
+                    <div className="font-medium text-purple-900 mb-1">"One-Stop Marine & Security Solution"</div>
+                    <div className="text-sm text-purple-700">Comprehensive service offering</div>
+                  </div>
+                  <div className="p-3 bg-orange-50 rounded-lg">
+                    <div className="font-medium text-orange-900 mb-1">"Power, Protection & Performance"</div>
+                    <div className="text-sm text-orange-700">Complete solution promise</div>
+                  </div>
+                </div>
+
+                <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                  <div className="text-sm font-medium text-gray-900 mb-1">Professional Tone:</div>
+                  <div className="text-sm text-gray-700">Trustworthy • Solution-driven • Persuasive • Local expertise</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Content Direction */}
+            <div className="mt-6 pt-4 border-t border-gray-200">
+              <h4 className="font-medium text-gray-900 mb-3">📱 Content Direction Ideas</h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="text-center p-3 bg-blue-50 rounded-lg">
+                  <div className="text-lg mb-1">🚤</div>
+                  <div className="text-xs font-medium text-blue-900">Product Showcases</div>
+                  <div className="text-xs text-blue-700">Boats, engines, CCTV</div>
+                </div>
+                <div className="text-center p-3 bg-green-50 rounded-lg">
+                  <div className="text-lg mb-1">🛟</div>
+                  <div className="text-xs font-medium text-green-900">Safety Education</div>
+                  <div className="text-xs text-green-700">Life jackets, tips</div>
+                </div>
+                <div className="text-center p-3 bg-purple-50 rounded-lg">
+                  <div className="text-lg mb-1">⚡</div>
+                  <div className="text-xs font-medium text-purple-900">Installation Stories</div>
+                  <div className="text-xs text-purple-700">Before/after videos</div>
+                </div>
+                <div className="text-center p-3 bg-orange-50 rounded-lg">
+                  <div className="text-lg mb-1">💬</div>
+                  <div className="text-xs font-medium text-orange-900">Customer Testimonials</div>
+                  <div className="text-xs text-orange-700">Success stories</div>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+
         {/* Success Stories Section */}
         <div className="mb-8">
           <Card>
@@ -286,20 +484,35 @@ export default function ContentGenerator() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Roshanal Infotech Story */}
               <div className="p-4 border border-blue-200 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100">
-                <div className="flex items-center mb-3">
-                  <span className="text-2xl mr-2">🛟</span>
-                  <div>
-                    <h4 className="font-semibold text-blue-900">Roshanal Infotech</h4>
-                    <p className="text-sm text-blue-700">Marine Safety Equipment</p>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center">
+                    <span className="text-2xl mr-2">🛟</span>
+                    <div>
+                      <h4 className="font-semibold text-blue-900">Roshanal Infotech Limited</h4>
+                      <p className="text-sm text-blue-700">Marine & Security Solutions</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-bold text-blue-600">300%</div>
+                    <div className="text-xs text-blue-600">Engagement</div>
                   </div>
                 </div>
                 <blockquote className="text-sm text-blue-800 italic mb-3">
-                  "Our social media engagement increased by 300% in just 2 weeks! The marine safety content strategy perfectly captured our 'Safety First' brand voice."
+                  "ClipGenius transformed our social media presence! The marine safety content strategy perfectly captured our 'Safety First, Always' brand voice and helped us connect with boat owners, fishermen, and businesses across Port Harcourt."
                 </blockquote>
-                <div className="flex items-center text-xs text-blue-600">
-                  <span>📈 300% engagement increase</span>
-                  <span className="mx-2">•</span>
-                  <span>🎯 Port Harcourt focus</span>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs text-blue-600">
+                    <span>📈 300% engagement increase</span>
+                    <span>🎯 Port Harcourt focus</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-blue-600">
+                    <span>🚤 Marine equipment showcase</span>
+                    <span>🛟 Safety gear promotion</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-blue-600">
+                    <span>📹 CCTV installation stories</span>
+                    <span>☀️ Solar power solutions</span>
+                  </div>
                 </div>
               </div>
 
