@@ -139,13 +139,13 @@ function getContentType(contentType: string, day: number) {
 }
 
 function getPostingTime(platform: string, day: number) {
-  const times = {
+  const times: Record<string, string[]> = {
     instagram: ['7:00 AM', '12:00 PM', '6:00 PM', '8:00 PM'],
     facebook: ['9:00 AM', '1:00 PM', '7:00 PM'],
     tiktok: ['6:00 PM', '8:00 PM', '10:00 PM'],
     all: ['7:00 AM', '12:00 PM', '6:00 PM', '8:00 PM']
   }
-  const platformTimes = times[platform] || times.all
+  const platformTimes = times[platform as keyof typeof times] || times.all
   return platformTimes[day % platformTimes.length]
 }
 
