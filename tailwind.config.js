@@ -15,6 +15,17 @@ module.exports = {
       '2xl': '1536px',
     },
     extend: {
+      fontFamily: {
+        'syne': ['Syne', 'system-ui', 'sans-serif'],
+        'manrope': ['Manrope', 'system-ui', 'sans-serif'],
+      },
+      colors: {
+        'roshanal': {
+          'navy': '#0C1A36',
+          'blue': '#1641C4',
+          'red': '#C8191C',
+        },
+      },
       container: {
         center: true,
         padding: '1rem',

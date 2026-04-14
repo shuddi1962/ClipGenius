@@ -1,118 +1,244 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
+import { TrendingUp, FileText, Video, Bookmark, Sparkles, RefreshCw } from 'lucide-react'
 
 export default function Dashboard() {
+  const [todayIdea, setTodayIdea] = useState<any>(null)
+  const [trendingTopics, setTrendingTopics] = useState<any[]>([])
+  const [isLoadingIdea, setIsLoadingIdea] = useState(true)
+
+  // Mock today's top content idea
+  useEffect(() => {
+    const mockIdea = {
+      title: "Smart CCTV Installation for Port Harcourt Businesses",
+      format: "Instagram Carousel",
+      hook: "Protect your business 24/7 with Hikvision CCTV systems! 🏢",
+      caption: "Investing in security shouldn't be complicated. Our professional CCTV installation includes:\n\n✅ Hikvision 4K cameras with night vision\n✅ Mobile app access from anywhere\n✅ 24/7 monitoring capabilities\n✅ Expert setup and training\n\nSecure your Port Harcourt business today! Call 08109522432\n\n#CCTV #BusinessSecurity #PortHarcourt #RoshanalInfotech",
+      hashtags: ["#CCTV", "#BusinessSecurity", "#PortHarcourt", "#Hikvision", "#SecuritySystems"],
+      image_prompt: "Modern office building with Hikvision CCTV cameras installed, professional installation in progress, Port Harcourt cityscape in background, security and trust theme",
+      why_trending: "Small businesses in Port Harcourt are increasingly investing in professional CCTV systems due to rising security concerns"
+    }
+    setTodayIdea(mockIdea)
+    setIsLoadingIdea(false)
+  }, [])
+
+  // Mock trending topics
+  useEffect(() => {
+    const mockTopics = [
+      {
+        title: "Solar Power Adoption in Nigeria",
+        trend: "📈 Rising 45%",
+        reason: "Government incentives and rising electricity costs"
+      },
+      {
+        title: "Smart Door Locks Market",
+        trend: "📈 Rising 32%",
+        reason: "Increasing demand for home automation in urban areas"
+      },
+      {
+        title: "Boat Safety Regulations",
+        trend: "📈 Rising 28%",
+        reason: "New maritime safety laws in Niger Delta region"
+      }
+    ]
+    setTrendingTopics(mockTopics)
+  }, [])
+
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-          <p className="text-gray-600">Manage your marketing content and projects</p>
-        </div>
-
-        <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <Card>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Content</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                <div>
-                  <p className="font-medium text-gray-900">Instagram Post</p>
-                  <p className="text-sm text-gray-600">2 hours ago</p>
-                </div>
-                <span className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Published</span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                <div>
-                  <p className="font-medium text-gray-900">Video Promo</p>
-                  <p className="text-sm text-gray-600">1 day ago</p>
-                </div>
-                <span className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Draft</span>
-              </div>
-            </div>
-          </Card>
-
-          <Card>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-            <div className="space-y-3">
-              <Link href="/content-generator">
-                <Button className="w-full justify-start">
-                  📝 Generate Content
-                </Button>
-              </Link>
-              <Link href="/video-generator">
-                <Button variant="secondary" className="w-full justify-start">
-                  🎥 Create Video
-                </Button>
-              </Link>
-              <Link href="/saved-content">
-                <Button variant="outline" className="w-full justify-start">
-                  📁 View Saved Content
-                </Button>
-              </Link>
-            </div>
-          </Card>
-
-          <Card>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Statistics</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Content Generated</span>
-                <span className="font-semibold">24</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Videos Created</span>
-                <span className="font-semibold">8</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Drafts</span>
-                <span className="font-semibold">12</span>
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        <Card>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">AI Content Generation Panel</h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Business Type
-              </label>
-              <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                <option>Select business type</option>
-                <option>E-commerce</option>
-                <option>Technology</option>
-                <option>Healthcare</option>
-                <option>Education</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Target Audience
-              </label>
-              <input
-                type="text"
-                placeholder="e.g., Young professionals"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              />
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Product/Service
-              </label>
-              <input
-                type="text"
-                placeholder="Describe your product or service"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              />
+    <div className="p-6 lg:p-8">
+      {/* Hero Section */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl lg:text-4xl font-bold text-roshanal-navy mb-2">
+              Good morning, Roshanal
+            </h1>
+            <p className="text-gray-600 font-manrope">{currentDate}</p>
+          </div>
+          <div className="hidden lg:block">
+            <div className="w-16 h-16 bg-gradient-to-br from-roshanal-navy to-roshanal-blue rounded-full flex items-center justify-center">
+              <Sparkles className="w-8 h-8 text-white" />
             </div>
           </div>
-          <div className="mt-6">
-            <Button>Generate Content</Button>
+        </div>
+
+        {/* Today's Top Content Idea */}
+        <Card className="mb-6 border-l-4 border-l-roshanal-blue">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-1">Today's Top Content Idea</h2>
+              <p className="text-gray-600 text-sm">AI-powered suggestion based on current trends</p>
+            </div>
+            <Button size="sm" variant="outline" className="flex items-center">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Refresh
+            </Button>
           </div>
+
+          {isLoadingIdea ? (
+            <div className="animate-pulse">
+              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+            </div>
+          ) : todayIdea && (
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-semibold text-roshanal-navy">{todayIdea.title}</h3>
+                <span className="px-3 py-1 bg-roshanal-blue text-white text-xs rounded-full">
+                  {todayIdea.format}
+                </span>
+              </div>
+
+              <p className="text-gray-800 font-medium mb-2">{todayIdea.hook}</p>
+              <p className="text-gray-700 text-sm mb-3 line-clamp-3">{todayIdea.caption}</p>
+
+              <div className="flex flex-wrap gap-1 mb-3">
+                {todayIdea.hashtags.slice(0, 4).map((hashtag: string, index: number) => (
+                  <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">
+                    {hashtag}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex gap-3">
+                <Button size="sm">Use This Idea</Button>
+                <Button size="sm" variant="outline">Save for Later</Button>
+              </div>
+            </div>
+          )}
         </Card>
       </div>
-    </main>
+
+      {/* Metrics Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <Card className="text-center">
+          <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mx-auto mb-3">
+            <FileText className="w-6 h-6 text-green-600" />
+          </div>
+          <div className="text-2xl font-bold text-gray-900 mb-1">47</div>
+          <div className="text-sm text-gray-600">Posts Generated</div>
+          <div className="text-xs text-green-600 mt-1">+12% this week</div>
+        </Card>
+
+        <Card className="text-center">
+          <div className="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg mx-auto mb-3">
+            <Bookmark className="w-6 h-6 text-blue-600" />
+          </div>
+          <div className="text-2xl font-bold text-gray-900 mb-1">23</div>
+          <div className="text-sm text-gray-600">Ideas Saved</div>
+          <div className="text-xs text-blue-600 mt-1">+8% this week</div>
+        </Card>
+
+        <Card className="text-center">
+          <div className="flex items-center justify-center w-12 h-12 bg-purple-100 rounded-lg mx-auto mb-3">
+            <Video className="w-6 h-6 text-purple-600" />
+          </div>
+          <div className="text-2xl font-bold text-gray-900 mb-1">12</div>
+          <div className="text-sm text-gray-600">Videos Scripted</div>
+          <div className="text-xs text-purple-600 mt-1">+15% this week</div>
+        </Card>
+
+        <Card className="text-center">
+          <div className="flex items-center justify-center w-12 h-12 bg-orange-100 rounded-lg mx-auto mb-3">
+            <TrendingUp className="w-6 h-6 text-orange-600" />
+          </div>
+          <div className="text-2xl font-bold text-gray-900 mb-1">8</div>
+          <div className="text-sm text-gray-600">Trending Topics</div>
+          <div className="text-xs text-orange-600 mt-1">+25% this week</div>
+        </Card>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Link href="/content-generator">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-roshanal-blue">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-roshanal-blue rounded-lg flex items-center justify-center mr-4">
+                  <FileText className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Generate Post</h3>
+                  <p className="text-sm text-gray-600">Create engaging content</p>
+                </div>
+              </div>
+            </Card>
+          </Link>
+
+          <Link href="/content-planner">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-roshanal-blue">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-roshanal-blue rounded-lg flex items-center justify-center mr-4">
+                  <TrendingUp className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Plan Week</h3>
+                  <p className="text-sm text-gray-600">7-day content strategy</p>
+                </div>
+              </div>
+            </Card>
+          </Link>
+
+          <Link href="/video-studio">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-roshanal-blue">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-roshanal-blue rounded-lg flex items-center justify-center mr-4">
+                  <Video className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Write Video Script</h3>
+                  <p className="text-sm text-gray-600">Professional video content</p>
+                </div>
+              </div>
+            </Card>
+          </Link>
+        </div>
+      </div>
+
+      {/* Trending in Your Niche */}
+      <Card>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-semibold text-gray-900">Trending in Your Niche</h2>
+          <Button size="sm" variant="outline" className="flex items-center">
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Refresh
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {trendingTopics.map((topic, index) => (
+            <div key={index} className="p-4 border border-gray-200 rounded-lg hover:border-roshanal-blue transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-semibold text-gray-900 text-sm">{topic.title}</h3>
+                <span className="text-xs font-medium text-green-600">{topic.trend}</span>
+              </div>
+              <p className="text-xs text-gray-600 mb-3">{topic.reason}</p>
+              <Button size="sm" variant="outline" className="w-full">
+                Create Content
+              </Button>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+          <p className="text-sm text-gray-600">
+            <strong>💡 Pro Tip:</strong> Content about trending topics gets 3x more engagement.
+            Use our AI to create posts about these rising trends in your industry.
+          </p>
+        </div>
+      </Card>
+    </div>
   )
 }
