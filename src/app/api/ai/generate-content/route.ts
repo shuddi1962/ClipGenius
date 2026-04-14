@@ -106,7 +106,7 @@ function generateContentCalendar(data: any) {
     const themeIndex = (day - 1) % industryThemes.length
     const theme = industryThemes[themeIndex]
 
-    let dayContent = {
+    let dayContent: any = {
       day,
       theme,
       platform: platform === 'all' ? 'Instagram' : platform.charAt(0).toUpperCase() + platform.slice(1),
