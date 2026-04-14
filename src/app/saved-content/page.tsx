@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 
@@ -84,7 +85,7 @@ export default function SavedContent() {
           </div>
         </div>
 
-        <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredItems.map((item) => (
             <Card key={item.id}>
               <div className="flex justify-between items-start mb-4">
@@ -126,11 +127,12 @@ export default function SavedContent() {
               {item.type === 'video' && item.videoUrl && (
                 <div>
                   <h4 className="font-medium text-gray-900 mb-2">Video Preview</h4>
-                  <div className="aspect-video bg-gray-200 rounded">
+                  <div className="aspect-video bg-gray-200 rounded overflow-hidden">
                     <video
                       src={item.videoUrl}
-                      className="w-full h-full rounded object-cover"
-                      muted
+                      className="w-full h-full object-cover"
+                      controls
+                      preload="metadata"
                     />
                   </div>
                 </div>
