@@ -163,12 +163,16 @@ export default function SavedContent() {
                 }
               </p>
               <div className="flex gap-4 justify-center">
-                <Button as="a" href="/content-generator">
-                  Generate Content
-                </Button>
-                <Button as="a" href="/video-generator" variant="secondary">
-                  Create Video
-                </Button>
+                <Link href="/content-generator">
+                  <Button>
+                    Generate Content
+                  </Button>
+                </Link>
+                <Link href="/video-generator">
+                  <Button variant="secondary">
+                    Create Video
+                  </Button>
+                </Link>
               </div>
             </div>
           </Card>
