@@ -57,10 +57,10 @@ export async function POST(request: NextRequest) {
 }
 
 function generateContentCalendar(data: any) {
-  const { businessName, industry, products, targetAudience, brandVoice, keyMessage, platform, contentType, duration } = data
+  const { businessName, businessType, industry, products, targetAudience, brandVoice, keyMessage, platform, contentType, duration } = data
 
   // Industry-specific content themes
-  const themes = {
+  const themes: Record<string, string[]> = {
     marine: [
       'Marine Safety Essentials',
       'Boat Equipment Showcase',
@@ -99,7 +99,7 @@ function generateContentCalendar(data: any) {
     ]
   }
 
-  const industryThemes = themes[industry] || themes.marine
+  const industryThemes = themes[industry as keyof typeof themes] || themes.marine
   const calendar = []
 
   for (let day = 1; day <= duration; day++) {
