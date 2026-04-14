@@ -1,3 +1,5 @@
+import { NextRequest, NextResponse } from 'next/server'
+
 // GET /api/projects - Get user's projects
 export async function GET(request: NextRequest) {
   try {
