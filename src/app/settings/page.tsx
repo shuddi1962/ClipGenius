@@ -61,10 +61,8 @@ export default function Settings() {
       localStorage.setItem('roshanal_search_key', settings.searchKey)
       localStorage.setItem('roshanal_model', settings.selectedModel)
 
-      // Save other settings
-      const settingsToSave = { ...settings }
-      delete settingsToSave.openrouterKey
-      delete settingsToSave.searchKey
+      // Save other settings (exclude API keys for security)
+      const { openrouterKey, searchKey, ...settingsToSave } = settings
       localStorage.setItem('roshanal_settings', JSON.stringify(settingsToSave))
 
       setSaveMessage('Settings saved successfully!')
