@@ -2,6 +2,10 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Sidebar from '@/components/Sidebar'
 import BottomNav from '@/components/BottomNav'
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: 'Roshanal Infotech - Smart Marketing & Content Generator',
@@ -14,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className={cn("h-full", "font-sans", geist.variable)}>
       <body className="h-full antialiased font-manrope">
         <div className="flex h-full bg-gray-50">
           {/* Desktop Sidebar */}

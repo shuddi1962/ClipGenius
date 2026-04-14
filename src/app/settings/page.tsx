@@ -6,11 +6,18 @@ import Button from '@/components/Button'
 import { Eye, EyeOff, Save, AlertCircle } from 'lucide-react'
 
 export default function Settings() {
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false)
+  const [adminPassword, setAdminPassword] = useState('')
+  const [authError, setAuthError] = useState('')
+
   const [settings, setSettings] = useState({
+    aiProvider: 'openrouter', // openrouter or kie
     openrouterKey: '',
+    kieKey: '',
     searchKey: '',
     searchProvider: 'tavily', // tavily or serper
     selectedModel: 'anthropic/claude-3.5-sonnet',
+    kieModel: 'kie/grok-2-1212',
     companyName: 'Roshanal Infotech Limited',
     niche: 'Security Systems, Marine Equipment, Solar Installation',
     location: 'Port Harcourt, Rivers State, Nigeria',
@@ -24,29 +31,58 @@ export default function Settings() {
 
   const [showKeys, setShowKeys] = useState({
     openrouter: false,
+    kie: false,
     search: false
   })
 
   const [isSaving, setIsSaving] = useState(false)
   const [saveMessage, setSaveMessage] = useState('')
 
+  // Check admin authentication
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('roshanal_admin_auth') === 'true'
+    setIsAdminAuthenticated(isAuthenticated)
+  }, [])
+
   // Load settings from localStorage on mount
   useEffect(() => {
+    if (!isAdminAuthenticated) return
+
     const savedSettings = localStorage.getItem('roshanal_settings')
     if (savedSettings) {
-      setSettings(JSON.parse(savedSettings))
+      const parsed = JSON.parse(savedSettings)
+      setSettings(prev => ({ ...prev, ...parsed }))
     }
 
     // Load API keys separately for security
     const openrouterKey = localStorage.getItem('roshanal_openrouter_key')
+    const kieKey = localStorage.getItem('roshanal_kie_key')
     const searchKey = localStorage.getItem('roshanal_search_key')
+    const aiProvider = localStorage.getItem('roshanal_ai_provider') || 'openrouter'
+    const selectedModel = localStorage.getItem('roshanal_model') || 'anthropic/claude-3.5-sonnet'
+    const kieModel = localStorage.getItem('roshanal_kie_model') || 'kie/grok-2-1212'
 
     setSettings(prev => ({
       ...prev,
       openrouterKey: openrouterKey || '',
-      searchKey: searchKey || ''
+      kieKey: kieKey || '',
+      searchKey: searchKey || '',
+      aiProvider,
+      selectedModel,
+      kieModel
     }))
-  }, [])
+  }, [isAdminAuthenticated])
+
+  const handleAdminLogin = () => {
+    // Simple admin password check - in production, use proper authentication
+    if (adminPassword === 'roshanal2026') {
+      localStorage.setItem('roshanal_admin_auth', 'true')
+      setIsAdminAuthenticated(true)
+      setAuthError('')
+    } else {
+      setAuthError('Invalid admin password')
+    }
+  }
 
   const handleInputChange = (field: string, value: string) => {
     setSettings(prev => ({ ...prev, [field]: value }))
@@ -56,13 +92,16 @@ export default function Settings() {
     setIsSaving(true)
 
     try {
-      // Save API keys separately
+      // Save API keys and preferences separately
       localStorage.setItem('roshanal_openrouter_key', settings.openrouterKey)
+      localStorage.setItem('roshanal_kie_key', settings.kieKey)
       localStorage.setItem('roshanal_search_key', settings.searchKey)
+      localStorage.setItem('roshanal_ai_provider', settings.aiProvider)
       localStorage.setItem('roshanal_model', settings.selectedModel)
+      localStorage.setItem('roshanal_kie_model', settings.kieModel)
 
       // Save other settings (exclude API keys for security)
-      const { openrouterKey, searchKey, ...settingsToSave } = settings
+      const { openrouterKey, kieKey, searchKey, ...settingsToSave } = settings
       localStorage.setItem('roshanal_settings', JSON.stringify(settingsToSave))
 
       setSaveMessage('Settings saved successfully!')
@@ -74,7 +113,7 @@ export default function Settings() {
     }
   }
 
-  const availableModels = [
+  const openrouterModels = [
     { value: 'google/gemini-2.0-flash', label: 'Google Gemini 2.0 Flash', description: 'Fast, cost-effective' },
     { value: 'anthropic/claude-3.5-sonnet', label: 'Claude 3.5 Sonnet', description: 'Best for creative writing' },
     { value: 'openai/gpt-4o', label: 'GPT-4o', description: 'Balanced performance' },
@@ -82,6 +121,53 @@ export default function Settings() {
     { value: 'meta-llama/llama-3.3-70b-instruct', label: 'Llama 3.3 70B', description: 'Open-source alternative' },
     { value: 'deepseek/deepseek-r1', label: 'DeepSeek R1', description: 'Reasoning-focused' }
   ]
+
+  const kieModels = [
+    { value: 'kie/grok-2-1212', label: 'Grok 2', description: 'xAI\'s advanced reasoning model' },
+    { value: 'kie/grok-2-beta', label: 'Grok 2 Beta', description: 'Latest Grok iteration' },
+    { value: 'kie/grok-1.5', label: 'Grok 1.5', description: 'Stable production model' },
+    { value: 'kie/grok-vision', label: 'Grok Vision', description: 'Multi-modal with image understanding' },
+    { value: 'kie/grok-code', label: 'Grok Code', description: 'Specialized for programming tasks' }
+  ]
+
+  // Admin authentication check
+  if (!isAdminAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <Card className="w-full max-w-md">
+          <div className="text-center mb-6">
+            <div className="w-16 h-16 bg-roshanal-navy rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <h1 className="text-2xl font-bold text-roshanal-navy mb-2">Admin Access Required</h1>
+            <p className="text-gray-600">Enter admin password to access settings</p>
+          </div>
+
+          {authError && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-800 text-sm">{authError}</p>
+            </div>
+          )}
+
+          <div className="space-y-4">
+            <input
+              type="password"
+              value={adminPassword}
+              onChange={(e) => setAdminPassword(e.target.value)}
+              placeholder="Enter admin password"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-roshanal-blue focus:border-roshanal-blue"
+              onKeyPress={(e) => e.key === 'Enter' && handleAdminLogin()}
+            />
+            <Button onClick={handleAdminLogin} className="w-full bg-roshanal-navy hover:bg-roshanal-blue">
+              Access Settings
+            </Button>
+          </div>
+        </Card>
+      </div>
+    )
+  }
 
   return (
     <div className="p-6 lg:p-8">
@@ -93,11 +179,47 @@ export default function Settings() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* API Configuration */}
         <div className="lg:col-span-2 space-y-6">
-          {/* OpenRouter API */}
+          {/* AI Provider Selection */}
           <Card>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">AI Configuration</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">AI Provider</h2>
 
             <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  AI Service Provider
+                </label>
+                <div className="flex gap-4">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      value="openrouter"
+                      checked={settings.aiProvider === 'openrouter'}
+                      onChange={(e) => handleInputChange('aiProvider', e.target.value)}
+                      className="mr-2"
+                    />
+                    <span className="text-sm">OpenRouter (Multiple AI models)</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      value="kie"
+                      checked={settings.aiProvider === 'kie'}
+                      onChange={(e) => handleInputChange('aiProvider', e.target.value)}
+                      className="mr-2"
+                    />
+                    <span className="text-sm">kie.ai (xAI Grok models)</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* OpenRouter API */}
+          {settings.aiProvider === 'openrouter' && (
+            <Card>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">OpenRouter Configuration</h2>
+
+              <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   OpenRouter API Key
@@ -136,7 +258,7 @@ export default function Settings() {
                   onChange={(e) => handleInputChange('selectedModel', e.target.value)}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-roshanal-blue focus:border-roshanal-blue"
                 >
-                  {availableModels.map((model) => (
+                  {openrouterModels.map((model) => (
                     <option key={model.value} value={model.value}>
                       {model.label} - {model.description}
                     </option>
@@ -145,6 +267,62 @@ export default function Settings() {
               </div>
             </div>
           </Card>
+          )}
+
+          {/* kie.ai API */}
+          {settings.aiProvider === 'kie' && (
+            <Card>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">kie.ai Configuration</h2>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    kie.ai API Key
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showKeys.kie ? 'text' : 'password'}
+                      value={settings.kieKey}
+                      onChange={(e) => handleInputChange('kieKey', e.target.value)}
+                      placeholder="xai-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                      className="w-full p-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-roshanal-blue focus:border-roshanal-blue"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowKeys(prev => ({ ...prev, kie: !prev.kie }))}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    >
+                      {showKeys.kie ? (
+                        <EyeOff className="h-5 w-5 text-gray-400" />
+                      ) : (
+                        <Eye className="h-5 w-5 text-gray-400" />
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Get your API key from <a href="https://kie.ai" target="_blank" rel="noopener noreferrer" className="text-roshanal-blue hover:underline">kie.ai</a>
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    kie.ai Model
+                  </label>
+                  <select
+                    value={settings.kieModel}
+                    onChange={(e) => handleInputChange('kieModel', e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-roshanal-blue focus:border-roshanal-blue"
+                  >
+                    {kieModels.map((model) => (
+                      <option key={model.value} value={model.value}>
+                        {model.label} - {model.description}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </Card>
+          )}
 
           {/* Web Search API */}
           <Card>
