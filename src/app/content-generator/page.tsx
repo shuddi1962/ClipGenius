@@ -50,6 +50,317 @@ export default function ContentGenerator() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">AI Content Generator</h1>
           <p className="text-gray-600">Generate marketing content, captions, and post ideas</p>
+
+          {/* Quick Start Guide */}
+          <div className="mt-6 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-200">
+            <h3 className="text-lg font-semibold text-indigo-900 mb-3">🚀 Quick Start Guide</h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+              <div className="p-3">
+                <div className="text-2xl mb-2">📝</div>
+                <div className="text-sm font-medium text-indigo-900">1. Fill Business Form</div>
+                <div className="text-xs text-indigo-700">Enter your business details</div>
+              </div>
+              <div className="p-3">
+                <div className="text-2xl mb-2">🎯</div>
+                <div className="text-sm font-medium text-indigo-900">2. Choose Strategy</div>
+                <div className="text-xs text-indigo-700">Platform & duration</div>
+              </div>
+              <div className="p-3">
+                <div className="text-2xl mb-2">⚡</div>
+                <div className="text-sm font-medium text-indigo-900">3. Generate Content</div>
+                <div className="text-xs text-indigo-700">AI creates your calendar</div>
+              </div>
+              <div className="p-3">
+                <div className="text-2xl mb-2">📤</div>
+                <div className="text-sm font-medium text-indigo-900">4. Export & Post</div>
+                <div className="text-xs text-indigo-700">Share on social media</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Sample Content Strategies */}
+          <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h3 className="text-lg font-semibold text-blue-900 mb-2">💡 Featured Content Strategies</h3>
+            <p className="text-blue-700 mb-3">Get inspired with our pre-built content strategies for different industries:</p>
+            <div className="flex flex-wrap gap-2">
+              <button className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm hover:bg-blue-200 transition-colors">
+                🛟 Marine Safety Equipment
+              </button>
+              <button className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm hover:bg-green-200 transition-colors">
+                🍽️ Restaurant & Food
+              </button>
+              <button className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm hover:bg-purple-200 transition-colors">
+                💼 Professional Services
+              </button>
+              <button className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm hover:bg-orange-200 transition-colors">
+                🛒 E-commerce Store
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Content Templates Section */}
+        <div className="mb-8">
+          <Card>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">📚 Content Strategy Templates</h3>
+            <p className="text-gray-600 mb-4">Choose from our pre-built content strategies or create your own custom plan:</p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* Marine Safety Template */}
+              <div className="p-4 border border-blue-200 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors cursor-pointer">
+                <div className="flex items-center mb-2">
+                  <span className="text-2xl mr-2">🛟</span>
+                  <h4 className="font-semibold text-blue-900">Marine Safety Equipment</h4>
+                </div>
+                <p className="text-sm text-blue-700 mb-3">Complete 7-day strategy for boat safety companies</p>
+                <div className="text-xs text-blue-600">
+                  <div>✅ Daily content themes</div>
+                  <div>✅ Safety-focused messaging</div>
+                  <div>✅ Professional voiceover scripts</div>
+                </div>
+              </div>
+
+              {/* Restaurant Template */}
+              <div className="p-4 border border-green-200 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer">
+                <div className="flex items-center mb-2">
+                  <span className="text-2xl mr-2">🍽️</span>
+                  <h4 className="font-semibold text-green-900">Restaurant & Food</h4>
+                </div>
+                <p className="text-sm text-green-700 mb-3">Engaging content for food businesses</p>
+                <div className="text-xs text-green-600">
+                  <div>✅ Menu highlights</div>
+                  <div>✅ Customer testimonials</div>
+                  <div>✅ Special promotions</div>
+                </div>
+              </div>
+
+              {/* Professional Services Template */}
+              <div className="p-4 border border-purple-200 rounded-lg bg-purple-50 hover:bg-purple-100 transition-colors cursor-pointer">
+                <div className="flex items-center mb-2">
+                  <span className="text-2xl mr-2">💼</span>
+                  <h4 className="font-semibold text-purple-900">Professional Services</h4>
+                </div>
+                <p className="text-sm text-purple-700 mb-3">Authority-building content for consultants</p>
+                <div className="text-xs text-purple-600">
+                  <div>✅ Industry insights</div>
+                  <div>✅ Case studies</div>
+                  <div>✅ Lead generation</div>
+                </div>
+              </div>
+
+              {/* E-commerce Template */}
+              <div className="p-4 border border-orange-200 rounded-lg bg-orange-50 hover:bg-orange-100 transition-colors cursor-pointer">
+                <div className="flex items-center mb-2">
+                  <span className="text-2xl mr-2">🛒</span>
+                  <h4 className="font-semibold text-orange-900">E-commerce Store</h4>
+                </div>
+                <p className="text-sm text-orange-700 mb-3">Product-focused content for online stores</p>
+                <div className="text-xs text-orange-600">
+                  <div>✅ Product showcases</div>
+                  <div>✅ Customer reviews</div>
+                  <div>✅ Shopping tips</div>
+                </div>
+              </div>
+
+              {/* Technology Template */}
+              <div className="p-4 border border-indigo-200 rounded-lg bg-indigo-50 hover:bg-indigo-100 transition-colors cursor-pointer">
+                <div className="flex items-center mb-2">
+                  <span className="text-2xl mr-2">💻</span>
+                  <h4 className="font-semibold text-indigo-900">Technology Solutions</h4>
+                </div>
+                <p className="text-sm text-indigo-700 mb-3">Tech education and innovation content</p>
+                <div className="text-xs text-indigo-600">
+                  <div>✅ Product demos</div>
+                  <div>✅ Tech tips</div>
+                  <div>✅ Industry news</div>
+                </div>
+              </div>
+
+              {/* Custom Template */}
+              <div className="p-4 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer border-dashed">
+                <div className="flex items-center mb-2">
+                  <span className="text-2xl mr-2">✨</span>
+                  <h4 className="font-semibold text-gray-900">Custom Strategy</h4>
+                </div>
+                <p className="text-sm text-gray-700 mb-3">Build your own content strategy</p>
+                <div className="text-xs text-gray-600">
+                  <div>🔧 Use form below</div>
+                  <div>📊 AI-powered generation</div>
+                  <div>🎯 Industry-specific</div>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Sample Content Preview */}
+          <Card className="mt-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">📖 Sample Content Preview</h3>
+            <p className="text-gray-600 mb-4">See what your generated content will look like:</p>
+
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="flex items-center mb-3">
+                <span className="bg-blue-500 text-white px-2 py-1 rounded text-xs font-medium mr-2">Day 1</span>
+                <span className="text-sm font-medium text-gray-900">Marine Safety Essentials</span>
+                <span className="ml-auto text-xs text-gray-500">Instagram</span>
+              </div>
+
+              <div className="space-y-3">
+                <div>
+                  <span className="text-xs font-medium text-gray-700 uppercase tracking-wide">Caption:</span>
+                  <p className="text-sm text-gray-900 mt-1">
+                    🌊 MARINE SAFETY STARTS HERE 🌊<br/>
+                    Your safety is our priority! We provide top-quality life jackets and safety equipment to keep you safe on the water.<br/>
+                    <em>"Safety First, Always"</em><br/>
+                    #MarineSafety #BoatSafety #LifeJacket
+                  </p>
+                </div>
+
+                <div>
+                  <span className="text-xs font-medium text-gray-700 uppercase tracking-wide">Voiceover Script:</span>
+                  <p className="text-sm text-blue-800 mt-1 italic">
+                    "Hey everyone! Safety first when you're on the water! At Roshanal Infotech, we provide top-quality marine safety equipment to keep you safe. Don't risk it - stay safe with gear you can trust!"
+                  </p>
+                </div>
+
+                <div>
+                  <span className="text-xs font-medium text-gray-700 uppercase tracking-wide">Call-to-Action:</span>
+                  <p className="text-sm text-green-800 mt-1">
+                    DM "SAFETY" for your free marine safety checklist!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 text-center">
+              <p className="text-sm text-gray-600 mb-3">Generate complete 7/30-day content calendars with captions, hashtags, and strategies!</p>
+              <Button variant="outline" size="sm">
+                View Full Sample Strategy →
+              </Button>
+            </div>
+          </Card>
+        </div>
+
+        {/* Content Tips Section */}
+        <div className="mb-8">
+          <Card>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">💡 Content Creation Tips</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-3 bg-blue-50 rounded-lg">
+                <h4 className="font-medium text-blue-900 mb-2">📸 Visual Content</h4>
+                <ul className="text-sm text-blue-800 space-y-1">
+                  <li>• High-quality photos (1080x1080)</li>
+                  <li>• Consistent branding</li>
+                  <li>• Show products in use</li>
+                  <li>• Natural lighting</li>
+                </ul>
+              </div>
+
+              <div className="p-3 bg-green-50 rounded-lg">
+                <h4 className="font-medium text-green-900 mb-2">⏰ Posting Strategy</h4>
+                <ul className="text-sm text-green-800 space-y-1">
+                  <li>• Post consistently daily</li>
+                  <li>• Optimal times: 7AM, 12PM, 6PM</li>
+                  <li>• Mix content types</li>
+                  <li>• Engage within 24 hours</li>
+                </ul>
+              </div>
+
+              <div className="p-3 bg-purple-50 rounded-lg">
+                <h4 className="font-medium text-purple-900 mb-2">🎯 Engagement Boost</h4>
+                <ul className="text-sm text-purple-800 space-y-1">
+                  <li>• Ask questions in captions</li>
+                  <li>• Use relevant hashtags</li>
+                  <li>• Run polls and stories</li>
+                  <li>• Respond to comments</li>
+                </ul>
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* Success Stories Section */}
+        <div className="mb-8">
+          <Card>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">🌟 Success Stories</h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Roshanal Infotech Story */}
+              <div className="p-4 border border-blue-200 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100">
+                <div className="flex items-center mb-3">
+                  <span className="text-2xl mr-2">🛟</span>
+                  <div>
+                    <h4 className="font-semibold text-blue-900">Roshanal Infotech</h4>
+                    <p className="text-sm text-blue-700">Marine Safety Equipment</p>
+                  </div>
+                </div>
+                <blockquote className="text-sm text-blue-800 italic mb-3">
+                  "Our social media engagement increased by 300% in just 2 weeks! The marine safety content strategy perfectly captured our 'Safety First' brand voice."
+                </blockquote>
+                <div className="flex items-center text-xs text-blue-600">
+                  <span>📈 300% engagement increase</span>
+                  <span className="mx-2">•</span>
+                  <span>🎯 Port Harcourt focus</span>
+                </div>
+              </div>
+
+              {/* Restaurant Story */}
+              <div className="p-4 border border-green-200 rounded-lg bg-gradient-to-br from-green-50 to-green-100">
+                <div className="flex items-center mb-3">
+                  <span className="text-2xl mr-2">🍽️</span>
+                  <div>
+                    <h4 className="font-semibold text-green-900">Bella's Kitchen</h4>
+                    <p className="text-sm text-green-700">Fine Dining Restaurant</p>
+                  </div>
+                </div>
+                <blockquote className="text-sm text-green-800 italic mb-3">
+                  "The food content calendar helped us showcase our menu beautifully. Customer reservations increased by 150%!"
+                </blockquote>
+                <div className="flex items-center text-xs text-green-600">
+                  <span>📈 150% reservation increase</span>
+                  <span className="mx-2">•</span>
+                  <span>🍽️ Menu-focused content</span>
+                </div>
+              </div>
+
+              {/* Tech Company Story */}
+              <div className="p-4 border border-purple-200 rounded-lg bg-gradient-to-br from-purple-50 to-purple-100">
+                <div className="flex items-center mb-3">
+                  <span className="text-2xl mr-2">💻</span>
+                  <div>
+                    <h4 className="font-semibold text-purple-900">TechFlow Solutions</h4>
+                    <p className="text-sm text-purple-700">IT Consulting Firm</p>
+                  </div>
+                </div>
+                <blockquote className="text-sm text-purple-800 italic mb-3">
+                  "Our lead generation improved significantly. The professional content established us as industry experts."
+                </blockquote>
+                <div className="flex items-center text-xs text-purple-600">
+                  <span>📈 200% lead increase</span>
+                  <span className="mx-2">•</span>
+                  <span>🎯 Authority building</span>
+                </div>
+              </div>
+
+              {/* E-commerce Story */}
+              <div className="p-4 border border-orange-200 rounded-lg bg-gradient-to-br from-orange-50 to-orange-100">
+                <div className="flex items-center mb-3">
+                  <span className="text-2xl mr-2">🛒</span>
+                  <div>
+                    <h4 className="font-semibold text-orange-900">StyleHub Online</h4>
+                    <p className="text-sm text-orange-700">Fashion E-commerce</p>
+                  </div>
+                </div>
+                <blockquote className="text-sm text-orange-800 italic mb-3">
+                  "Product showcase content drove our sales up by 180%. The shopping tips series was a game-changer!"
+                </blockquote>
+                <div className="flex items-center text-xs text-orange-600">
+                  <span>📈 180% sales increase</span>
+                  <span className="mx-2">•</span>
+                  <span>🛍️ Product-focused</span>
+                </div>
+              </div>
+            </div>
+          </Card>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
