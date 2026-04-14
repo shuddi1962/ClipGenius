@@ -216,7 +216,7 @@ function getVisualSuggestions(theme: string, industry: string) {
 }
 
 function generateVoiceover(theme: string, businessName: string, products: string, targetAudience: string) {
-  const scripts = {
+  const scripts: Record<string, string> = {
     'Marine Safety Essentials': `Hey everyone! Safety first when you're on the water! At ${businessName}, we provide top-quality ${products} to keep you safe. Don't risk it - stay safe with equipment you can trust! Visit us or DM for details.`,
     'Boat Equipment Showcase': `Discover premium boat solutions at ${businessName}! Our ${products} are designed for maximum performance and reliability. Perfect for all your marine needs. Get yours today!`,
     'Safety Tips': `Marine safety 101 - essential tips for every boater from ${businessName}. Always wear your life jacket, check weather conditions, and carry emergency equipment. Stay safe out there!`,
