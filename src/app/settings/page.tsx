@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 import { Eye, EyeOff, Save, AlertCircle } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function Settings() {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false)
   const [adminPassword, setAdminPassword] = useState('')
-  const [authError, setAuthError] = useState('')
 
   const [settings, setSettings] = useState({
     aiProvider: 'openrouter', // openrouter or kie
@@ -34,9 +34,6 @@ export default function Settings() {
     kie: false,
     search: false
   })
-
-  const [isSaving, setIsSaving] = useState(false)
-  const [saveMessage, setSaveMessage] = useState('')
 
   // Check admin authentication
   useEffect(() => {
@@ -78,9 +75,9 @@ export default function Settings() {
     if (adminPassword === 'roshanal2026') {
       localStorage.setItem('roshanal_admin_auth', 'true')
       setIsAdminAuthenticated(true)
-      setAuthError('')
+      toast.success('Admin authentication successful')
     } else {
-      setAuthError('Invalid admin password')
+      toast.error('Invalid admin password')
     }
   }
 
@@ -89,8 +86,6 @@ export default function Settings() {
   }
 
   const handleSave = () => {
-    setIsSaving(true)
-
     try {
       // Save API keys and preferences separately
       localStorage.setItem('roshanal_openrouter_key', settings.openrouterKey)
@@ -104,12 +99,9 @@ export default function Settings() {
       const { openrouterKey, kieKey, searchKey, ...settingsToSave } = settings
       localStorage.setItem('roshanal_settings', JSON.stringify(settingsToSave))
 
-      setSaveMessage('Settings saved successfully!')
-      setTimeout(() => setSaveMessage(''), 3000)
+      toast.success('Settings saved successfully!')
     } catch (error) {
-      setSaveMessage('Error saving settings. Please try again.')
-    } finally {
-      setIsSaving(false)
+      toast.error('Error saving settings. Please try again.')
     }
   }
 
@@ -522,47 +514,10 @@ export default function Settings() {
           <Card className="sticky top-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Save Settings</h3>
 
-            {saveMessage && (
-              <div className={`p-3 rounded-lg mb-4 ${
-                saveMessage.includes('Error')
-                  ? 'bg-red-50 border border-red-200 text-red-800'
-                  : 'bg-green-50 border border-green-200 text-green-800'
-              }`}>
-                <div className="flex items-center">
-                  <AlertCircle className="w-5 h-5 mr-2" />
-                  {saveMessage}
-                </div>
-              </div>
-            )}
-
-            <div className="space-y-4">
-              <div className="p-4 bg-blue-50 rounded-lg">
-                <h4 className="font-medium text-blue-900 mb-2">What Gets Saved:</h4>
-                <ul className="text-sm text-blue-800 space-y-1">
-                  <li>• API keys (securely encrypted)</li>
-                  <li>• AI model preferences</li>
-                  <li>• Company profile information</li>
-                  <li>• Contact details</li>
-                </ul>
-              </div>
-
-              <Button
-                onClick={handleSave}
-                disabled={isSaving}
-                className="w-full bg-roshanal-navy hover:bg-roshanal-blue"
-              >
-                {isSaving ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Saving...
-                  </>
-                ) : (
-                  <>
-                    <Save className="w-4 h-4 mr-2" />
-                    Save All Settings
-                  </>
-                )}
-              </Button>
+            <Button onClick={handleSave} className="w-full bg-roshanal-navy hover:bg-roshanal-blue">
+              <Save className="w-4 h-4 mr-2" />
+              Save Settings
+            </Button>
 
               <p className="text-xs text-gray-500 text-center">
                 Settings are saved locally in your browser for security

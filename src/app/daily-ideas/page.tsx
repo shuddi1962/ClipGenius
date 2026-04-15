@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 import { RefreshCw, Search, Copy, Save, Video, ExternalLink, TrendingUp } from 'lucide-react'
+import { useSettings } from '@/lib/hooks'
+import { AIService } from '@/lib/ai-service'
+import { toast } from 'sonner'
 
 interface DailyIdea {
   title: string
@@ -16,6 +19,7 @@ interface DailyIdea {
 }
 
 export default function DailyIdeas() {
+  const { settings, loading: settingsLoading } = useSettings()
   const [ideas, setIdeas] = useState<DailyIdea[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [customTopic, setCustomTopic] = useState('')
@@ -27,17 +31,74 @@ export default function DailyIdeas() {
   }, [])
 
   const loadDailyIdeas = async (searchTopic?: string) => {
+    if (!settings) return
+
     setIsLoading(true)
     try {
-      const searchQueries = searchTopic ? [searchTopic] : [
-        "CCTV security systems trends Nigeria 2026",
-        "outboard engine marine accessories Port Harcourt",
-        "solar installation Nigeria demand",
-        "boat safety equipment Niger Delta"
-      ]
+      const aiService = new AIService(settings)
 
-      // Mock API response for now - replace with actual Tavily + OpenRouter calls
-      const mockIdeas: DailyIdea[] = [
+      // Get trending topics first
+      const searchQuery = searchTopic || `${settings.niche} trends ${settings.location} 2026`
+      const searchResults = await aiService.search(searchQuery)
+
+      // Generate ideas based on search results
+      const generatedIdeas: DailyIdea[] = []
+
+      for (let i = 0; i < Math.min(searchResults.length, 4); i++) {
+        const result = searchResults[i]
+        const prompt = `Create a social media content idea based on this trending topic: "${result.title}". Context: ${result.content.substring(0, 200)}...
+
+Company: ${settings.companyName}
+Products: ${settings.products}
+Target Audience: ${settings.targetAudience}
+Location: ${settings.location}
+Tone: ${settings.tone}
+
+Generate a complete social media post idea in JSON format with:
+- title: catchy, specific title
+- format: Instagram Carousel, Reels, Post, Story, etc.
+- hook: attention-grabbing first 5-10 seconds
+- caption: full social media caption with emojis and CTA
+- hashtags: array of 5 relevant hashtags
+- image_prompt: detailed visual description for image generation
+- why_trending: explanation of why this topic is trending`
+
+        try {
+          const response = await aiService.generate({ prompt })
+          const idea = JSON.parse(response)
+          generatedIdeas.push(idea)
+        } catch (error) {
+          console.error(`Error generating idea ${i + 1}:`, error)
+          // Continue with next idea
+        }
+      }
+
+      if (generatedIdeas.length === 0) {
+        // Use fallback mock data
+        const fallbackIdeas: DailyIdea[] = [
+          {
+            title: "AI-Powered CCTV Analytics Revolution",
+            format: "Instagram Carousel",
+            hook: "Your CCTV just got smarter! 🤖",
+            caption: "The future of security is here! AI-powered CCTV systems can now:\n\n🧠 Detect suspicious behavior automatically\n📊 Provide real-time analytics\n🚨 Send instant alerts to your phone\n💰 Reduce false alarms by 90%\n\nUpgrade your Port Harcourt business security with Hikvision AI cameras. Professional installation included!\n\n#AI #CCTV #SecurityTech #PortHarcourt",
+            hashtags: ["#AI", "#CCTV", "#SecurityTech", "#SmartSecurity", "#Hikvision"],
+            image_prompt: "Modern office with Hikvision AI CCTV cameras displaying analytics on screen, security personnel monitoring, futuristic tech interface, Port Harcourt business district",
+            why_trending: "AI-powered CCTV systems are seeing 300% adoption growth in Nigerian businesses due to advanced analytics and cost savings"
+          }
+        ]
+        setIdeas(fallbackIdeas)
+        toast.error('Failed to generate content ideas. Using fallback data.')
+      } else {
+        setIdeas(generatedIdeas)
+        setLastUpdated(new Date().toLocaleString())
+        toast.success(`Generated ${generatedIdeas.length} content ideas!`)
+      }
+    } catch (error) {
+      console.error('Error loading daily ideas:', error)
+      toast.error('Failed to generate content ideas. Please check your API keys in Settings.')
+
+      // Fallback mock data
+      const fallbackIdeas: DailyIdea[] = [
         {
           title: "AI-Powered CCTV Analytics Revolution",
           format: "Instagram Carousel",
@@ -46,49 +107,9 @@ export default function DailyIdeas() {
           hashtags: ["#AI", "#CCTV", "#SecurityTech", "#SmartSecurity", "#Hikvision"],
           image_prompt: "Modern office with Hikvision AI CCTV cameras displaying analytics on screen, security personnel monitoring, futuristic tech interface, Port Harcourt business district",
           why_trending: "AI-powered CCTV systems are seeing 300% adoption growth in Nigerian businesses due to advanced analytics and cost savings"
-        },
-        {
-          title: "Solar Independence for Port Harcourt Homes",
-          format: "Facebook Static Post",
-          hook: "Cut your electricity bill by 70%! ☀️",
-          caption: "Tired of NEPA bills? Go solar with Roshanal Infotech!\n\nOur complete solar packages include:\n✅ High-efficiency panels\n✅ Battery storage\n✅ Inverter systems\n✅ Professional installation\n✅ 25-year warranty\n\nInvest once, save forever! Government incentives available.\n\nDM 'SOLAR' for a free site assessment.\n\n#SolarPower #CleanEnergy #PortHarcourt #RenewableEnergy",
-          hashtags: ["#SolarPower", "#CleanEnergy", "#RenewableEnergy", "#SustainableLiving"],
-          image_prompt: "Beautiful Port Harcourt home with solar panels on roof, happy family outdoors, significant electricity bill savings graphic overlay, clean energy theme",
-          why_trending: "Solar adoption in Nigeria has increased 250% due to rising electricity costs and government incentives"
-        },
-        {
-          title: "Boat Safety: Life Jackets That Save Lives",
-          format: "WhatsApp Status",
-          hook: "Your family's safety depends on it! 🛟",
-          caption: "⚠️ MARINE SAFETY ALERT ⚠️\n\nDid you know? 80% of boating accidents happen to those without proper safety gear.\n\nOur Coast Guard-approved life jackets feature:\n• Reflective strips for visibility\n• Quick-release buckles\n• Buoyant foam construction\n• Available in all sizes\n\nProtect your loved ones on the water. Quality equipment from Roshanal Infotech.\n\n#BoatSafety #LifeJacket #MarineSafety",
-          hashtags: ["#BoatSafety", "#LifeJacket", "#MarineSafety", "#WaterSafety"],
-          image_prompt: "Family on boat wearing bright orange life jackets, calm river scene, safety equipment displayed, Niger Delta waterway background",
-          why_trending: "New maritime safety regulations in Niger Delta have increased demand for certified safety equipment by 180%"
-        },
-        {
-          title: "Smart Home Security Evolution",
-          format: "TikTok Video",
-          hook: "Lock your door from anywhere! 🔐✨",
-          caption: "Gone are the days of worrying about your home security! Our smart door locks feature:\n\n🔐 Biometric fingerprint access\n📱 Remote unlocking via app\n📹 Integrated camera\n🚨 Instant alerts\n🎯 Anti-tamper technology\n\nPerfect for Port Harcourt homes and businesses. Easy installation!\n\n#SmartHome #Security #Biometric #PortHarcourt",
-          hashtags: ["#SmartHome", "#Security", "#Biometric", "#HomeAutomation"],
-          image_prompt: "Modern Port Harcourt home entrance with smart door lock, person unlocking with fingerprint on phone, security app interface, family safely entering",
-          why_trending: "Smart home security market in Nigeria growing 400% as urbanization increases security concerns"
-        },
-        {
-          title: "Outboard Engine Maintenance Tips",
-          format: "LinkedIn Article",
-          hook: "Keep your engine running smoothly! 🏃‍♂️",
-          caption: "📈 MARINE ENGINE MAINTENANCE GUIDE 📈\n\nExtend the life of your outboard engine with these expert tips:\n\n🔧 Regular oil changes every 50 hours\n⚡ Clean fuel filters monthly\n🌊 Flush with fresh water after saltwater use\n🔍 Annual professional servicing\n⚙️ Winter storage preparation\n\nWe service Suzuki, Yamaha, and all major brands. Professional marine technicians in Port Harcourt.\n\n#MarineMaintenance #OutboardEngine #BoatCare #PortHarcourt",
-          hashtags: ["#MarineMaintenance", "#OutboardEngine", "#BoatCare", "#MarineTech"],
-          image_prompt: "Professional technician servicing outboard engine on boat, maintenance tools organized, Port Harcourt marina background, clean and organized workspace",
-          why_trending: "Nigerian boat owners are increasingly seeking professional maintenance services due to engine reliability concerns"
         }
       ]
-
-      setIdeas(mockIdeas)
-      setLastUpdated(new Date().toLocaleString())
-    } catch (error) {
-      console.error('Error loading daily ideas:', error)
+      setIdeas(fallbackIdeas)
     } finally {
       setIsLoading(false)
     }

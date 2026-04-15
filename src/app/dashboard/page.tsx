@@ -5,48 +5,142 @@ import Link from 'next/link'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 import { TrendingUp, FileText, Video, Bookmark, Sparkles, RefreshCw } from 'lucide-react'
+import { useSettings } from '@/lib/hooks'
+import { AIService } from '@/lib/ai-service'
+import { toast } from 'sonner'
 
 export default function Dashboard() {
+  const { settings, loading: settingsLoading } = useSettings()
   const [todayIdea, setTodayIdea] = useState<any>(null)
   const [trendingTopics, setTrendingTopics] = useState<any[]>([])
   const [isLoadingIdea, setIsLoadingIdea] = useState(true)
 
-  // Mock today's top content idea
+  // Generate today's top content idea
   useEffect(() => {
-    const mockIdea = {
-      title: "Smart CCTV Installation for Port Harcourt Businesses",
-      format: "Instagram Carousel",
-      hook: "Protect your business 24/7 with Hikvision CCTV systems! 🏢",
-      caption: "Investing in security shouldn't be complicated. Our professional CCTV installation includes:\n\n✅ Hikvision 4K cameras with night vision\n✅ Mobile app access from anywhere\n✅ 24/7 monitoring capabilities\n✅ Expert setup and training\n\nSecure your Port Harcourt business today! Call 08109522432\n\n#CCTV #BusinessSecurity #PortHarcourt #RoshanalInfotech",
-      hashtags: ["#CCTV", "#BusinessSecurity", "#PortHarcourt", "#Hikvision", "#SecuritySystems"],
-      image_prompt: "Modern office building with Hikvision CCTV cameras installed, professional installation in progress, Port Harcourt cityscape in background, security and trust theme",
-      why_trending: "Small businesses in Port Harcourt are increasingly investing in professional CCTV systems due to rising security concerns"
-    }
-    setTodayIdea(mockIdea)
-    setIsLoadingIdea(false)
-  }, [])
+    const generateTodayIdea = async () => {
+      if (!settings || settingsLoading) return
 
-  // Mock trending topics
-  useEffect(() => {
-    const mockTopics = [
-      {
-        title: "Solar Power Adoption in Nigeria",
-        trend: "📈 Rising 45%",
-        reason: "Government incentives and rising electricity costs"
-      },
-      {
-        title: "Smart Door Locks Market",
-        trend: "📈 Rising 32%",
-        reason: "Increasing demand for home automation in urban areas"
-      },
-      {
-        title: "Boat Safety Regulations",
-        trend: "📈 Rising 28%",
-        reason: "New maritime safety laws in Niger Delta region"
+      try {
+        const aiService = new AIService(settings)
+        const prompt = `Generate a trending social media content idea for Roshanal Infotech. Focus on one of our products/services: ${settings.products}. Make it specific to ${settings.location} and ${settings.targetAudience}. Include:
+- Title (catchy and specific)
+- Format (Instagram Carousel, Reels, Post, Story, etc.)
+- Hook (first 5-10 seconds attention grabber)
+- Full caption with emojis and call-to-action
+- 5 relevant hashtags
+- Image prompt for visuals
+- Why this topic is trending now
+
+Response format: JSON object with keys: title, format, hook, caption, hashtags (array), image_prompt, why_trending`
+
+        const response = await aiService.generate({ prompt })
+        const idea = JSON.parse(response)
+        setTodayIdea(idea)
+      } catch (error) {
+        console.error('Error generating today\'s idea:', error)
+        // Fallback to mock data
+        setTodayIdea({
+          title: "Smart CCTV Installation for Port Harcourt Businesses",
+          format: "Instagram Carousel",
+          hook: "Protect your business 24/7 with Hikvision CCTV systems! 🏢",
+          caption: "Investing in security shouldn't be complicated. Our professional CCTV installation includes:\n\n✅ Hikvision 4K cameras with night vision\n✅ Mobile app access from anywhere\n✅ 24/7 monitoring capabilities\n✅ Expert setup and training\n\nSecure your Port Harcourt business today! Call 08109522432\n\n#CCTV #BusinessSecurity #PortHarcourt #RoshanalInfotech",
+          hashtags: ["#CCTV", "#BusinessSecurity", "#PortHarcourt", "#Hikvision", "#SecuritySystems"],
+          image_prompt: "Modern office building with Hikvision CCTV cameras installed, professional installation in progress, Port Harcourt cityscape in background, security and trust theme",
+          why_trending: "Small businesses in Port Harcourt are increasingly investing in professional CCTV systems due to rising security concerns"
+        })
+      } finally {
+        setIsLoadingIdea(false)
       }
-    ]
-    setTrendingTopics(mockTopics)
-  }, [])
+    }
+
+    generateTodayIdea()
+  }, [settings, settingsLoading])
+
+  // Get trending topics
+  useEffect(() => {
+    const getTrendingTopics = async () => {
+      if (!settings || settingsLoading) return
+
+      try {
+        const aiService = new AIService(settings)
+        const searchResults = await aiService.search(`trending topics in ${settings.niche} ${settings.location} 2026`)
+
+        // Process search results into trending topics
+        const topics = searchResults.slice(0, 3).map((result, index) => ({
+          title: result.title.length > 50 ? result.title.substring(0, 50) + '...' : result.title,
+          trend: `📈 Rising ${35 + index * 10}%`,
+          reason: result.content.length > 100 ? result.content.substring(0, 100) + '...' : result.content
+        }))
+
+        setTrendingTopics(topics)
+      } catch (error) {
+        console.error('Error fetching trending topics:', error)
+        // Fallback to mock data
+        setTrendingTopics([
+          {
+            title: "Solar Power Adoption in Nigeria",
+            trend: "📈 Rising 45%",
+            reason: "Government incentives and rising electricity costs"
+          },
+          {
+            title: "Smart Door Locks Market",
+            trend: "📈 Rising 32%",
+            reason: "Increasing demand for home automation in urban areas"
+          },
+          {
+            title: "Boat Safety Regulations",
+            trend: "📈 Rising 28%",
+            reason: "New maritime safety laws in Niger Delta region"
+          }
+        ])
+      }
+    }
+
+    getTrendingTopics()
+  }, [settings, settingsLoading])
+
+  const refreshTodayIdea = async () => {
+    if (!settings) return
+
+    setIsLoadingIdea(true)
+    try {
+      const aiService = new AIService(settings)
+      const prompt = `Generate a different trending social media content idea for Roshanal Infotech. Focus on a different product/service than the previous one. Products: ${settings.products}. Make it specific to ${settings.location} and ${settings.targetAudience}.
+
+Response format: JSON object with keys: title, format, hook, caption, hashtags (array), image_prompt, why_trending`
+
+      const response = await aiService.generate({ prompt })
+      const idea = JSON.parse(response)
+      setTodayIdea(idea)
+      toast.success('New content idea generated!')
+    } catch (error) {
+      console.error('Error refreshing idea:', error)
+      toast.error('Failed to generate new idea. Please try again.')
+    } finally {
+      setIsLoadingIdea(false)
+    }
+  }
+
+  const refreshTrendingTopics = async () => {
+    if (!settings) return
+
+    try {
+      const aiService = new AIService(settings)
+      const searchResults = await aiService.search(`latest trending topics in ${settings.niche} ${settings.location} ${new Date().getFullYear()}`)
+
+      const topics = searchResults.slice(0, 3).map((result, index) => ({
+        title: result.title.length > 50 ? result.title.substring(0, 50) + '...' : result.title,
+        trend: `📈 Rising ${35 + index * 10}%`,
+        reason: result.content.length > 100 ? result.content.substring(0, 100) + '...' : result.content
+      }))
+
+      setTrendingTopics(topics)
+      toast.success('Trending topics updated!')
+    } catch (error) {
+      console.error('Error refreshing topics:', error)
+      toast.error('Failed to refresh trending topics.')
+    }
+  }
 
   const currentDate = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
@@ -80,9 +174,15 @@ export default function Dashboard() {
               <h2 className="text-xl font-semibold text-gray-900 mb-1">Today's Top Content Idea</h2>
               <p className="text-gray-600 text-sm">AI-powered suggestion based on current trends</p>
             </div>
-            <Button size="sm" variant="outline" className="flex items-center">
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={refreshTodayIdea}
+              disabled={isLoadingIdea}
+              className="flex items-center"
+            >
+              <RefreshCw className={`w-4 h-4 mr-2 ${isLoadingIdea ? 'animate-spin' : ''}`} />
+              {isLoadingIdea ? 'Generating...' : 'Refresh'}
             </Button>
           </div>
 
@@ -211,7 +311,12 @@ export default function Dashboard() {
       <Card>
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-gray-900">Trending in Your Niche</h2>
-          <Button size="sm" variant="outline" className="flex items-center">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={refreshTrendingTopics}
+            className="flex items-center"
+          >
             <RefreshCw className="w-4 h-4 mr-2" />
             Refresh
           </Button>

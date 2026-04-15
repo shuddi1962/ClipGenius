@@ -187,7 +187,6 @@ export default function SavedContent() {
     const exportFileDefaultName = `roshanal_saved_content_${new Date().toISOString().split('T')[0]}.json`
 
     const linkElement = document.createElement('a')
-    linkElement.setAttribute('href', dataUri)
     linkElement.setAttribute('download', exportFileDefaultName)
     linkElement.click()
   }
@@ -309,9 +308,7 @@ export default function SavedContent() {
                 : 'Start creating content to see it here!'
             }
           </p>
-          <Link href="/content-generator">
             <Button>Create Your First Content</Button>
-          </Link>
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -479,87 +476,5 @@ export default function SavedContent() {
         </div>
       </Card>
     </div>
-  )
-}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div>
-              <div className="text-2xl font-bold">{savedItems.filter(i => i.type === 'idea').length}</div>
-              <div className="text-sm opacity-90">Ideas Saved</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold">{savedItems.filter(i => i.type === 'post').length}</div>
-              <div className="text-sm opacity-90">Posts Created</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold">{savedItems.filter(i => i.type === 'script').length}</div>
-              <div className="text-sm opacity-90">Video Scripts</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold">{savedItems.filter(i => i.type === 'plan').length}</div>
-              <div className="text-sm opacity-90">Content Plans</div>
-            </div>
-          </div>
-        </div>
-      </Card>
-    </div>
-              )}
-
-              {item.type === 'video' && item.videoUrl && (
-                <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Video Preview</h4>
-                  <div className="aspect-video bg-gray-200 rounded overflow-hidden">
-                    <video
-                      src={item.videoUrl}
-                      className="w-full h-full object-cover"
-                      controls
-                      preload="metadata"
-                    />
-                  </div>
-                </div>
-              )}
-
-              <div className="flex gap-2 mt-4">
-                <Button size="sm" variant="outline">
-                  Edit
-                </Button>
-                <Button size="sm" variant="outline">
-                  {item.status === 'draft' ? 'Publish' : 'Share'}
-                </Button>
-                <Button size="sm" variant="outline">
-                  Download
-                </Button>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        {filteredItems.length === 0 && (
-          <Card>
-            <div className="text-center py-12">
-              <div className="text-4xl mb-4">📁</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">No saved content</h3>
-              <p className="text-gray-600 mb-4">
-                {filter === 'all'
-                  ? 'Start generating content to see it here'
-                  : `No ${filter} content saved yet`
-                }
-              </p>
-              <div className="flex gap-4 justify-center">
-                <Link href="/content-generator">
-                  <Button>
-                    Generate Content
-                  </Button>
-                </Link>
-                <Link href="/video-generator">
-                  <Button variant="secondary">
-                    Create Video
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </Card>
-        )}
-      </div>
-    </main>
   )
 }

@@ -11,7 +11,7 @@ interface ContentItem {
   title: string
   format: string
   platform: string
-  status: 'empty' | 'draft' | 'ready' | 'scheduled' | 'posted'
+  status: 'draft' | 'ready' | 'scheduled' | 'posted'
   caption?: string
   hashtags?: string[]
   imagePrompt?: string
@@ -37,7 +37,7 @@ export default function ContentPlanner() {
         title: '',
         format: '',
         platform: 'Instagram',
-        status: 'empty'
+        status: 'draft'
       })
     }
 
@@ -172,14 +172,14 @@ export default function ContentPlanner() {
       <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div className="flex gap-2">
           <Button
-            variant={viewMode === 'week' ? 'default' : 'outline'}
+            variant={viewMode === 'week' ? 'secondary' : 'outline'}
             onClick={() => setViewMode('week')}
           >
             <Calendar className="w-4 h-4 mr-2" />
             Week View
           </Button>
           <Button
-            variant={viewMode === 'month' ? 'default' : 'outline'}
+            variant={viewMode === 'month' ? 'secondary' : 'outline'}
             onClick={() => setViewMode('month')}
           >
             <Calendar className="w-4 h-4 mr-2" />
@@ -228,7 +228,7 @@ export default function ContentPlanner() {
             <div
               key={item.id}
               className={`p-4 border rounded-lg cursor-pointer hover:shadow-md transition-shadow ${
-                item.status === 'empty' ? 'border-gray-200 bg-gray-50' : 'border-gray-300 bg-white'
+                item.status === 'draft' ? 'border-gray-200 bg-gray-50' : 'border-gray-300 bg-white'
               }`}
               onClick={() => setSelectedItem(item)}
             >

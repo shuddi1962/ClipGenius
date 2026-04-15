@@ -1,6 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @tailwind base;
 @tailwind components;
@@ -87,10 +85,10 @@
     --sidebar-ring: oklch(0.556 0 0);
   }
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border) outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background); color: var(--foreground);
   }
 }
 
