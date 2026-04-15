@@ -81,71 +81,7 @@ export default function SavedContent() {
       console.error('Error loading saved items:', error)
       toast.error('Failed to load saved items')
     }
-        const sampleItems: SavedItem[] = [
-          {
-            id: '1',
-            type: 'post',
-            title: 'CCTV Security System Promotion',
-            createdAt: new Date().toISOString(),
-            status: 'ready',
-            content: {
-              captions: ['🏠 SECURE YOUR WORLD 🏠\n\nAdvanced CCTV solutions for homes & businesses from Roshanal Infotech.\n\n#CCTV #HomeSecurity'],
-              hashtags: ['#CCTV', '#HomeSecurity', '#SecuritySystems', '#RoshanalInfotech'],
-              imagePrompt: 'Modern CCTV camera installation in Port Harcourt business with professional technician'
-            },
-            tags: ['security', 'cctv', 'business']
-          },
-          {
-            id: '2',
-            type: 'idea',
-            title: 'Trending: AI-Powered CCTV Analytics',
-            createdAt: new Date(Date.now() - 86400000).toISOString(),
-            status: 'draft',
-            content: {
-              captions: ['🤖 AI-powered CCTV systems are revolutionizing security! Detect suspicious behavior automatically with our Hikvision cameras.'],
-              hashtags: ['#AI', '#CCTV', '#SmartSecurity', '#Hikvision'],
-              imagePrompt: 'Futuristic CCTV analytics dashboard showing security alerts and AI detection'
-            },
-            tags: ['ai', 'trending', 'security']
-          },
-          {
-            id: '3',
-            type: 'script',
-            title: 'Outboard Engine Product Demo',
-            createdAt: new Date(Date.now() - 172800000).toISOString(),
-            status: 'ready',
-            script: {
-              title: 'Suzuki Outboard Engine Demo',
-              scenes: [
-                { scene: 1, duration_seconds: 8, visual: 'Engine showcase with smooth camera movement', voiceover: 'Introducing the powerful Suzuki outboard engine', text_overlay: 'Suzuki 4-Stroke' },
-                { scene: 2, duration_seconds: 6, visual: 'Engine in water demonstration', voiceover: 'Experience unmatched performance and reliability', text_overlay: 'Maximum Power' }
-              ],
-              duration: '30s',
-              platform: 'Instagram Reels'
-            },
-            tags: ['marine', 'outboard', 'suzuki']
-          },
-          {
-            id: '4',
-            type: 'plan',
-            title: '7-Day Marine Safety Campaign',
-            createdAt: new Date(Date.now() - 259200000).toISOString(),
-            status: 'published',
-            plan: {
-              days: 7,
-              platform: 'Instagram',
-              content: [
-                { day: 1, title: 'Life Jackets Introduction', status: 'posted' },
-                { day: 2, title: 'Safety Equipment Guide', status: 'posted' },
-                { day: 3, title: 'Customer Safety Stories', status: 'posted' }
-              ]
-            },
-            tags: ['campaign', 'marine', 'safety']
-          }
-        ]
-        setSavedItems(sampleItems)
-        localStorage.setItem('roshanal_saved_content', JSON.stringify(sampleItems))
-      }
+  }
   }
 
   const filteredItems = savedItems.filter(item => {
