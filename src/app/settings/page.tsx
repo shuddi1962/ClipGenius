@@ -525,5 +525,6 @@ export default function Settings() {
         </Card>
       </div>
     </div>
+    </div>
   )
 }
