@@ -4,16 +4,67 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
-import { TrendingUp, FileText, Video, Bookmark, Sparkles, RefreshCw } from 'lucide-react'
+import { TrendingUp, FileText, Video, Bookmark, Sparkles, RefreshCw, Star } from 'lucide-react'
 import { useSettings } from '@/lib/hooks'
 import { AIService } from '@/lib/ai-service'
 import { toast } from 'sonner'
+import { useState, useEffect } from 'react'
+import { dbService } from '@/lib/database'
 
 export default function Dashboard() {
   const { settings, loading: settingsLoading } = useSettings()
+  const [user, setUser] = useState<any>(null)
+  const [showWelcome, setShowWelcome] = useState(false)
+  const [stats, setStats] = useState({
+    totalContent: 0,
+    thisWeek: 0,
+    aiGenerations: 0
+  })
   const [todayIdea, setTodayIdea] = useState<any>(null)
   const [trendingTopics, setTrendingTopics] = useState<any[]>([])
   const [isLoadingIdea, setIsLoadingIdea] = useState(true)
+
+  // Check user and show welcome message
+  useEffect(() => {
+    const checkUser = async () => {
+      const currentUser = await dbService.getCurrentUser()
+      setUser(currentUser)
+
+      // Show welcome message for new users (created within last 24 hours)
+      if (currentUser) {
+        const userCreated = new Date(currentUser.created_at)
+        const now = new Date()
+        const hoursSinceCreation = (now.getTime() - userCreated.getTime()) / (1000 * 60 * 60)
+
+        if (hoursSinceCreation < 24) {
+          setShowWelcome(true)
+          // Auto-hide after 10 seconds
+          setTimeout(() => setShowWelcome(false), 10000)
+        }
+
+        // Load user stats
+        try {
+          const contentItems = await dbService.getContentItems(currentUser.id)
+          const thisWeek = contentItems.filter(item => {
+            const itemDate = new Date(item.created_at)
+            const weekAgo = new Date()
+            weekAgo.setDate(weekAgo.getDate() - 7)
+            return itemDate >= weekAgo
+          }).length
+
+          setStats({
+            totalContent: contentItems.length,
+            thisWeek,
+            aiGenerations: contentItems.length // Approximation
+          })
+        } catch (error) {
+          console.error('Error loading stats:', error)
+        }
+      }
+    }
+
+    checkUser()
+  }, [])
 
   // Generate today's top content idea
   useEffect(() => {
@@ -164,10 +215,37 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
             <div className="w-16 h-16 bg-gradient-to-br from-roshanal-navy to-roshanal-blue rounded-full flex items-center justify-center">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
-          </div>
         </div>
+      </div>
 
-        {/* Today's Top Content Idea */}
+      {/* Welcome Banner for New Users */}
+      {showWelcome && user && (
+        <Card className="mb-6 border-l-4 border-l-green-500 bg-gradient-to-r from-green-50 to-blue-50">
+          <div className="flex items-start">
+            <div className="flex-shrink-0">
+              <Star className="w-6 h-6 text-green-600" />
+            </div>
+            <div className="ml-3 flex-1">
+              <h3 className="text-lg font-semibold text-green-800 mb-1">
+                🎉 Welcome to Roshanal AI Marketing, {user.name || 'User'}!
+              </h3>
+              <p className="text-green-700 mb-3">
+                Your AI-powered marketing platform is ready. Start creating amazing content for your marine equipment, security systems, and solar solutions business.
+              </p>
+              <div className="flex gap-3">
+                <Button size="sm" href="/settings" className="bg-green-600 hover:bg-green-700">
+                  Configure Settings
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setShowWelcome(false)}>
+                  Dismiss
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {/* Today's Top Content Idea */}
         <Card className="mb-6 border-l-4 border-l-roshanal-blue">
           <div className="flex items-start justify-between mb-4">
             <div>
@@ -226,9 +304,9 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
           <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mx-auto mb-3">
             <FileText className="w-6 h-6 text-green-600" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-1">47</div>
-          <div className="text-sm text-gray-600">Posts Generated</div>
-          <div className="text-xs text-green-600 mt-1">+12% this week</div>
+          <div className="text-2xl font-bold text-gray-900 mb-1">{stats.totalContent}</div>
+          <div className="text-sm text-gray-600">Content Created</div>
+          <div className="text-xs text-green-600 mt-1">+{stats.thisWeek} this week</div>
         </Card>
 
         <Card className="text-center">

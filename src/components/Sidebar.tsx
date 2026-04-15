@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import {
   BarChart3,
   Lightbulb,
@@ -11,35 +12,55 @@ import {
   Package,
   Bookmark,
   Settings,
-  Zap
+  Zap,
+  Shield
 } from 'lucide-react'
+import { dbService } from '@/lib/database'
 
-const navigation = [
+const baseNavigation = [
   { name: 'Dashboard', href: '/', icon: BarChart3 },
   { name: 'Daily Ideas', href: '/daily-ideas', icon: Lightbulb },
   { name: 'Content Generator', href: '/content-generator', icon: PenTool },
   { name: 'Content Planner', href: '/content-planner', icon: Calendar },
   { name: 'Video Studio', href: '/video-studio', icon: Video },
   { name: 'Products', href: '/products', icon: Package },
-   { name: 'Saved', href: '/saved-content', icon: Bookmark },
+  { name: 'Saved', href: '/saved-content', icon: Bookmark },
   { name: 'Settings', href: '/settings', icon: Settings },
 ]
 
 export default function Sidebar() {
   const pathname = usePathname()
+  const [user, setUser] = useState<any>(null)
+  const [navigation, setNavigation] = useState(baseNavigation)
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const currentUser = await dbService.getCurrentUser()
+      setUser(currentUser)
+
+      if (currentUser?.role === 'admin') {
+        setNavigation([
+          ...baseNavigation,
+          { name: 'Admin', href: '/admin', icon: Shield }
+        ])
+      } else {
+        setNavigation(baseNavigation)
+      }
+    }
+
+    checkUser()
+  }, [])
 
   return (
     <div className="flex flex-col h-full bg-white border-r border-gray-200">
       {/* Logo */}
       <div className="flex items-center justify-center h-16 px-4 border-b border-gray-200">
-        <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-[#0C1A36] to-[#1641C4] rounded-lg flex items-center justify-center">
-            <Zap className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <h1 className="text-lg font-bold text-[#0C1A36] leading-tight">Roshanal</h1>
-            <p className="text-xs text-gray-500">Infotech</p>
-          </div>
+        <div className="w-8 h-8 bg-gradient-to-br from-[#0C1A36] to-[#1641C4] rounded-lg flex items-center justify-center">
+          <Zap className="w-5 h-5 text-white" />
+        </div>
+        <div>
+          <h1 className="text-lg font-bold text-[#0C1A36] leading-tight">Roshanal</h1>
+          <p className="text-xs text-gray-500">Infotech</p>
         </div>
       </div>
 
