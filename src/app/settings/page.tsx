@@ -523,8 +523,7 @@ export default function Settings() {
               Settings are saved locally in your browser for security
             </p>
           </div>
-          </Card>
-        </div>
+        </Card>
       </div>
     </div>
   )
