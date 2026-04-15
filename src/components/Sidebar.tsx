@@ -21,7 +21,7 @@ const navigation = [
   { name: 'Content Planner', href: '/content-planner', icon: Calendar },
   { name: 'Video Studio', href: '/video-studio', icon: Video },
   { name: 'Products', href: '/products', icon: Package },
-  { name: 'Saved', href: '/saved', icon: Bookmark },
+   { name: 'Saved', href: '/saved-content', icon: Bookmark },
   { name: 'Settings', href: '/settings', icon: Settings },
 ]
 

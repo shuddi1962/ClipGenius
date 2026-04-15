@@ -5,6 +5,8 @@ import Link from 'next/link'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 import { Search, Filter, Trash2, Copy, Edit, Eye, Calendar, FileText, Video, Zap, Bookmark, CheckSquare, Square, Download } from 'lucide-react'
+import { dbService } from '@/lib/database'
+import { toast } from 'sonner'
 
 interface SavedItem {
   id: string
@@ -33,25 +35,52 @@ interface SavedItem {
 }
 
 export default function SavedContent() {
+  const [user, setUser] = useState<any>(null)
   const [savedItems, setSavedItems] = useState<SavedItem[]>([])
-  const [filter, setFilter] = useState<'all' | 'idea' | 'post' | 'script' | 'plan'>('all')
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedItems, setSelectedItems] = useState<string[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
-  // Load saved items from localStorage
+  // Load user and saved items from database
   useEffect(() => {
-    loadSavedItems()
+    const loadData = async () => {
+      try {
+        const currentUser = await dbService.getCurrentUser()
+        setUser(currentUser)
+
+        if (currentUser) {
+          await loadSavedItems()
+        } else {
+          setSavedItems([])
+        }
+      } catch (error) {
+        console.error('Error loading data:', error)
+        toast.error('Failed to load saved content')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadData()
   }, [])
 
-  const loadSavedItems = () => {
+  const loadSavedItems = async () => {
+    if (!user) return
+
     try {
-      const savedData = localStorage.getItem('roshanal_saved_content')
-      if (savedData) {
-        const parsed = JSON.parse(savedData)
-        setSavedItems(Array.isArray(parsed) ? parsed : [])
-      } else {
-        // Initialize with sample Roshanal data
+      const items = await dbService.getContentItems(user.id)
+      setSavedItems(items.map(item => ({
+        id: item.id,
+        type: item.type,
+        title: item.title,
+        createdAt: item.created_at,
+        status: item.status,
+        content: item.metadata?.content,
+        script: item.metadata?.script,
+        plan: item.metadata?.plan
+      })))
+    } catch (error) {
+      console.error('Error loading saved items:', error)
+      toast.error('Failed to load saved items')
+    }
         const sampleItems: SavedItem[] = [
           {
             id: '1',
@@ -146,17 +175,40 @@ export default function SavedContent() {
     }
   }
 
-  const handleDelete = (id: string) => {
-    const updatedItems = savedItems.filter(item => item.id !== id)
-    setSavedItems(updatedItems)
-    localStorage.setItem('roshanal_saved_content', JSON.stringify(updatedItems))
+  const handleDelete = async (id: string) => {
+    try {
+      const success = await dbService.deleteContentItem(id)
+      if (success) {
+        setSavedItems(prev => prev.filter(item => item.id !== id))
+        toast.success('Item deleted successfully')
+      } else {
+        toast.error('Failed to delete item')
+      }
+    } catch (error) {
+      console.error('Error deleting item:', error)
+      toast.error('Failed to delete item')
+    }
   }
 
-  const handleBulkDelete = () => {
-    const updatedItems = savedItems.filter(item => !selectedItems.includes(item.id))
-    setSavedItems(updatedItems)
-    setSelectedItems([])
-    localStorage.setItem('roshanal_saved_content', JSON.stringify(updatedItems))
+  const handleBulkDelete = async () => {
+    try {
+      let successCount = 0
+      for (const id of selectedItems) {
+        const success = await dbService.deleteContentItem(id)
+        if (success) successCount++
+      }
+
+      if (successCount > 0) {
+        setSavedItems(prev => prev.filter(item => !selectedItems.includes(item.id)))
+        setSelectedItems([])
+        toast.success(`Deleted ${successCount} items successfully`)
+      } else {
+        toast.error('Failed to delete items')
+      }
+    } catch (error) {
+      console.error('Error bulk deleting items:', error)
+      toast.error('Failed to delete items')
+    }
   }
 
   const handleCopy = async (content: any, type: string) => {

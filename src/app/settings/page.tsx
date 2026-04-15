@@ -3,12 +3,20 @@
 import { useState, useEffect } from 'react'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
-import { Eye, EyeOff, Save, AlertCircle } from 'lucide-react'
+import { Eye, EyeOff, Save, AlertCircle, User, Mail, Lock } from 'lucide-react'
 import { toast } from 'sonner'
+import { dbService } from '@/lib/database'
+import { supabase } from '@/lib/supabase'
 
 export default function Settings() {
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false)
-  const [adminPassword, setAdminPassword] = useState('')
+  const [user, setUser] = useState<any>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login')
+  const [authForm, setAuthForm] = useState({
+    email: '',
+    password: '',
+    name: ''
+  })
 
   const [settings, setSettings] = useState({
     aiProvider: 'openrouter', // openrouter or kie
@@ -35,10 +43,47 @@ export default function Settings() {
     search: false
   })
 
-  // Check admin authentication
+  // Check user authentication and load settings
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem('roshanal_admin_auth') === 'true'
-    setIsAdminAuthenticated(isAuthenticated)
+    const checkAuth = async () => {
+      try {
+        const currentUser = await dbService.getCurrentUser()
+        setUser(currentUser)
+
+        if (currentUser) {
+          // Load user settings from database
+          const userSettings = await dbService.getUserSettings(currentUser.id)
+          if (userSettings) {
+            setSettings(userSettings)
+          }
+
+          // Sync localStorage data to database
+          await dbService.syncLocalStorageToDatabase(currentUser.id)
+        }
+      } catch (error) {
+        console.error('Auth check error:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    checkAuth()
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user) {
+        setUser(session.user)
+        const userSettings = await dbService.getUserSettings(session.user.id)
+        if (userSettings) {
+          setSettings(userSettings)
+        }
+      } else {
+        setUser(null)
+      }
+      setIsLoading(false)
+    })
+
+    return () => subscription.unsubscribe()
   }, [])
 
   // Load settings from localStorage on mount
@@ -70,24 +115,62 @@ export default function Settings() {
     }))
   }, [isAdminAuthenticated])
 
-  const handleAdminLogin = () => {
-    // Simple admin password check - in production, use proper authentication
-    if (adminPassword === 'roshanal2026') {
-      localStorage.setItem('roshanal_admin_auth', 'true')
-      setIsAdminAuthenticated(true)
-      toast.success('Admin authentication successful')
-    } else {
-      toast.error('Invalid admin password')
+  const handleAuth = async () => {
+    if (!authForm.email || !authForm.password) {
+      toast.error('Please fill in all fields')
+      return
     }
+
+    if (authMode === 'register' && !authForm.name) {
+      toast.error('Please enter your name')
+      return
+    }
+
+    try {
+      if (authMode === 'login') {
+        const user = await dbService.signIn(authForm.email, authForm.password)
+        if (user) {
+          toast.success('Login successful!')
+          setUser(user)
+        } else {
+          toast.error('Invalid credentials')
+        }
+      } else {
+        const user = await dbService.createUser(authForm.email, authForm.name, authForm.password, 'admin')
+        if (user) {
+          toast.success('Account created successfully!')
+          setUser(user)
+        } else {
+          toast.error('Failed to create account')
+        }
+      }
+    } catch (error) {
+      toast.error('Authentication failed')
+      console.error(error)
+    }
+  }
+
+  const handleSignOut = async () => {
+    await dbService.signOut()
+    setUser(null)
+    toast.success('Signed out successfully')
   }
 
   const handleInputChange = (field: string, value: string) => {
     setSettings(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    if (!user) {
+      toast.error('Please sign in first')
+      return
+    }
+
     try {
-      // Save API keys and preferences separately
+      // Save to database
+      await dbService.updateUserSettings(user.id, settings)
+
+      // Also save to localStorage for immediate access
       localStorage.setItem('roshanal_openrouter_key', settings.openrouterKey)
       localStorage.setItem('roshanal_kie_key', settings.kieKey)
       localStorage.setItem('roshanal_search_key', settings.searchKey)
@@ -95,7 +178,7 @@ export default function Settings() {
       localStorage.setItem('roshanal_model', settings.selectedModel)
       localStorage.setItem('roshanal_kie_model', settings.kieModel)
 
-      // Save other settings (exclude API keys for security)
+      // Save other settings to localStorage
       const { openrouterKey, kieKey, searchKey, ...settingsToSave } = settings
       localStorage.setItem('roshanal_settings', JSON.stringify(settingsToSave))
 
@@ -122,33 +205,103 @@ export default function Settings() {
     { value: 'kie/grok-code', label: 'Grok Code', description: 'Specialized for programming tasks' }
   ]
 
-  // Admin authentication check
-  if (!isAdminAuthenticated) {
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <Card className="w-full max-w-md text-center">
+          <div className="animate-pulse">
+            <div className="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-3/4 mx-auto mb-2"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
+          </div>
+        </Card>
+      </div>
+    )
+  }
+
+  // Show authentication form if not logged in
+  if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <Card className="w-full max-w-md">
           <div className="text-center mb-6">
             <div className="w-16 h-16 bg-roshanal-navy rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
+              <User className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-roshanal-navy mb-2">Admin Access Required</h1>
-            <p className="text-gray-600">Enter admin password to access settings</p>
+            <h1 className="text-2xl font-bold text-roshanal-navy mb-2">
+              {authMode === 'login' ? 'Sign In' : 'Create Account'}
+            </h1>
+            <p className="text-gray-600">
+              {authMode === 'login'
+                ? 'Sign in to access your settings'
+                : 'Create an admin account to get started'
+              }
+            </p>
           </div>
 
           <div className="space-y-4">
-            <input
-              type="password"
-              value={adminPassword}
-              onChange={(e) => setAdminPassword(e.target.value)}
-              placeholder="Enter admin password"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-roshanal-blue focus:border-roshanal-blue"
-              onKeyPress={(e) => e.key === 'Enter' && handleAdminLogin()}
-            />
-            <Button onClick={handleAdminLogin} className="w-full bg-roshanal-navy hover:bg-roshanal-blue">
-              Access Settings
+            {authMode === 'register' && (
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  value={authForm.name}
+                  onChange={(e) => setAuthForm(prev => ({ ...prev, name: e.target.value }))}
+                  placeholder="Full Name"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-roshanal-blue focus:border-roshanal-blue"
+                />
+              </div>
+            )}
+
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="email"
+                value={authForm.email}
+                onChange={(e) => setAuthForm(prev => ({ ...prev, email: e.target.value }))}
+                placeholder="Email Address"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-roshanal-blue focus:border-roshanal-blue"
+              />
+            </div>
+
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="password"
+                value={authForm.password}
+                onChange={(e) => setAuthForm(prev => ({ ...prev, password: e.target.value }))}
+                placeholder="Password"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-roshanal-blue focus:border-roshanal-blue"
+                onKeyPress={(e) => e.key === 'Enter' && handleAuth()}
+              />
+            </div>
+
+            <Button onClick={handleAuth} className="w-full bg-roshanal-navy hover:bg-roshanal-blue">
+              {authMode === 'login' ? (
+                <>
+                  <Lock className="w-4 h-4 mr-2" />
+                  Sign In
+                </>
+              ) : (
+                <>
+                  <User className="w-4 h-4 mr-2" />
+                  Create Account
+                </>
+              )}
             </Button>
+
+            <div className="text-center">
+              <button
+                onClick={() => setAuthMode(authMode === 'login' ? 'register' : 'login')}
+                className="text-sm text-roshanal-blue hover:underline"
+              >
+                {authMode === 'login'
+                  ? "Don't have an account? Create one"
+                  : "Already have an account? Sign in"
+                }
+              </button>
+            </div>
           </div>
         </Card>
       </div>
@@ -158,8 +311,26 @@ export default function Settings() {
   return (
     <div className="p-6 lg:p-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-roshanal-navy mb-2">Settings</h1>
-        <p className="text-gray-600">Configure your AI models and company profile</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-roshanal-navy mb-2">Settings</h1>
+            <p className="text-gray-600">Configure your AI models and company profile</p>
+          </div>
+          <div className="flex items-center space-x-4">
+            <div className="text-right">
+              <p className="text-sm font-medium text-gray-900">{user?.name}</p>
+              <p className="text-xs text-gray-500">{user?.email}</p>
+            </div>
+            <Button
+              onClick={handleSignOut}
+              variant="outline"
+              size="sm"
+              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+            >
+              Sign Out
+            </Button>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
