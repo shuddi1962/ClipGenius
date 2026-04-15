@@ -519,10 +519,10 @@ export default function Settings() {
               Save Settings
             </Button>
 
-              <p className="text-xs text-gray-500 text-center">
-                Settings are saved locally in your browser for security
-              </p>
-            </div>
+            <p className="text-xs text-gray-500 text-center mt-4">
+              Settings are saved locally in your browser for security
+            </p>
+          </div>
           </Card>
         </div>
       </div>
