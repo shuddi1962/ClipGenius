@@ -8,7 +8,6 @@ import { TrendingUp, FileText, Video, Bookmark, Sparkles, RefreshCw, Star } from
 import { useSettings } from '@/lib/hooks'
 import { AIService } from '@/lib/ai-service'
 import { toast } from 'sonner'
-import { useState, useEffect } from 'react'
 import { dbService } from '@/lib/database'
 
 export default function Dashboard() {

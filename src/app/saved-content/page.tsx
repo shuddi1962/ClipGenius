@@ -146,9 +146,6 @@ export default function SavedContent() {
         setSavedItems(sampleItems)
         localStorage.setItem('roshanal_saved_content', JSON.stringify(sampleItems))
       }
-    } catch (error) {
-      console.error('Error loading saved items:', error)
-    }
   }
 
   const filteredItems = savedItems.filter(item => {
