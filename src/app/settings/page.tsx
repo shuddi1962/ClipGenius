@@ -137,12 +137,6 @@ export default function Settings() {
             <p className="text-gray-600">Enter admin password to access settings</p>
           </div>
 
-          {authError && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-800 text-sm">{authError}</p>
-            </div>
-          )}
-
           <div className="space-y-4">
             <input
               type="password"
