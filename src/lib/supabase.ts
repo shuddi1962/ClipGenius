@@ -1,9 +1,15 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@insforge/sdk'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+const insforgeUrl = process.env.NEXT_PUBLIC_INSFORGE_URL || 'https://wk49fyqm.us-east.insforge.app'
+const insforgeAnonKey = process.env.NEXT_PUBLIC_INSFORGE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3OC0xMjM0LTU2NzgtOTBhYi1jZGVmMTIzNDU2NzgiLCJlbWFpbCI6ImFub25AaW5zZm9yZ2UuY29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNDQ2MTN9.chhPkW6KmyR--3L-0PZWe3L8I5XUaebgy6jlF6jtJ1o'
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const insforge = createClient({
+  baseUrl: insforgeUrl,
+  anonKey: insforgeAnonKey
+})
+
+// Keep supabase export for backward compatibility during transition
+export const supabase = insforge
 
 // Database types
 export interface User {

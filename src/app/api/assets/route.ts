@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { insforge } from '@/lib/supabase'
 
 // POST /api/assets - Upload file
 export async function POST(request: NextRequest) {
@@ -21,17 +22,30 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Mock response until storage is properly configured
-    const mockAsset = {
-      id: Date.now().toString(),
-      filename: file.name,
-      file_url: `https://wk49fyqm.storage.insforge.app/assets/${Date.now()}-${file.name}`,
-      file_type: file.type,
-      file_size: file.size,
-      created_at: new Date().toISOString(),
-    }
+    // Upload to InsForge storage
+    const { data, error } = await insforge.storage
+      .from('assets')
+      .uploadAuto(file)
 
-    return NextResponse.json(mockAsset, { status: 201 })
+    if (error) throw error
+    if (!data) throw new Error('Upload failed - no data returned')
+
+    // Save to database
+    const { data: assetData, error: dbError } = await insforge.database
+      .from('assets')
+      .insert([{
+        filename: file.name,
+        file_url: data.url,
+        file_key: data.key,
+        file_type: file.type,
+        file_size: file.size
+      }])
+      .select()
+      .single()
+
+    if (dbError) throw dbError
+
+    return NextResponse.json(assetData, { status: 201 })
   } catch (error) {
     console.error('Error uploading asset:', error)
     return NextResponse.json(
@@ -44,19 +58,14 @@ export async function POST(request: NextRequest) {
 // GET /api/assets - Get user's assets
 export async function GET(request: NextRequest) {
   try {
-    // Mock data until auth is properly configured
-    const mockAssets = [
-      {
-        id: '1',
-        filename: 'product-image.jpg',
-        file_url: 'https://wk49fyqm.storage.insforge.app/assets/product-image.jpg',
-        file_type: 'image/jpeg',
-        file_size: 2048000,
-        created_at: '2024-01-10T10:00:00Z',
-      },
-    ]
+    const { data, error } = await insforge.database
+      .from('assets')
+      .select('*')
+      .order('created_at', { ascending: false })
 
-    return NextResponse.json(mockAssets)
+    if (error) throw error
+
+    return NextResponse.json(data || [])
   } catch (error) {
     console.error('Error fetching assets:', error)
     return NextResponse.json(

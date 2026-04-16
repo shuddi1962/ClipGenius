@@ -6,7 +6,7 @@ User authentication, registration, and session management via `insforge.auth`.
 
 ## Setup
 
-First, ensure your `.env` file is configured with your InsForge URL and anon key (see the main [SKILL.md](../SKILL.md) for framework-specific variable names and how to get your anon key).
+First, ensure your `.env` file is configured with your InsForge URL and anon key. Get the anon key with `npx @insforge/cli secrets get ANON_KEY`. See the main [SKILL.md](../SKILL.md) for framework-specific variable names and full setup steps.
 
 ```javascript
 import { createClient } from '@insforge/sdk'
@@ -99,20 +99,49 @@ if (error) {
 
 ## OAuth Sign In
 
-```javascript
-// Auto-redirect to provider
-await insforge.auth.signInWithOAuth({
-  provider: 'google', // google, github, discord, microsoft, etc.
-  redirectTo: 'http://localhost:3000/dashboard'
-})
+OAuth uses PKCE. The SDK handles code generation, redirect, and token exchange automatically in the browser.
 
-// Get URL without redirect
+### Two redirect URLs — don't confuse them
+
+| URL | Points to | Where to configure |
+|-----|-----------|-------------------|
+| OAuth provider callback | InsForge backend (`https://<project>.insforge.app/api/auth/oauth/<provider>/callback`) | Google Console, GitHub OAuth app, etc. |
+| `redirectTo` | **Your app** (`https://yourapp.com/auth/callback`) | Passed in `signInWithOAuth()` |
+
+`redirectTo` is where the user lands after auth. The backend appends `?insforge_code=<code>` to it. If this points to the backend instead of your app, you get `Cannot GET /auth/callback`.
+
+### SPA (browser) — fully automatic
+
+```javascript
+await insforge.auth.signInWithOAuth({
+  provider: 'google',
+  redirectTo: 'http://localhost:3000/dashboard' // any page where SDK is initialized
+})
+```
+
+The SDK constructor auto-detects `insforge_code` in the URL, exchanges it for a session, and cleans the URL. No callback handler needed — just ensure the SDK is initialized on the `redirectTo` page.
+
+### SSR (Next.js) — manual exchange required
+
+The browser auto-detection doesn't work server-side (`sessionStorage` unavailable, `detectAuthCallback()` skips in server mode). Use `skipBrowserRedirect: true` and handle the exchange in a Next.js API route. See [ssr-integration.md](ssr-integration.md) for the full implementation.
+
+```javascript
 const { data } = await insforge.auth.signInWithOAuth({
   provider: 'google',
+  redirectTo: 'https://yourapp.com/api/auth/callback',
   skipBrowserRedirect: true
 })
-window.location.href = data.url
+// data.codeVerifier — store in httpOnly cookie before redirect
+// data.url — redirect user to this
 ```
+
+### SDK methods reference
+
+| Method | When to use |
+|--------|-------------|
+| `signInWithOAuth({ provider, redirectTo })` | SPA: auto-redirects and handles everything |
+| `signInWithOAuth({ ..., skipBrowserRedirect: true })` | SSR: returns `{ url, codeVerifier }` for manual handling |
+| `exchangeOAuthCode(code, codeVerifier?)` | Exchange `insforge_code` for session. Auto-called in SPA; call manually in SSR |
 
 ## Sign Out
 

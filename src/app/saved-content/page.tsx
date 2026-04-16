@@ -38,6 +38,9 @@ export default function SavedContent() {
   const [user, setUser] = useState<any>(null)
   const [savedItems, setSavedItems] = useState<SavedItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [filter, setFilter] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedItems, setSelectedItems] = useState<string[]>([])
 
   // Load user and saved items from database
   useEffect(() => {
@@ -81,7 +84,6 @@ export default function SavedContent() {
       console.error('Error loading saved items:', error)
       toast.error('Failed to load saved items')
     }
-  }
   }
 
   const filteredItems = savedItems.filter(item => {

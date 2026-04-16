@@ -1,28 +1,24 @@
-import { supabase, User, ContentItem, Settings } from './supabase'
+import { insforge, User, ContentItem, Settings } from './supabase'
 
 class DatabaseService {
   // User Management
   async createUser(email: string, name: string, password: string, role: 'admin' | 'user' = 'user'): Promise<User | null> {
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await insforge.auth.signUp({
         email,
         password,
-        options: {
-          data: {
-            name,
-            role
-          }
-        }
+        name,
+        redirectTo: window.location.origin + '/settings'
       })
 
       if (error) throw error
-      return data.user ? {
+      return data?.user ? {
         id: data.user.id,
         email: data.user.email || '',
-        name: data.user.user_metadata?.name || '',
-        role: data.user.user_metadata?.role || 'user',
-        created_at: data.user.created_at,
-        updated_at: data.user.updated_at || data.user.created_at
+        name: data.user.profile?.name || name || '',
+        role: 'user',
+        created_at: data.user.createdAt,
+        updated_at: data.user.updatedAt || data.user.createdAt
       } : null
     } catch (error) {
       console.error('Error creating user:', error)
@@ -32,19 +28,19 @@ class DatabaseService {
 
   async signIn(email: string, password: string): Promise<User | null> {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await insforge.auth.signInWithPassword({
         email,
         password
       })
 
       if (error) throw error
-      return data.user ? {
+      return data?.user ? {
         id: data.user.id,
         email: data.user.email || '',
-        name: data.user.user_metadata?.name || '',
-        role: data.user.user_metadata?.role || 'user',
-        created_at: data.user.created_at,
-        updated_at: data.user.updated_at || data.user.created_at
+        name: data.user.profile?.name || '',
+        role: 'user',
+        created_at: data.user.createdAt,
+        updated_at: data.user.updatedAt || data.user.createdAt
       } : null
     } catch (error) {
       console.error('Error signing in:', error)
@@ -54,15 +50,15 @@ class DatabaseService {
 
   async getCurrentUser(): Promise<User | null> {
     try {
-      const { data: { user }, error } = await supabase.auth.getUser()
+      const { data, error } = await insforge.auth.getCurrentUser()
       if (error) throw error
-      return user ? {
-        id: user.id,
-        email: user.email || '',
-        name: user.user_metadata?.name || '',
-        role: user.user_metadata?.role || 'user',
-        created_at: user.created_at,
-        updated_at: user.updated_at || user.created_at
+      return data?.user ? {
+        id: data.user.id,
+        email: data.user.email || '',
+        name: data.user.profile?.name || '',
+        role: 'user',
+        created_at: data.user.createdAt,
+        updated_at: data.user.updatedAt || data.user.createdAt
       } : null
     } catch (error) {
       console.error('Error getting current user:', error)
@@ -72,7 +68,7 @@ class DatabaseService {
 
   async signOut(): Promise<void> {
     try {
-      const { error } = await supabase.auth.signOut()
+      const { error } = await insforge.auth.signOut()
       if (error) throw error
     } catch (error) {
       console.error('Error signing out:', error)
@@ -82,8 +78,8 @@ class DatabaseService {
   // Content Management
   async createContentItem(item: Omit<ContentItem, 'id' | 'created_at' | 'updated_at'>): Promise<ContentItem | null> {
     try {
-      const { data, error } = await supabase
-        .from('content_items')
+      const { data, error } = await insforge.database
+        .from('content')
         .insert([item])
         .select()
         .single()
@@ -98,8 +94,8 @@ class DatabaseService {
 
   async getContentItems(userId: string): Promise<ContentItem[]> {
     try {
-      const { data, error } = await supabase
-        .from('content_items')
+      const { data, error } = await insforge.database
+        .from('content')
         .select('*')
         .eq('user_id', userId)
         .order('created_at', { ascending: false })
@@ -114,8 +110,8 @@ class DatabaseService {
 
   async updateContentItem(id: string, updates: Partial<ContentItem>): Promise<ContentItem | null> {
     try {
-      const { data, error } = await supabase
-        .from('content_items')
+      const { data, error } = await insforge.database
+        .from('content')
         .update({ ...updates, updated_at: new Date().toISOString() })
         .eq('id', id)
         .select()
@@ -131,8 +127,8 @@ class DatabaseService {
 
   async deleteContentItem(id: string): Promise<boolean> {
     try {
-      const { error } = await supabase
-        .from('content_items')
+      const { error } = await insforge.database
+        .from('content')
         .delete()
         .eq('id', id)
 
@@ -147,7 +143,7 @@ class DatabaseService {
   // Settings Management
   async getUserSettings(userId: string): Promise<Settings | null> {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await insforge.database
         .from('user_settings')
         .select('*')
         .eq('user_id', userId)
@@ -166,7 +162,7 @@ class DatabaseService {
       const existingSettings = await this.getUserSettings(userId)
 
       if (existingSettings) {
-        const { data, error } = await supabase
+        const { data, error } = await insforge.database
           .from('user_settings')
           .update({ ...settings, updated_at: new Date().toISOString() })
           .eq('user_id', userId)
@@ -176,7 +172,7 @@ class DatabaseService {
         if (error) throw error
         return data
       } else {
-        const { data, error } = await supabase
+        const { data, error } = await insforge.database
           .from('user_settings')
           .insert([{ user_id: userId, ...settings }])
           .select()

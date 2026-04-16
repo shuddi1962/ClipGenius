@@ -232,9 +232,11 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
                 Your AI-powered marketing platform is ready. Start creating amazing content for your marine equipment, security systems, and solar solutions business.
               </p>
               <div className="flex gap-3">
-                <Button size="sm" href="/settings" className="bg-green-600 hover:bg-green-700">
-                  Configure Settings
-                </Button>
+                <Link href="/settings">
+                  <Button size="sm" className="bg-green-600 hover:bg-green-700">
+                    Configure Settings
+                  </Button>
+                </Link>
                 <Button size="sm" variant="outline" onClick={() => setShowWelcome(false)}>
                   Dismiss
                 </Button>

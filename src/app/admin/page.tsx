@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 import { BarChart3, Users, FileText, Settings, TrendingUp, Zap } from 'lucide-react'
@@ -64,7 +65,9 @@ export default function AdminDashboard() {
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">Access Denied</h3>
           <p className="text-gray-600 mb-6">You need to be signed in as an admin to access this page.</p>
-          <Button href="/settings">Go to Settings</Button>
+          <Link href="/settings">
+            <Button>Go to Settings</Button>
+          </Link>
         </Card>
       </div>
     )
@@ -182,9 +185,11 @@ export default function AdminDashboard() {
             </div>
           </div>
           <div className="mt-4">
-            <Button href="/settings" className="w-full">
-              Go to Settings
-            </Button>
+            <Link href="/settings" className="w-full">
+              <Button className="w-full">
+                Go to Settings
+              </Button>
+            </Link>
           </div>
         </Card>
 

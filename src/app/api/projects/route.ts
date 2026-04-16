@@ -1,29 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { insforge } from '@/lib/supabase'
 
 // GET /api/projects - Get user's projects
 export async function GET(request: NextRequest) {
   try {
-    // Mock data until auth is properly configured
-    const mockProjects = [
-      {
-        id: '1',
-        name: 'Coffee Shop Campaign',
-        type: 'marketing',
-        created_at: '2024-01-10',
-        content_count: 5,
-        video_count: 2,
-      },
-      {
-        id: '2',
-        name: 'Tech Product Launch',
-        type: 'product',
-        created_at: '2024-01-08',
-        content_count: 8,
-        video_count: 1,
-      },
-    ]
+    const { data, error } = await insforge.database
+      .from('projects')
+      .select('*')
+      .order('created_at', { ascending: false })
 
-    return NextResponse.json(mockProjects)
+    if (error) throw error
+
+    return NextResponse.json(data || [])
   } catch (error) {
     console.error('Error fetching projects:', error)
     return NextResponse.json(

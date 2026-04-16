@@ -54,7 +54,24 @@ export default function Settings() {
           // Load user settings from database
           const userSettings = await dbService.getUserSettings(currentUser.id)
           if (userSettings) {
-            setSettings(userSettings)
+            setSettings({
+              aiProvider: userSettings.ai_provider,
+              openrouterKey: userSettings.openrouter_key,
+              kieKey: userSettings.kie_key,
+              searchKey: userSettings.search_key,
+              searchProvider: userSettings.search_provider,
+              selectedModel: userSettings.selected_model,
+              kieModel: userSettings.kie_model,
+              companyName: userSettings.company_name,
+              niche: userSettings.niche,
+              location: userSettings.location,
+              tone: userSettings.tone,
+              targetAudience: userSettings.target_audience,
+              products: userSettings.products,
+              whatsapp: userSettings.whatsapp,
+              website: userSettings.website,
+              address: userSettings.address
+            })
           }
 
           // Sync localStorage data to database
@@ -68,27 +85,11 @@ export default function Settings() {
     }
 
     checkAuth()
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (session?.user) {
-        setUser(session.user)
-        const userSettings = await dbService.getUserSettings(session.user.id)
-        if (userSettings) {
-          setSettings(userSettings)
-        }
-      } else {
-        setUser(null)
-      }
-      setIsLoading(false)
-    })
-
-    return () => subscription.unsubscribe()
   }, [])
 
   // Load settings from localStorage on mount
   useEffect(() => {
-    if (!isAdminAuthenticated) return
+    if (!user) return
 
     const savedSettings = localStorage.getItem('roshanal_settings')
     if (savedSettings) {
@@ -113,7 +114,7 @@ export default function Settings() {
       selectedModel,
       kieModel
     }))
-  }, [isAdminAuthenticated])
+  }, [user])
 
   const handleAuth = async () => {
     if (!authForm.email || !authForm.password) {

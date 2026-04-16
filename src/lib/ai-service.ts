@@ -1,4 +1,5 @@
 import { Settings } from './hooks'
+import { insforge } from './supabase'
 
 export interface AIGenerateOptions {
   prompt: string
@@ -36,39 +37,24 @@ export class AIService {
     temperature?: number,
     maxTokens?: number
   ): Promise<string> {
-    if (!this.settings.openrouterKey) {
-      throw new Error('OpenRouter API key not configured. Please add it in Settings.')
-    }
-
-    const messages = []
+    const messages: Array<{role: 'user' | 'system' | 'assistant' | 'tool', content: string}> = []
     if (systemPrompt) {
       messages.push({ role: 'system', content: systemPrompt })
     }
     messages.push({ role: 'user', content: prompt })
 
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.settings.openrouterKey}`,
-        'HTTP-Referer': 'https://roshanalinfotech.com',
-        'X-Title': 'Roshanal Marketing Platform'
-      },
-      body: JSON.stringify({
+    try {
+      const completion = await insforge.ai.chat.completions.create({
         model: this.settings.selectedModel,
         messages,
         temperature,
-        max_tokens: maxTokens
+        maxTokens
       })
-    })
 
-    if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.error?.message || 'Failed to generate content')
+      return completion.choices[0].message.content
+    } catch (error) {
+      throw new Error(`AI generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
-
-    const data = await response.json()
-    return data.choices[0].message.content
   }
 
   private async generateKIE(
@@ -77,37 +63,24 @@ export class AIService {
     temperature?: number,
     maxTokens?: number
   ): Promise<string> {
-    if (!this.settings.kieKey) {
-      throw new Error('KIE API key not configured. Please add it in Settings.')
-    }
-
-    const messages = []
+    const messages: Array<{role: 'user' | 'system' | 'assistant' | 'tool', content: string}> = []
     if (systemPrompt) {
       messages.push({ role: 'system', content: systemPrompt })
     }
     messages.push({ role: 'user', content: prompt })
 
-    const response = await fetch('https://api.kie.ai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.settings.kieKey}`
-      },
-      body: JSON.stringify({
+    try {
+      const completion = await insforge.ai.chat.completions.create({
         model: this.settings.kieModel,
         messages,
         temperature,
-        max_tokens: maxTokens
+        maxTokens
       })
-    })
 
-    if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.error?.message || 'Failed to generate content')
+      return completion.choices[0].message.content
+    } catch (error) {
+      throw new Error(`AI generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
-
-    const data = await response.json()
-    return data.choices[0].message.content
   }
 
   async search(query: string): Promise<SearchResult[]> {
