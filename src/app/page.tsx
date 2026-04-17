@@ -6,7 +6,7 @@ export default function Home() {
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-12">
           <h1 className="text-4xl font-bold text-white mb-4">
-            Roshanal Smart Marketing & Content Generator
+            ClipGenius - AI Marketing Automation Platform
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Generate AI-powered marketing content, videos, and designs to boost your business growth
