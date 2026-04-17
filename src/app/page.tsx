@@ -1,80 +1,47 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
   return (
-    <div className="min-h-screen bg-[#050A18] text-white overflow-hidden">
-      {/* Animated Background */}
-      <div className="fixed inset-0 opacity-20">
+    <div className="min-h-screen bg-[#050A18] text-white">
+      {/* Simple Background */}
+      <div className="fixed inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-br from-[#00F5FF]/10 via-transparent to-[#FFB800]/10" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00F5FF]/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#FFB800]/5 rounded-full blur-3xl animate-pulse delay-1000" />
       </div>
 
       {/* Navigation */}
       <nav className="relative z-50 flex items-center justify-between px-6 py-4 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="flex items-center space-x-2"
-        >
+        <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-gradient-to-r from-[#00F5FF] to-[#FFB800] rounded-lg flex items-center justify-center">
             <span className="text-black font-bold text-lg">⚡</span>
           </div>
           <span className="text-2xl font-bold bg-gradient-to-r from-[#00F5FF] to-[#FFB800] bg-clip-text text-transparent">
             ClipGenius
           </span>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="hidden md:flex items-center space-x-8"
-        >
+        <div className="hidden md:flex items-center space-x-8">
           <a href="#features" className="text-gray-300 hover:text-[#00F5FF] transition-colors">Features</a>
           <a href="#pricing" className="text-gray-300 hover:text-[#00F5FF] transition-colors">Pricing</a>
-          <a href="#integrations" className="text-gray-300 hover:text-[#00F5FF] transition-colors">Integrations</a>
           <a href="#about" className="text-gray-300 hover:text-[#00F5FF] transition-colors">About</a>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
-          className="flex items-center space-x-4"
-        >
+        <div className="flex items-center space-x-4">
           <Link href="/login" className="text-gray-300 hover:text-white transition-colors">
             Login
           </Link>
           <Link
             href="/register"
-            className="bg-gradient-to-r from-[#00F5FF] to-[#FFB800] text-black px-6 py-2 rounded-lg font-semibold hover:shadow-lg hover:shadow-[#00F5FF]/25 transition-all"
+            className="bg-gradient-to-r from-[#00F5FF] to-[#FFB800] text-black px-6 py-2 rounded-lg font-semibold hover:shadow-lg transition-all"
           >
             Start Free →
           </Link>
-        </motion.div>
+        </div>
       </nav>
 
       {/* Hero Section */}
       <section className="relative px-6 py-20 lg:px-12 lg:py-32">
         <div className="max-w-7xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <div>
             <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
               The AI That Grows Your
               <br />
@@ -91,7 +58,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link
                 href="/register"
-                className="bg-gradient-to-r from-[#00F5FF] to-[#FFB800] text-black px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-[#00F5FF]/50 transition-all transform hover:scale-105"
+                className="bg-gradient-to-r from-[#00F5FF] to-[#FFB800] text-black px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
               >
                 Start Free Today
               </Link>
@@ -99,38 +66,27 @@ export default function Home() {
                 ▶ Watch Demo
               </button>
             </div>
-          </motion.div>
+          </div>
 
           {/* Live Counter */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="bg-black/30 backdrop-blur-sm border border-[#00F5FF]/20 rounded-2xl p-6 max-w-md mx-auto"
-          >
+          <div className="bg-black/30 backdrop-blur-sm border border-[#00F5FF]/20 rounded-2xl p-6 max-w-md mx-auto">
             <div className="text-3xl font-bold text-[#00F5FF] mb-2">47,392</div>
             <div className="text-gray-400">Leads Generated Today</div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Feature Highlights */}
       <section id="features" className="py-20 px-6 lg:px-12">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+          <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold mb-6">
               Everything Your Business Needs
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               From lead generation to customer conversion, we've automated the entire sales funnel.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
@@ -165,15 +121,11 @@ export default function Home() {
                 description: 'Knows YOUR business and handles customer interactions'
               }
             ].map((feature, index) => (
-              <motion.div
+              <div
                 key={feature.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-black/20 backdrop-blur-sm border border-[#00F5FF]/10 rounded-2xl p-8 hover:border-[#00F5FF]/30 transition-all group"
+                className="bg-black/20 backdrop-blur-sm border border-[#00F5FF]/10 rounded-2xl p-8 hover:border-[#00F5FF]/30 transition-all"
               >
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
+                <div className="text-4xl mb-4">
                   {feature.icon}
                 </div>
                 <h3 className="text-2xl font-bold mb-3 text-[#00F5FF]">
@@ -182,7 +134,7 @@ export default function Home() {
                 <p className="text-gray-300 leading-relaxed">
                   {feature.description}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -191,20 +143,14 @@ export default function Home() {
       {/* Pricing Section */}
       <section id="pricing" className="py-20 px-6 lg:px-12 bg-black/10">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+          <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold mb-6">
               Choose Your Growth Plan
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Start free, scale as you grow. No hidden fees, cancel anytime.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
@@ -253,12 +199,8 @@ export default function Home() {
                 popular: false
               }
             ].map((plan, index) => (
-              <motion.div
+              <div
                 key={plan.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
                 className={`relative bg-black/20 backdrop-blur-sm border rounded-2xl p-8 ${
                   plan.popular
                     ? 'border-[#00F5FF] shadow-2xl shadow-[#00F5FF]/20'
@@ -292,13 +234,13 @@ export default function Home() {
                   href={plan.name === 'Free' ? '/register' : '/register?plan=' + plan.name.toLowerCase()}
                   className={`w-full block text-center py-3 px-6 rounded-xl font-semibold transition-all ${
                     plan.popular
-                      ? 'bg-gradient-to-r from-[#00F5FF] to-[#FFB800] text-black hover:shadow-2xl hover:shadow-[#00F5FF]/50'
+                      ? 'bg-gradient-to-r from-[#00F5FF] to-[#FFB800] text-black hover:shadow-2xl'
                       : 'border border-[#00F5FF]/50 text-[#00F5FF] hover:bg-[#00F5FF]/10'
                   }`}
                 >
                   {plan.cta}
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -306,13 +248,7 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="py-20 px-6 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto text-center bg-gradient-to-r from-[#00F5FF]/10 to-[#FFB800]/10 border border-[#00F5FF]/20 rounded-3xl p-12"
-        >
+        <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-[#00F5FF]/10 to-[#FFB800]/10 border border-[#00F5FF]/20 rounded-3xl p-12">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             Ready to Automate Your Growth?
           </h2>
@@ -322,7 +258,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/register"
-              className="bg-gradient-to-r from-[#00F5FF] to-[#FFB800] text-black px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-[#00F5FF]/50 transition-all transform hover:scale-105"
+              className="bg-gradient-to-r from-[#00F5FF] to-[#FFB800] text-black px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
             >
               Start Free Today
             </Link>
@@ -333,7 +269,7 @@ export default function Home() {
               Learn More
             </Link>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Footer */}
