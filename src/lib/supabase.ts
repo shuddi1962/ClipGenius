@@ -8,6 +8,15 @@ export const insforge = createClient({
   anonKey: insforgeAnonKey
 })
 
+// Server client (for server components and API routes)
+export function createServerClient() {
+  return createClient({
+    baseUrl: insforgeUrl,
+    anonKey: insforgeAnonKey,
+    isServerMode: true
+  })
+}
+
 // Keep supabase export for backward compatibility during transition
 export const supabase = insforge
 
