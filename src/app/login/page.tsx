@@ -117,7 +117,7 @@ export default function Login() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Email Address
               </label>
               <div className="relative">
@@ -125,16 +125,16 @@ export default function Login() {
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500"
                   placeholder="Enter your email"
                   required
                 />
-                <Mail className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <Mail className="absolute left-3 top-3.5 w-5 h-5 text-gray-500" />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -142,11 +142,11 @@ export default function Login() {
                   type={showPassword ? 'text' : 'password'}
                   value={formData.password}
                   onChange={(e) => handleInputChange('password', e.target.value)}
-                  className="w-full px-4 py-3 pl-12 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-3 pl-12 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500"
                   placeholder="Enter your password"
                   required
                 />
-                <Lock className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <Lock className="absolute left-3 top-3.5 w-5 h-5 text-gray-500" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}

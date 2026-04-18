@@ -156,7 +156,7 @@ export default function Register() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Full Name *
               </label>
               <div className="relative">
@@ -164,16 +164,16 @@ export default function Register() {
                   type="text"
                   value={formData.fullName}
                   onChange={(e) => handleInputChange('fullName', e.target.value)}
-                  className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500"
                   placeholder="Enter your full name"
                   required
                 />
-                <User className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <User className="absolute left-3 top-3.5 w-5 h-5 text-gray-500" />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Email Address *
               </label>
               <div className="relative">
@@ -181,49 +181,54 @@ export default function Register() {
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500"
                   placeholder="Enter your email"
                   required
                 />
-                <Mail className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <Mail className="absolute left-3 top-3.5 w-5 h-5 text-gray-500" />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Country *
               </label>
               <div className="relative">
                 <select
                   value={formData.country}
                   onChange={(e) => handleInputChange('country', e.target.value)}
-                  className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none"
+                  className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none text-gray-900 bg-white"
                   required
                 >
-                  <option value="">Select your country</option>
+                  <option value="" className="text-gray-500">Select your country</option>
                   {countries.map(country => (
-                    <option key={country} value={country}>{country}</option>
+                    <option key={country} value={country} className="text-gray-900">{country}</option>
                   ))}
                 </select>
-                <MapPin className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <MapPin className="absolute left-3 top-3.5 w-5 h-5 text-gray-500" />
+                <div className="absolute right-3 top-3.5 pointer-events-none">
+                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Business Name (Optional)
               </label>
               <input
                 type="text"
                 value={formData.businessName}
                 onChange={(e) => handleInputChange('businessName', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500"
                 placeholder="Enter your business name"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Password *
               </label>
               <div className="relative">
@@ -231,11 +236,11 @@ export default function Register() {
                   type={showPassword ? 'text' : 'password'}
                   value={formData.password}
                   onChange={(e) => handleInputChange('password', e.target.value)}
-                  className="w-full px-4 py-3 pl-12 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-3 pl-12 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500"
                   placeholder="Create a password"
                   required
                 />
-                <Lock className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <Lock className="absolute left-3 top-3.5 w-5 h-5 text-gray-500" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -247,7 +252,7 @@ export default function Register() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Confirm Password *
               </label>
               <div className="relative">
@@ -255,15 +260,15 @@ export default function Register() {
                   type={showConfirmPassword ? 'text' : 'password'}
                   value={formData.confirmPassword}
                   onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                  className="w-full px-4 py-3 pl-12 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-3 pl-12 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500"
                   placeholder="Confirm your password"
                   required
                 />
-                <Lock className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <Lock className="absolute left-3 top-3.5 w-5 h-5 text-gray-500" />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-3.5 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-3.5 text-gray-500 hover:text-gray-700"
                 >
                   {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
