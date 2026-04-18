@@ -1,5 +1,10 @@
+import React from 'react'
 import type { Metadata } from 'next'
 import './globals.css'
+import Sidebar from '@/components/Sidebar'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'ClipGenius - AI Marketing Automation Platform',
@@ -17,6 +22,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Check if we're on a dashboard/admin page that needs the sidebar
+  const isDashboardPage = typeof window !== 'undefined' &&
+    (window.location.pathname.startsWith('/dashboard') ||
+     window.location.pathname.startsWith('/admin'))
+
   return (
     <html lang="en" className="dark">
       <head>
@@ -27,9 +37,32 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased font-['Cabinet_Grotesk'] bg-[#050A18] text-white">
-        {children}
+      <body className={`${inter.className} bg-[#050A18] text-white min-h-screen`}>
+        {isDashboardPage ? (
+          <DashboardLayout>{children}</DashboardLayout>
+        ) : (
+          children
+        )}
       </body>
     </html>
+  )
+}
+
+function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false)
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed(!sidebarCollapsed)
+  }
+
+  return (
+    <div className="flex h-screen bg-[#050A18]">
+      <Sidebar isCollapsed={sidebarCollapsed} onToggle={toggleSidebar} />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <main className="flex-1 overflow-y-auto">
+          {children}
+        </main>
+      </div>
+    </div>
   )
 }
