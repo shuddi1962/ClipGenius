@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
-import { TrendingUp, FileText, Video, Bookmark, Sparkles, RefreshCw, Star, Calendar, Users, Send, Instagram, Phone, Building, Settings, Target, Workflow } from 'lucide-react'
+import { TrendingUp, FileText, Video, Bookmark, Sparkles, RefreshCw, Star, Calendar, Users, Send, Instagram, Phone, Building, Settings, Target, Workflow, Activity, BarChart3 } from 'lucide-react'
 import { useSettings } from '@/lib/hooks'
 import { AIService } from '@/lib/ai-service'
 import { toast } from 'sonner'
@@ -201,32 +201,204 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
 
   return (
     <div className="p-6 lg:p-8">
+      {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-[#00F5FF] via-[#FFB800] to-[#FF6B6B] bg-clip-text text-transparent">
-          Welcome to ClipGenius
-        </h1>
-        <p className="text-gray-400 mt-2">Your AI-powered marketing automation platform</p>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-[#00F5FF] via-[#FFB800] to-[#FF6B6B] bg-clip-text text-transparent">
+              Welcome back, {user?.name || 'User'}
+            </h1>
+            <p className="text-gray-400">{currentDate}</p>
+          </div>
+          <div className="hidden lg:block">
+            <div className="w-16 h-16 bg-gradient-to-r from-[#00F5FF] to-[#FFB800] rounded-full flex items-center justify-center shadow-lg">
+              <Sparkles className="w-8 h-8 text-white" />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <Card className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-600/50">
-        <div className="p-8 text-center">
-          <div className="w-16 h-16 bg-gradient-to-br from-[#00F5FF] to-[#FFB800] rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Sparkles className="w-8 h-8 text-white" />
+      {/* Quick Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <Card className="bg-gradient-to-br from-blue-900/20 to-blue-800/20 border-blue-500/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-3xl font-bold text-blue-400 mb-1">{stats.totalContent}</div>
+              <div className="text-sm text-gray-400">Content Created</div>
+              <div className="text-xs text-blue-300 mt-1">+{stats.thisWeek} this week</div>
+            </div>
+            <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+              <FileText className="w-6 h-6 text-blue-400" />
+            </div>
           </div>
-          <h3 className="text-xl font-bold text-white mb-2">Dashboard Coming Soon</h3>
-          <p className="text-gray-400 mb-6">We're building an amazing dashboard experience for you!</p>
-          <div className="flex gap-4 justify-center">
+        </Card>
+
+        <Card className="bg-gradient-to-br from-green-900/20 to-green-800/20 border-green-500/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-3xl font-bold text-green-400 mb-1">156</div>
+              <div className="text-sm text-gray-400">Active Leads</div>
+              <div className="text-xs text-green-300 mt-1">+12 qualified</div>
+            </div>
+            <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+              <Users className="w-6 h-6 text-green-400" />
+            </div>
+          </div>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-purple-900/20 to-purple-800/20 border-purple-500/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-3xl font-bold text-purple-400 mb-1">8</div>
+              <div className="text-sm text-gray-400">Campaigns Sent</div>
+              <div className="text-xs text-purple-300 mt-1">92% open rate</div>
+            </div>
+            <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
+              <Send className="w-6 h-6 text-purple-400" />
+            </div>
+          </div>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-orange-900/20 to-orange-800/20 border-orange-500/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-3xl font-bold text-orange-400 mb-1">23</div>
+              <div className="text-sm text-gray-400">Ideas Saved</div>
+              <div className="text-xs text-orange-300 mt-1">Ready to use</div>
+            </div>
+            <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
+              <Bookmark className="w-6 h-6 text-orange-400" />
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        {/* Recent Activity */}
+        <Card className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-600/50">
+          <h3 className="text-xl font-bold text-white mb-6 flex items-center">
+            <Activity className="w-5 h-5 mr-2 text-blue-400" />
+            Recent Activity
+          </h3>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg">
+              <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                <Users className="w-4 h-4 text-green-400" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm text-white font-medium">New lead qualified</p>
+                <p className="text-xs text-gray-400">Sarah Johnson - Hot lead</p>
+              </div>
+              <span className="text-xs text-gray-500">2m ago</span>
+            </div>
+
+            <div className="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg">
+              <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                <Send className="w-4 h-4 text-blue-400" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm text-white font-medium">Campaign sent</p>
+                <p className="text-xs text-gray-400">Welcome Series - 45 recipients</p>
+              </div>
+              <span className="text-xs text-gray-500">15m ago</span>
+            </div>
+
+            <div className="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg">
+              <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                <FileText className="w-4 h-4 text-purple-400" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm text-white font-medium">Content generated</p>
+                <p className="text-xs text-gray-400">Social media post - 3 variants</p>
+              </div>
+              <span className="text-xs text-gray-500">1h ago</span>
+            </div>
+          </div>
+        </Card>
+
+        {/* Quick Actions */}
+        <Card className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-600/50">
+          <h3 className="text-xl font-bold text-white mb-6">Quick Actions</h3>
+          <div className="space-y-3">
             <Link href="/dashboard/content-generator">
-              <Button className="bg-gradient-to-r from-[#00F5FF] to-[#FFB800] hover:from-[#00F5FF]/80 hover:to-[#FFB800]/80">
-                Try Content Generator
+              <Button className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-700" variant="outline">
+                <FileText className="w-4 h-4 mr-3" />
+                Generate Content
               </Button>
             </Link>
+
+            <Link href="/dashboard/social">
+              <Button className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-700" variant="outline">
+                <Instagram className="w-4 h-4 mr-3" />
+                Social Media Hub
+              </Button>
+            </Link>
+
             <Link href="/dashboard/leads">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
+              <Button className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-700" variant="outline">
+                <Users className="w-4 h-4 mr-3" />
                 Manage Leads
               </Button>
             </Link>
+
+            <Link href="/dashboard/campaigns">
+              <Button className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-700" variant="outline">
+                <Send className="w-4 h-4 mr-3" />
+                Run Campaigns
+              </Button>
+            </Link>
+
+            <Link href="/dashboard/analytics">
+              <Button className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-700" variant="outline">
+                <TrendingUp className="w-4 h-4 mr-3" />
+                View Analytics
+              </Button>
+            </Link>
           </div>
+        </Card>
+
+        {/* Performance Chart Placeholder */}
+        <Card className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-600/50">
+          <h3 className="text-xl font-bold text-white mb-6 flex items-center">
+            <TrendingUp className="w-5 h-5 mr-2 text-green-400" />
+            Performance Overview
+          </h3>
+          <div className="h-48 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-600">
+            <div className="text-center">
+              <BarChart3 className="w-12 h-12 text-gray-500 mx-auto mb-2" />
+              <div className="text-gray-400 text-sm">Growth Chart</div>
+              <div className="text-xs text-gray-500">Interactive analytics coming soon</div>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      {/* Trending Topics */}
+      <Card className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-600/50">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-bold text-white">📈 Trending Topics</h3>
+          <Button size="sm" variant="outline" onClick={refreshTrendingTopics} className="border-gray-600 text-gray-300 hover:bg-gray-700">
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Refresh
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {trendingTopics.map((topic, index) => (
+            <div key={index} className="p-4 bg-gray-700/50 rounded-lg border border-gray-600/30 hover:border-[#00F5FF]/30 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="font-semibold text-white text-sm">{topic.title}</h4>
+                <span className="text-xs font-medium text-[#00F5FF] bg-[#00F5FF]/10 px-2 py-1 rounded">
+                  {topic.trend}
+                </span>
+              </div>
+              <p className="text-sm text-gray-300 mb-3">{topic.reason}</p>
+              <Button size="sm" className="w-full bg-gradient-to-r from-[#00F5FF]/20 to-[#FFB800]/20 hover:from-[#00F5FF]/30 hover:to-[#FFB800]/30 text-white">
+                Create Content
+              </Button>
+            </div>
+          ))}
         </div>
       </Card>
     </div>

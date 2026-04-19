@@ -2,9 +2,9 @@ import React from 'react'
 import type { Metadata } from 'next'
 import './globals.css'
 import Sidebar from '@/components/Sidebar'
-import { Inter } from 'next/font/google'
+// import { Inter } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'ClipGenius - AI Marketing Automation Platform',
@@ -37,7 +37,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${inter.className} bg-[#050A18] text-white min-h-screen`}>
+      <body className={`bg-[#050A18] text-white min-h-screen`}>
         {isDashboardPage ? (
           <DashboardLayout>{children}</DashboardLayout>
         ) : (
