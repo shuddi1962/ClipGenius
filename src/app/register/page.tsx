@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 import { Eye, EyeOff, Mail, Lock, User, MapPin } from 'lucide-react'
+import { insforge } from '@/lib/insforge'
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -54,17 +55,56 @@ export default function Register() {
     setError('')
 
     try {
-      // TODO: Implement InsForge.dev user registration
-      // For now, simulate registration
-      localStorage.setItem('user', JSON.stringify({
+      // Sign up with InsForge.dev
+      const { data, error: signUpError } = await insforge.auth.signUp({
         email: formData.email,
-        name: formData.fullName,
-        businessName: formData.businessName,
-        country: formData.country
-      }))
+        password: formData.password,
+        options: {
+          data: {
+            full_name: formData.fullName,
+            country: formData.country,
+            business_name: formData.businessName
+          }
+        }
+      })
 
-      // Redirect to onboarding or dashboard
-      router.push('/dashboard')
+      if (signUpError) {
+        setError(signUpError.message)
+        return
+      }
+
+      if (data.user) {
+        // Create user record in public.users table
+        const { error: userError } = await insforge
+          .from('users')
+          .insert({
+            id: data.user.id,
+            email: formData.email,
+            full_name: formData.fullName,
+            country: formData.country
+          })
+
+        if (userError) {
+          console.error('Error creating user record:', userError)
+        }
+
+        // Create workspace if business name provided
+        if (formData.businessName) {
+          const { error: workspaceError } = await insforge
+            .from('workspaces')
+            .insert({
+              user_id: data.user.id,
+              business_name: formData.businessName
+            })
+
+          if (workspaceError) {
+            console.error('Error creating workspace:', workspaceError)
+          }
+        }
+
+        // Redirect to onboarding or dashboard
+        router.push('/onboarding')
+      }
     } catch (error) {
       setError('Registration failed. Please try again.')
     } finally {
@@ -72,14 +112,38 @@ export default function Register() {
     }
   }
 
-  const handleGoogleSignup = () => {
-    // TODO: Implement Google OAuth with InsForge.dev
-    setError('Google signup coming soon')
+  const handleGoogleSignup = async () => {
+    try {
+      const { data, error } = await insforge.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/onboarding`
+        }
+      })
+
+      if (error) {
+        setError(error.message)
+      }
+    } catch (error) {
+      setError('Google signup failed. Please try again.')
+    }
   }
 
-  const handleLinkedInSignup = () => {
-    // TODO: Implement LinkedIn OAuth with InsForge.dev
-    setError('LinkedIn signup coming soon')
+  const handleLinkedInSignup = async () => {
+    try {
+      const { data, error } = await insforge.auth.signInWithOAuth({
+        provider: 'linkedin',
+        options: {
+          redirectTo: `${window.location.origin}/onboarding`
+        }
+      })
+
+      if (error) {
+        setError(error.message)
+      }
+    } catch (error) {
+      setError('LinkedIn signup failed. Please try again.')
+    }
   }
 
   const countries = [

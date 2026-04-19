@@ -34,7 +34,12 @@ import {
   Eye,
   Mail,
   Send,
-  Smartphone
+  Smartphone,
+  Sparkles,
+  Globe,
+  Cpu,
+  Layers,
+  Rocket
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -54,45 +59,42 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
   }, [pathname])
 
   const clientNavigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: Home, description: 'Overview & insights' },
-    { name: 'Business Profile', href: '/dashboard/business', icon: Building, description: 'Company details & products' },
+    { name: 'Dashboard', href: '/dashboard', icon: Home, description: 'Overview & insights', color: 'text-blue-400' },
+    { name: 'Business Profile', href: '/dashboard/business', icon: Building, description: 'Company details & products', color: 'text-purple-400' },
 
     // Lead Management Section
-    { name: 'Lead Scraping', href: '/dashboard/leads/scrape', icon: Search, description: 'Import from multiple sources' },
-    { name: 'Lead Management', href: '/dashboard/leads', icon: Users, description: 'View & manage all leads' },
-    { name: 'AI Qualification', href: '/dashboard/leads/qualify', icon: Zap, description: 'Score leads automatically' },
+    { name: 'Lead Scraping', href: '/dashboard/leads/scrape', icon: Search, description: 'Import from multiple sources', color: 'text-green-400' },
+    { name: 'Lead Management', href: '/dashboard/leads', icon: Users, description: 'View & manage all leads', color: 'text-cyan-400' },
+    { name: 'AI Qualification', href: '/dashboard/leads/qualify', icon: Zap, description: 'Score leads automatically', color: 'text-yellow-400' },
 
     // Outreach Section
-    { name: 'Email Campaigns', href: '/dashboard/campaigns/email', icon: Mail, description: 'Create & send email campaigns' },
-    { name: 'WhatsApp Campaigns', href: '/dashboard/campaigns/whatsapp', icon: MessageSquare, description: 'WhatsApp automation' },
-    { name: 'SMS Campaigns', href: '/dashboard/campaigns/sms', icon: Smartphone, description: 'SMS marketing campaigns' },
-    { name: 'Voice Agent', href: '/dashboard/voice-agent', icon: Phone, description: 'AI phone call automation' },
+    { name: 'Campaigns', href: '/dashboard/campaigns', icon: Send, description: 'Email, WhatsApp & SMS campaigns', color: 'text-red-400' },
+    { name: 'Voice Agent', href: '/dashboard/voice', icon: Phone, description: 'AI phone call automation', color: 'text-pink-400' },
 
     // Content Section
-    { name: 'Content Generator', href: '/dashboard/content', icon: FileText, description: 'AI content creation' },
-    { name: 'Video Studio', href: '/dashboard/video-studio', icon: Video, description: 'AI video script generation' },
-    { name: 'Social Scheduler', href: '/dashboard/scheduler', icon: Calendar, description: 'Schedule social media posts' },
+    { name: 'Content Generator', href: '/dashboard/content-generator', icon: Sparkles, description: 'AI content creation', color: 'text-indigo-400' },
+    { name: 'Video Studio', href: '/dashboard/video-studio', icon: Video, description: 'AI video script generation', color: 'text-orange-400' },
+    { name: 'Social Media', href: '/dashboard/social', icon: Instagram, description: 'Social posting & scheduling', color: 'text-rose-400' },
 
     // Intelligence Section
-    { name: 'Competitor Analysis', href: '/dashboard/competitors', icon: Eye, description: 'Monitor competitors' },
-    { name: 'AI Agents', href: '/dashboard/agents', icon: Bot, description: 'Configure AI assistants' },
-    { name: 'Workflows', href: '/dashboard/workflows', icon: Workflow, description: 'Automation workflows' },
+    { name: 'Competitor Analysis', href: '/dashboard/competitors', icon: Target, description: 'Monitor competitors', color: 'text-emerald-400' },
+    { name: 'AI Agents', href: '/dashboard/agents', icon: Bot, description: 'Configure AI assistants', color: 'text-violet-400' },
+    { name: 'Workflows', href: '/dashboard/workflows', icon: Workflow, description: 'Automation workflows', color: 'text-teal-400' },
 
     // Business Tools
-    { name: 'Products', href: '/dashboard/products', icon: ShoppingBag, description: 'Manage product catalog' },
-    { name: 'Analytics', href: '/dashboard/analytics', icon: PieChart, description: 'Performance metrics' },
-    { name: 'Settings', href: '/dashboard/settings', icon: Settings, description: 'Account & preferences' }
+    { name: 'Products', href: '/dashboard/products', icon: ShoppingBag, description: 'Manage product catalog', color: 'text-amber-400' },
+    { name: 'Analytics', href: '/dashboard/analytics', icon: PieChart, description: 'Performance metrics', color: 'text-lime-400' },
+    { name: 'Settings', href: '/dashboard/settings', icon: Settings, description: 'Account & preferences', color: 'text-slate-400' }
   ]
 
   const adminNavigation = [
-    { name: 'Admin Dashboard', href: '/admin', icon: BarChart3, description: 'System overview' },
-    { name: 'User Management', href: '/admin/users', icon: Users, description: 'Manage all users' },
-    { name: 'API Keys', href: '/admin/api-keys', icon: Shield, description: 'Manage third-party APIs' },
-    { name: 'Subscriptions', href: '/admin/subscriptions', icon: CreditCard, description: 'Billing & subscriptions' },
-    { name: 'Content Moderation', href: '/admin/content', icon: FileText, description: 'Review user content' },
-    { name: 'System Settings', href: '/admin/settings', icon: Settings, description: 'Platform configuration' },
-    { name: 'Audit Logs', href: '/admin/logs', icon: Activity, description: 'System activity logs' },
-    { name: 'Analytics', href: '/admin/analytics', icon: TrendingUp, description: 'Platform analytics' }
+    { name: 'Dashboard', href: '/admin', icon: BarChart3, description: 'System overview', color: 'text-blue-400' },
+    { name: 'User Management', href: '/admin/users', icon: Users, description: 'Manage all users', color: 'text-green-400' },
+    { name: 'API Management', href: '/admin/api-keys', icon: Shield, description: 'Third-party API keys', color: 'text-purple-400' },
+    { name: 'Billing', href: '/admin/billing', icon: CreditCard, description: 'Subscriptions & payments', color: 'text-yellow-400' },
+    { name: 'Content Moderation', href: '/admin/content', icon: FileText, description: 'Review user content', color: 'text-red-400' },
+    { name: 'System Health', href: '/admin/system', icon: Activity, description: 'Platform monitoring', color: 'text-cyan-400' },
+    { name: 'Audit Logs', href: '/admin/logs', icon: Database, description: 'Activity tracking', color: 'text-orange-400' }
   ]
 
   const navigation = userRole === 'admin' ? adminNavigation : clientNavigation
@@ -102,23 +104,23 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
     if (userRole === 'admin') return [adminNavigation]
 
     // Group client navigation into logical sections
+    const overviewSection = navigation.filter(item =>
+      ['Dashboard', 'Business Profile'].includes(item.name)
+    )
     const leadSection = navigation.filter(item =>
       ['Lead Scraping', 'Lead Management', 'AI Qualification'].includes(item.name)
     )
     const outreachSection = navigation.filter(item =>
-      ['Email Campaigns', 'WhatsApp Campaigns', 'SMS Campaigns', 'Voice Agent'].includes(item.name)
+      ['Campaigns', 'Voice Agent'].includes(item.name)
     )
     const contentSection = navigation.filter(item =>
-      ['Content Generator', 'Video Studio', 'Social Scheduler'].includes(item.name)
+      ['Content Generator', 'Video Studio', 'Social Media'].includes(item.name)
     )
     const intelligenceSection = navigation.filter(item =>
       ['Competitor Analysis', 'AI Agents', 'Workflows'].includes(item.name)
     )
     const businessSection = navigation.filter(item =>
-      ['Business Profile', 'Products', 'Analytics', 'Settings'].includes(item.name)
-    )
-    const overviewSection = navigation.filter(item =>
-      ['Dashboard'].includes(item.name)
+      ['Products', 'Analytics', 'Settings'].includes(item.name)
     )
 
     return [overviewSection, leadSection, outreachSection, contentSection, intelligenceSection, businessSection]
@@ -127,39 +129,55 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
   const groupedNavigation = getGroupedNavigation()
 
   return (
-    <div className={`${isCollapsed ? 'w-16' : 'w-72'} bg-gray-900 border-r border-gray-700 transition-all duration-300 flex flex-col h-screen overflow-hidden`}>
+    <div className={`${isCollapsed ? 'w-20' : 'w-80'} bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 border-r border-gray-700/50 transition-all duration-300 flex flex-col h-screen overflow-hidden shadow-2xl backdrop-blur-xl`}>
       {/* Header */}
-      <div className="p-4 border-b border-gray-700 flex-shrink-0">
+      <div className="p-6 border-b border-gray-700/30 flex-shrink-0">
         <div className="flex items-center justify-between">
           {!isCollapsed && (
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">⚡</span>
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+                <div className="w-10 h-10 bg-gradient-to-br from-[#00F5FF] via-[#FFB800] to-[#FF6B6B] rounded-xl flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-xl">⚡</span>
+                </div>
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-gray-900 animate-pulse"></div>
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                ClipGenius
-              </span>
+              <div>
+                <span className="text-xl font-bold bg-gradient-to-r from-[#00F5FF] via-[#FFB800] to-[#FF6B6B] bg-clip-text text-transparent">
+                  ClipGenius
+                </span>
+                <div className="text-xs text-gray-400 font-medium">AI Marketing Platform</div>
+              </div>
+            </div>
+          )}
+          {isCollapsed && (
+            <div className="w-10 h-10 bg-gradient-to-br from-[#00F5FF] via-[#FFB800] to-[#FF6B6B] rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-xl">⚡</span>
             </div>
           )}
           <button
             onClick={onToggle}
-            className="p-2 rounded-lg hover:bg-gray-700 transition-colors text-gray-400 hover:text-white"
+            className="p-2 rounded-lg hover:bg-gray-700/50 transition-all duration-200 text-gray-400 hover:text-white backdrop-blur-sm"
           >
-            {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            {isCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
           </button>
         </div>
 
         {!isCollapsed && (
-          <div className="mt-4">
-            <div className="flex items-center space-x-3 px-3 py-2 bg-gray-800 rounded-lg">
-              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                <User className="w-4 h-4 text-white" />
+          <div className="mt-6">
+            <div className="flex items-center space-x-4 px-4 py-3 bg-gradient-to-r from-gray-800/80 to-gray-700/80 backdrop-blur-sm rounded-xl border border-gray-600/30 shadow-lg">
+              <div className="relative">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-md">
+                  <User className="w-5 h-5 text-white" />
+                </div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-gray-900"></div>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">
-                  {userRole === 'admin' ? 'Admin User' : 'John Smith'}
+                <p className="text-sm font-semibold text-white truncate">
+                  {userRole === 'admin' ? 'System Admin' : 'John Smith'}
                 </p>
-                <p className="text-xs text-gray-400 capitalize">{userRole}</p>
+                <p className="text-xs text-gray-400 capitalize font-medium">
+                  {userRole === 'admin' ? 'Administrator' : 'Marketing Director'}
+                </p>
               </div>
             </div>
           </div>
@@ -167,19 +185,19 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-4 space-y-6 overflow-y-auto">
+      <nav className="flex-1 px-4 py-6 space-y-8 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
         {groupedNavigation.map((group, groupIndex) => (
-          <div key={groupIndex} className="space-y-1">
+          <div key={groupIndex} className="space-y-2">
             {!isCollapsed && group.length > 0 && (
-              <div className="px-3 py-2">
-                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              <div className="px-3">
+                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest opacity-80">
                   {groupIndex === 0 && userRole === 'client' && 'Overview'}
                   {groupIndex === 1 && userRole === 'client' && 'Lead Management'}
                   {groupIndex === 2 && userRole === 'client' && 'Outreach'}
-                  {groupIndex === 3 && userRole === 'client' && 'Content'}
-                  {groupIndex === 4 && userRole === 'client' && 'Intelligence'}
-                  {groupIndex === 5 && userRole === 'client' && 'Business'}
-                  {groupIndex === 0 && userRole === 'admin' && 'Administration'}
+                  {groupIndex === 3 && userRole === 'client' && 'Content Creation'}
+                  {groupIndex === 4 && userRole === 'client' && 'AI Intelligence'}
+                  {groupIndex === 5 && userRole === 'client' && 'Business Tools'}
+                  {groupIndex === 0 && userRole === 'admin' && 'System Administration'}
                 </h3>
               </div>
             )}
@@ -190,22 +208,49 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 group ${
+                  className={`group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 ${
                     isActive
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                      ? 'bg-gradient-to-r from-[#00F5FF]/20 to-[#FFB800]/20 text-white shadow-lg shadow-[#00F5FF]/10 border border-[#00F5FF]/30'
+                      : 'text-gray-300 hover:bg-gray-700/50 hover:text-white hover:shadow-md'
                   }`}
                   title={isCollapsed ? item.name : undefined}
                 >
-                  <item.icon className={`w-5 h-5 ${isCollapsed ? 'mx-auto' : 'mr-3'} flex-shrink-0 ${
-                    isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'
-                  }`} />
+                  {/* Active indicator */}
+                  {isActive && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-[#00F5FF] to-[#FFB800] rounded-r-full"></div>
+                  )}
+
+                  {/* Icon with dynamic color */}
+                  <div className={`relative ${isCollapsed ? '' : 'mr-4'} flex-shrink-0`}>
+                    <item.icon className={`w-5 h-5 ${
+                      isActive
+                        ? 'text-white'
+                        : item.color || 'text-gray-400 group-hover:text-white'
+                    } transition-colors duration-200`} />
+                    {isActive && (
+                      <div className="absolute -inset-1 bg-gradient-to-r from-[#00F5FF]/20 to-[#FFB800]/20 rounded-lg blur-sm"></div>
+                    )}
+                  </div>
+
                   {!isCollapsed && (
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium truncate">{item.name}</div>
-                      <div className="text-xs text-gray-400 truncate">{item.description}</div>
+                      <div className={`text-sm font-semibold truncate transition-colors duration-200 ${
+                        isActive ? 'text-white' : 'text-gray-300 group-hover:text-white'
+                      }`}>
+                        {item.name}
+                      </div>
+                      <div className="text-xs text-gray-500 truncate group-hover:text-gray-400 transition-colors duration-200">
+                        {item.description}
+                      </div>
                     </div>
                   )}
+
+                  {/* Hover effect */}
+                  <div className={`absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[#00F5FF]/10 to-[#FFB800]/10'
+                      : 'bg-gray-700/30'
+                  }`}></div>
                 </Link>
               )
             })}
@@ -214,26 +259,34 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-700 flex-shrink-0">
+      <div className="p-6 border-t border-gray-700/30 flex-shrink-0">
         {!isCollapsed && (
-          <div className="space-y-2">
-            <div className="px-3 py-2">
-              <div className="flex items-center justify-between text-xs text-gray-400">
-                <span>v2.0.0</span>
-                <span>ClipGenius</span>
+          <div className="space-y-4">
+            <div className="px-4 py-3 bg-gradient-to-r from-gray-800/60 to-gray-700/60 backdrop-blur-sm rounded-lg border border-gray-600/20">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-gray-400 font-medium">Version</span>
+                <span className="text-[#00F5FF] font-bold">2.0.0</span>
+              </div>
+              <div className="flex items-center justify-between text-xs mt-1">
+                <span className="text-gray-400 font-medium">Status</span>
+                <span className="text-green-400 font-bold flex items-center">
+                  <div className="w-2 h-2 bg-green-400 rounded-full mr-1 animate-pulse"></div>
+                  Online
+                </span>
               </div>
             </div>
-            <button className="flex items-center w-full px-3 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors text-sm">
-              <LogOut className="w-4 h-4 mr-3" />
-              Logout
+            <button className="flex items-center w-full px-4 py-3 text-gray-300 hover:bg-gradient-to-r hover:from-red-600/20 hover:to-red-500/20 hover:text-red-400 rounded-lg transition-all duration-200 font-medium backdrop-blur-sm border border-transparent hover:border-red-500/30">
+              <LogOut className="w-5 h-5 mr-3" />
+              Sign Out
             </button>
           </div>
         )}
 
         {isCollapsed && (
-          <div className="flex flex-col items-center space-y-2">
-            <button className="p-2 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg transition-colors">
-              <LogOut className="w-4 h-4" />
+          <div className="flex flex-col items-center space-y-4">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <button className="p-3 text-gray-400 hover:bg-red-600/20 hover:text-red-400 rounded-lg transition-all duration-200">
+              <LogOut className="w-5 h-5" />
             </button>
           </div>
         )}

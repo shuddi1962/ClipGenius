@@ -1,264 +1,259 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import Card from '@/components/Card'
-import Button from '@/components/Button'
-import { BarChart3, Users, FileText, Settings, TrendingUp, Zap } from 'lucide-react'
-import { dbService } from '@/lib/database'
+import { Users, DollarSign, BarChart3, Shield, Settings, Key, Activity } from 'lucide-react'
+import { insforge } from '@/lib/insforge'
+
+interface AdminStats {
+  totalUsers: number
+  totalWorkspaces: number
+  totalRevenue: number
+  activeSubscriptions: number
+  totalLeads: number
+  totalCampaigns: number
+  apiUsage: any
+  recentSignups: any[]
+  systemHealth: any
+}
 
 export default function AdminDashboard() {
-  const [user, setUser] = useState<any>(null)
-  const [stats, setStats] = useState({
-    totalUsers: 0,
-    totalContent: 0,
-    activeUsers: 0,
-    totalViews: 0
-  })
-  const [isLoading, setIsLoading] = useState(true)
+  const [stats, setStats] = useState<AdminStats | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'billing' | 'api' | 'system'>('overview')
 
   useEffect(() => {
-    const loadAdminData = async () => {
-      try {
-        const currentUser = await dbService.getCurrentUser()
-        setUser(currentUser)
-
-        // In a real application, you'd have admin APIs to get these stats
-        // For now, we'll show placeholder data
-        setStats({
-          totalUsers: 1, // Current user
-          totalContent: 0, // Would come from admin API
-          activeUsers: 1,
-          totalViews: 0
-        })
-      } catch (error) {
-        console.error('Error loading admin data:', error)
-      } finally {
-        setIsLoading(false)
-      }
+    if (activeTab === 'overview') {
+      fetchAdminStats()
     }
+  }, [activeTab])
 
-    loadAdminData()
-  }, [])
+  const fetchAdminStats = async () => {
+    try {
+      // This would require admin permissions in InsForge
+      // For now, we'll show mock data
+      const mockStats: AdminStats = {
+        totalUsers: 1247,
+        totalWorkspaces: 892,
+        totalRevenue: 45680,
+        activeSubscriptions: 456,
+        totalLeads: 89456,
+        totalCampaigns: 1247,
+        apiUsage: {
+          apify: 45600,
+          sendgrid: 12340,
+          twilio: 8900,
+          claude: 5670
+        },
+        recentSignups: [
+          { email: 'user1@example.com', plan: 'pro', date: '2024-04-19' },
+          { email: 'user2@example.com', plan: 'starter', date: '2024-04-18' },
+          { email: 'user3@example.com', plan: 'free', date: '2024-04-18' }
+        ],
+        systemHealth: {
+          database: 'healthy',
+          apis: 'healthy',
+          storage: 'healthy',
+          uptime: '99.9%'
+        }
+      }
 
-  if (isLoading) {
-    return (
-      <div className="p-6 lg:p-8">
-        <div className="animate-pulse space-y-6">
-          <div className="h-8 w-64 bg-gray-200 rounded" />
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map(i => (
-              <div key={i} className="h-32 bg-gray-200 rounded-xl" />
-            ))}
-          </div>
-        </div>
-      </div>
-    )
+      setStats(mockStats)
+    } catch (error) {
+      console.error('Error fetching admin stats:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  if (!user) {
+  if (loading && activeTab === 'overview') {
     return (
-      <div className="p-6 lg:p-8">
-        <Card className="text-center py-16">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Users className="w-8 h-8 text-red-600" />
-          </div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">Access Denied</h3>
-          <p className="text-gray-600 mb-6">You need to be signed in as an admin to access this page.</p>
-          <Link href="/settings">
-            <Button>Go to Settings</Button>
-          </Link>
-        </Card>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#00F5FF]"></div>
       </div>
     )
   }
 
   return (
-    <div className="p-6 lg:p-8">
+    <div className="max-w-7xl mx-auto p-6">
+      {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-roshanal-navy mb-2">Admin Dashboard</h1>
-        <p className="text-gray-600">Manage users, content, and platform analytics</p>
-        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-sm text-blue-800">
-            <strong>👋 Welcome back, {user.name || user.email}!</strong><br />
-            This admin dashboard provides insights into platform usage and user management.
-          </p>
+        <h1 className="text-3xl font-bold text-white mb-2">Admin Dashboard</h1>
+        <p className="text-gray-300">Platform management and analytics</p>
+      </div>
+
+      {/* Navigation Tabs */}
+      <div className="flex gap-4 mb-8 border-b border-gray-700">
+        {[
+          { id: 'overview', label: 'Overview', icon: BarChart3 },
+          { id: 'users', label: 'Users', icon: Users },
+          { id: 'billing', label: 'Billing', icon: DollarSign },
+          { id: 'api', label: 'API Keys', icon: Key },
+          { id: 'system', label: 'System', icon: Activity }
+        ].map(tab => {
+          const Icon = tab.icon
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as any)}
+              className={`flex items-center gap-2 px-4 py-2 border-b-2 transition-colors ${
+                activeTab === tab.id
+                  ? 'border-[#00F5FF] text-[#00F5FF]'
+                  : 'border-transparent text-gray-400 hover:text-white'
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              {tab.label}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Overview Tab */}
+      {activeTab === 'overview' && stats && (
+        <div className="space-y-8">
+          {/* Key Metrics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-2xl font-bold text-[#00F5FF]">{stats.totalUsers.toLocaleString()}</div>
+                  <div className="text-gray-400 text-sm">Total Users</div>
+                </div>
+                <Users className="w-8 h-8 text-[#00F5FF]" />
+              </div>
+            </div>
+
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-2xl font-bold text-green-400">{stats.totalWorkspaces.toLocaleString()}</div>
+                  <div className="text-gray-400 text-sm">Workspaces</div>
+                </div>
+                <Shield className="w-8 h-8 text-green-400" />
+              </div>
+            </div>
+
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-2xl font-bold text-yellow-400">${stats.totalRevenue.toLocaleString()}</div>
+                  <div className="text-gray-400 text-sm">Revenue</div>
+                </div>
+                <DollarSign className="w-8 h-8 text-yellow-400" />
+              </div>
+            </div>
+
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-2xl font-bold text-blue-400">{stats.activeSubscriptions}</div>
+                  <div className="text-gray-400 text-sm">Active Subs</div>
+                </div>
+                <BarChart3 className="w-8 h-8 text-blue-400" />
+              </div>
+            </div>
+
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-2xl font-bold text-purple-400">{stats.totalLeads.toLocaleString()}</div>
+                  <div className="text-gray-400 text-sm">Total Leads</div>
+                </div>
+                <Users className="w-8 h-8 text-purple-400" />
+              </div>
+            </div>
+
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-2xl font-bold text-orange-400">{stats.totalCampaigns.toLocaleString()}</div>
+                  <div className="text-gray-400 text-sm">Campaigns</div>
+                </div>
+                <BarChart3 className="w-8 h-8 text-orange-400" />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* API Usage */}
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">API Usage This Month</h3>
+              <div className="space-y-3">
+                {Object.entries(stats.apiUsage).map(([api, usage]) => (
+                  <div key={api} className="flex items-center justify-between">
+                    <span className="text-gray-300 capitalize">{api}</span>
+                    <span className="text-[#00F5FF] font-semibold">{usage.toLocaleString()}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Recent Signups */}
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">Recent Signups</h3>
+              <div className="space-y-3">
+                {stats.recentSignups.map((signup, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div>
+                      <div className="text-white text-sm">{signup.email}</div>
+                      <div className="text-gray-400 text-xs">{signup.date}</div>
+                    </div>
+                    <div className="text-[#00F5FF] text-sm capitalize">{signup.plan}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* System Health */}
+          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+            <h3 className="text-lg font-semibold text-white mb-4">System Health</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {Object.entries(stats.systemHealth).map(([service, status]) => (
+                <div key={service} className="text-center">
+                  <div className={`inline-block w-3 h-3 rounded-full mb-2 ${
+                    status === 'healthy' ? 'bg-green-500' : 'bg-red-500'
+                  }`}></div>
+                  <div className="text-white font-medium capitalize">{service}</div>
+                  <div className="text-gray-400 text-sm">{status}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <Card className="text-center">
-          <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-            <Users className="w-6 h-6 text-blue-600" />
-          </div>
-          <div className="text-2xl font-bold text-gray-900 mb-1">{stats.totalUsers}</div>
-          <div className="text-sm text-gray-600">Total Users</div>
-        </Card>
+      {/* Users Tab */}
+      {activeTab === 'users' && (
+        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">User Management</h3>
+          <p className="text-gray-400">User management features would be implemented here</p>
+        </div>
+      )}
 
-        <Card className="text-center">
-          <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-            <FileText className="w-6 h-6 text-green-600" />
-          </div>
-          <div className="text-2xl font-bold text-gray-900 mb-1">{stats.totalContent}</div>
-          <div className="text-sm text-gray-600">Content Items</div>
-        </Card>
+      {/* Billing Tab */}
+      {activeTab === 'billing' && (
+        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">Billing & Subscriptions</h3>
+          <p className="text-gray-400">Billing management and subscription features would be implemented here</p>
+        </div>
+      )}
 
-        <Card className="text-center">
-          <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-            <TrendingUp className="w-6 h-6 text-purple-600" />
-          </div>
-          <div className="text-2xl font-bold text-gray-900 mb-1">{stats.activeUsers}</div>
-          <div className="text-sm text-gray-600">Active Users</div>
-        </Card>
+      {/* API Keys Tab */}
+      {activeTab === 'api' && (
+        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">API Key Management</h3>
+          <p className="text-gray-400">API key management for third-party integrations would be implemented here</p>
+        </div>
+      )}
 
-        <Card className="text-center">
-          <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-            <BarChart3 className="w-6 h-6 text-orange-600" />
-          </div>
-          <div className="text-2xl font-bold text-gray-900 mb-1">{stats.totalViews}</div>
-          <div className="text-sm text-gray-600">Total Views</div>
-        </Card>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card className="hover:shadow-lg transition-shadow">
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-roshanal-navy rounded-lg flex items-center justify-center mr-4">
-              <Users className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900">User Management</h3>
-              <p className="text-sm text-gray-600">Manage user accounts and permissions</p>
-            </div>
-          </div>
-          <div className="mt-4">
-            <Button className="w-full" disabled>
-              Coming Soon
-            </Button>
-          </div>
-        </Card>
-
-        <Card className="hover:shadow-lg transition-shadow">
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-roshanal-blue rounded-lg flex items-center justify-center mr-4">
-              <FileText className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900">Content Moderation</h3>
-              <p className="text-sm text-gray-600">Review and moderate user content</p>
-            </div>
-          </div>
-          <div className="mt-4">
-            <Button className="w-full" disabled>
-              Coming Soon
-            </Button>
-          </div>
-        </Card>
-
-        <Card className="hover:shadow-lg transition-shadow">
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4">
-              <BarChart3 className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900">Analytics</h3>
-              <p className="text-sm text-gray-600">Platform usage and performance metrics</p>
-            </div>
-          </div>
-          <div className="mt-4">
-            <Button className="w-full" disabled>
-              Coming Soon
-            </Button>
-          </div>
-        </Card>
-
-        <Card className="hover:shadow-lg transition-shadow">
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mr-4">
-              <Settings className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900">System Settings</h3>
-              <p className="text-sm text-gray-600">Configure platform settings</p>
-            </div>
-          </div>
-          <div className="mt-4">
-            <Link href="/settings" className="w-full">
-              <Button className="w-full">
-                Go to Settings
-              </Button>
-            </Link>
-          </div>
-        </Card>
-
-        <Card className="hover:shadow-lg transition-shadow">
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mr-4">
-              <Zap className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900">AI Management</h3>
-              <p className="text-sm text-gray-600">Monitor AI usage and performance</p>
-            </div>
-          </div>
-          <div className="mt-4">
-            <Button className="w-full" disabled>
-              Coming Soon
-            </Button>
-          </div>
-        </Card>
-
-        <Card className="hover:shadow-lg transition-shadow">
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center mr-4">
-              <TrendingUp className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900">Reports</h3>
-              <p className="text-sm text-gray-600">Generate usage and performance reports</p>
-            </div>
-          </div>
-          <div className="mt-4">
-            <Button className="w-full" disabled>
-              Coming Soon
-            </Button>
-          </div>
-        </Card>
-      </div>
-
-      {/* Platform Health */}
-      <div className="mt-8">
-        <Card>
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Platform Health</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <div className="w-6 h-6 bg-green-600 rounded-full"></div>
-              </div>
-              <h3 className="font-semibold text-gray-900">Database</h3>
-              <p className="text-sm text-gray-600">Online & Healthy</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <div className="w-6 h-6 bg-green-600 rounded-full"></div>
-              </div>
-              <h3 className="font-semibold text-gray-900">AI Services</h3>
-              <p className="text-sm text-gray-600">Connected</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <div className="w-6 h-6 bg-green-600 rounded-full"></div>
-              </div>
-              <h3 className="font-semibold text-gray-900">Deployment</h3>
-              <p className="text-sm text-gray-600">Active</p>
-            </div>
-          </div>
-        </Card>
-      </div>
+      {/* System Tab */}
+      {activeTab === 'system' && (
+        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">System Administration</h3>
+          <p className="text-gray-400">System monitoring and administration features would be implemented here</p>
+        </div>
+      )}
     </div>
   )
 }

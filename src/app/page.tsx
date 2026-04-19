@@ -142,6 +142,194 @@ export default function Home() {
         </div>
       </section>
 
+      {/* How It Works */}
+      <section className="py-20 px-6 lg:px-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              How It Works
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Three simple steps to automate your entire marketing operation.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 relative">
+            {/* Connection Lines */}
+            <div className="hidden md:block absolute top-24 left-1/3 right-1/3 h-0.5 bg-gradient-to-r from-[#00F5FF] to-[#FFB800]"></div>
+
+            {[
+              {
+                step: '01',
+                title: 'Add Your Business',
+                description: 'Upload your website, flyer, or describe your business. Our AI learns everything about your company, products, and target audience.',
+                icon: '📚'
+              },
+              {
+                step: '02',
+                title: 'AI Learns & Trains',
+                description: 'The AI analyzes your content, competitors, and market data to understand your unique value proposition and ideal customer profile.',
+                icon: '🧠'
+              },
+              {
+                step: '03',
+                title: 'It Works 24/7',
+                description: 'Automated lead generation, qualification, outreach campaigns, content creation, and social posting — all running on autopilot.',
+                icon: '⚡'
+              }
+            ].map((item, index) => (
+              <div key={item.step} className="text-center relative">
+                <div className="bg-gradient-to-r from-[#00F5FF] to-[#FFB800] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-black font-bold text-xl">
+                  {item.step}
+                </div>
+                <div className="text-6xl mb-4">{item.icon}</div>
+                <h3 className="text-2xl font-bold mb-3 text-[#00F5FF]">
+                  {item.title}
+                </h3>
+                <p className="text-gray-300 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Integrations Wall */}
+      <section className="py-20 px-6 lg:px-12 bg-black/10">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              Integrates With Everything
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Connect your favorite tools and platforms. 50+ integrations and growing.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 opacity-60 hover:opacity-100 transition-opacity">
+            {[
+              'Apify', 'VibeProspecting', 'Google', 'Meta', 'Instagram', 'TikTok',
+              'LinkedIn', 'Twitter/X', 'Twilio', 'SendGrid', 'Mailgun', 'ElevenLabs',
+              'Bland.ai', 'WhatsApp', 'Zapier', 'Make.com', 'Slack', 'HubSpot',
+              'Stripe', 'Paystack'
+            ].map((integration, index) => (
+              <div
+                key={integration}
+                className="bg-black/20 backdrop-blur-sm border border-[#00F5FF]/10 rounded-xl p-4 text-center hover:border-[#00F5FF]/30 transition-all"
+              >
+                <div className="text-gray-300 font-semibold">
+                  {integration}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 px-6 lg:px-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              Trusted by Businesses Worldwide
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: 'Sarah Johnson',
+                company: 'TechStart Inc.',
+                role: 'CEO',
+                content: 'ClipGenius automated our entire lead generation process. We went from 50 leads/month to 500+ while I focused on closing deals.',
+                avatar: 'SJ'
+              },
+              {
+                name: 'Michael Chen',
+                company: 'Global Solutions Ltd',
+                role: 'Marketing Director',
+                content: 'The AI qualification is incredible. It understands our ideal customers better than our sales team did.',
+                avatar: 'MC'
+              },
+              {
+                name: 'Amanda Rodriguez',
+                company: 'Creative Agency',
+                role: 'Founder',
+                content: 'Social auto-publishing saved us 20 hours/week. The content is actually better than what we were creating manually.',
+                avatar: 'AR'
+              }
+            ].map((testimonial, index) => (
+              <div
+                key={testimonial.name}
+                className="bg-black/20 backdrop-blur-sm border border-[#00F5FF]/10 rounded-2xl p-8 hover:border-[#00F5FF]/30 transition-all"
+              >
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-[#00F5FF] to-[#FFB800] rounded-full flex items-center justify-center text-black font-bold mr-4">
+                    {testimonial.avatar}
+                  </div>
+                  <div>
+                    <div className="font-bold text-[#00F5FF]">{testimonial.name}</div>
+                    <div className="text-gray-400 text-sm">{testimonial.role}, {testimonial.company}</div>
+                  </div>
+                </div>
+                <p className="text-gray-300 italic">
+                  "{testimonial.content}"
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-20 px-6 lg:px-12 bg-black/10">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              Frequently Asked Questions
+            </h2>
+          </div>
+
+          <div className="space-y-6">
+            {[
+              {
+                question: 'How does the AI learn about my business?',
+                answer: 'Upload your website, business documents, or simply describe your company. Our AI analyzes everything to understand your products, target audience, and unique value proposition.'
+              },
+              {
+                question: 'What platforms do you support for social media automation?',
+                answer: 'We support Facebook, Instagram, LinkedIn, Twitter/X, TikTok, YouTube, Pinterest, and Telegram. More platforms are added regularly.'
+              },
+              {
+                question: 'Is my data secure?',
+                answer: 'Yes, all data is encrypted and stored securely. We use enterprise-grade security and comply with GDPR and other privacy regulations.'
+              },
+              {
+                question: 'Can I cancel anytime?',
+                answer: 'Absolutely. No long-term contracts, no cancellation fees. Your data remains yours, and you can export it at any time.'
+              },
+              {
+                question: 'Do you offer white-label solutions?',
+                answer: 'Yes, our Agency plan includes white-label options so you can resell ClipGenius under your own brand.'
+              }
+            ].map((faq, index) => (
+              <div
+                key={index}
+                className="bg-black/20 backdrop-blur-sm border border-[#00F5FF]/10 rounded-xl p-6 hover:border-[#00F5FF]/30 transition-all"
+              >
+                <h3 className="text-lg font-bold text-[#00F5FF] mb-3">
+                  {faq.question}
+                </h3>
+                <p className="text-gray-300 leading-relaxed">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Section */}
       <section id="pricing" className="py-20 px-6 lg:px-12 bg-black/10">
         <div className="max-w-7xl mx-auto">

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
+import { insforge } from '@/lib/insforge'
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -28,14 +29,18 @@ export default function Login() {
     setError('')
 
     try {
-      // TODO: Implement InsForge.dev authentication
-      // For now, simulate login
-      if (formData.email && formData.password) {
-        // Simulate successful login
-        localStorage.setItem('user', JSON.stringify({ email: formData.email, name: 'User' }))
+      const { data, error } = await insforge.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      })
+
+      if (error) {
+        setError(error.message)
+        return
+      }
+
+      if (data.user) {
         router.push('/dashboard')
-      } else {
-        setError('Please fill in all fields')
       }
     } catch (error) {
       setError('Login failed. Please try again.')
@@ -44,14 +49,38 @@ export default function Login() {
     }
   }
 
-  const handleGoogleLogin = () => {
-    // TODO: Implement Google OAuth with InsForge.dev
-    setError('Google login coming soon')
+  const handleGoogleLogin = async () => {
+    try {
+      const { data, error } = await insforge.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`
+        }
+      })
+
+      if (error) {
+        setError(error.message)
+      }
+    } catch (error) {
+      setError('Google login failed. Please try again.')
+    }
   }
 
-  const handleLinkedInLogin = () => {
-    // TODO: Implement LinkedIn OAuth with InsForge.dev
-    setError('LinkedIn login coming soon')
+  const handleLinkedInLogin = async () => {
+    try {
+      const { data, error } = await insforge.auth.signInWithOAuth({
+        provider: 'linkedin',
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`
+        }
+      })
+
+      if (error) {
+        setError(error.message)
+      }
+    } catch (error) {
+      setError('LinkedIn login failed. Please try again.')
+    }
   }
 
   return (
