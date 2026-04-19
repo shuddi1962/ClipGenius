@@ -54,6 +54,19 @@ class MockInsForgeClient {
         }
       }
     },
+    getCurrentUser: async (): Promise<AuthResponse> => {
+      // Mock current user
+      return {
+        data: {
+          user: {
+            id: 'user_1',
+            email: 'user@clipgenius.com',
+            name: 'Demo User',
+            role: 'client'
+          }
+        }
+      }
+    },
     signInWithPassword: async (credentials: any): Promise<AuthResponse> => {
       // Mock login
       return {
