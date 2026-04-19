@@ -218,10 +218,9 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#00F5FF] to-[#FFB800] rounded-xl flex items-center justify-center shadow-lg">
                 <Sparkles className="w-6 h-6 text-white" />
-              </div>
-            </div>
-          </div>
         </div>
+      </div>
+    </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
@@ -700,7 +699,6 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
           </div>
         </div>
       </div>
-    </div>
     </div>
   )
 }
