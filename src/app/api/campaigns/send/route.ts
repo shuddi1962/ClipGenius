@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Filter leads with email addresses
-    const validLeads = leads.filter(lead => lead.email)
+    const validLeads = leads.filter((lead: any) => lead.email)
     if (validLeads.length === 0) {
       return NextResponse.json({ error: 'No leads with email addresses' }, { status: 400 })
     }
