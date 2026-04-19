@@ -65,5 +65,4 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </main>
     </div>
   )
-}</content>
-<parameter name="filePath">src/app/dashboard/layout.tsx
+}
