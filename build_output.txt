@@ -1,0 +1,23 @@
+
+> clipgenius@1.0.0 build
+> next build
+
+Γû▓ Next.js 16.2.3 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 33.5s
+  Running TypeScript ...
+Failed to type check.
+
+./src/app/api/campaigns/send-whatsapp/route.ts:88:37
+Type error: Parameter 'lead' implicitly has an 'any' type.
+
+  86 |
+  87 |     // Filter leads with phone numbers
+> 88 |     const validLeads = leads.filter(lead => lead.phone)
+     |                                     ^
+  89 |     if (validLeads.length === 0) {
+  90 |       return NextResponse.json({ error: 'No leads with phone numbers' }, { status: 400 })
+  91 |     }
+Next.js build worker exited with code: 1 and signal: null

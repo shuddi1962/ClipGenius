@@ -65,7 +65,7 @@ export default function SettingsPage() {
           theme: data.theme ?? 'dark'
         })
       } else {
-        setSettings(prev => ({ ...prev, user_id: userData.user.id }))
+        setSettings(prev => ({ ...prev, user_id: userData.user?.id || '' }))
       }
     } catch (error) {
       console.error('Error loading settings:', error)

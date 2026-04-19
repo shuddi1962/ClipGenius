@@ -1,0 +1,10 @@
+
+> clipgenius@1.0.0 build
+> next build
+
+Γû▓ Next.js 16.2.3 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 30.6s
+  Running TypeScript ...

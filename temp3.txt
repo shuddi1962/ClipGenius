@@ -1,0 +1,8 @@
+    if (!leads?.length) {
+      return NextResponse.json({ error: 'No valid leads found' }, { status: 400 })
+    }
+
+    // Filter leads with phone numbers
+    const validLeads = leads.filter(lead => lead.phone)
+    if (validLeads.length === 0) {
+      return NextResponse.json({ error: 'No leads with phone numbers' }, { status: 400 })

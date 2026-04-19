@@ -42,9 +42,9 @@ export async function POST(request: NextRequest) {
       calendar: contentCalendar,
       summary: {
         totalPosts: contentCalendar.length,
-        educationalPosts: contentCalendar.filter(day => day.theme.toLowerCase().includes('safety') || day.theme.toLowerCase().includes('education') || day.theme.toLowerCase().includes('tips')).length,
-        promotionalPosts: contentCalendar.filter(day => day.theme.toLowerCase().includes('special') || day.theme.toLowerCase().includes('product') || day.theme.toLowerCase().includes('showcase')).length,
-        interactivePosts: contentCalendar.filter(day => day.contentType.toLowerCase().includes('poll') || day.contentType.toLowerCase().includes('question') || day.contentType.toLowerCase().includes('story')).length
+        educationalPosts: contentCalendar.filter((day: any) => day.theme.toLowerCase().includes('safety') || day.theme.toLowerCase().includes('education') || day.theme.toLowerCase().includes('tips')).length,
+        promotionalPosts: contentCalendar.filter((day: any) => day.theme.toLowerCase().includes('special') || day.theme.toLowerCase().includes('product') || day.theme.toLowerCase().includes('showcase')).length,
+        interactivePosts: contentCalendar.filter((day: any) => day.contentType.toLowerCase().includes('poll') || day.contentType.toLowerCase().includes('question') || day.contentType.toLowerCase().includes('story')).length
       }
     })
   } catch (error) {

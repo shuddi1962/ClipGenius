@@ -64,11 +64,11 @@ export default function LeadQualificationPage() {
       setLeads(leadsData)
 
       // Calculate stats
-      const qualified = leadsData.filter(l => l.score !== null && l.score > 0)
-      const unqualified = leadsData.filter(l => l.score === null || l.score === 0)
-      const hot = leadsData.filter(l => l.tier === 'hot')
-      const warm = leadsData.filter(l => l.tier === 'warm')
-      const cold = leadsData.filter(l => l.tier === 'cold')
+      const qualified = leadsData.filter((l: any) => l.score !== null && l.score > 0)
+      const unqualified = leadsData.filter((l: any) => l.score === null || l.score === 0)
+      const hot = leadsData.filter((l: any) => l.tier === 'hot')
+      const warm = leadsData.filter((l: any) => l.tier === 'warm')
+      const cold = leadsData.filter((l: any) => l.tier === 'cold')
 
       setStats({
         total: leadsData.length,

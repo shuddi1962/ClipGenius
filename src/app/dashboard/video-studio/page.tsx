@@ -36,7 +36,7 @@ export default function VideoStudioPage() {
 
   const [newProject, setNewProject] = useState({
     title: '',
-    type: 'social' as const,
+    type: 'social' as 'social' | 'promo' | 'tutorial' | 'story',
     script: '',
     style: 'modern'
   })
@@ -98,7 +98,7 @@ export default function VideoStudioPage() {
           return (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => setActiveTab(tab.id as 'create' | 'projects' | 'templates')}
               className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-[#00F5FF]/20 to-[#FFB800]/20 text-white shadow-lg'
@@ -126,7 +126,7 @@ export default function VideoStudioPage() {
                   return (
                     <button
                       key={type.id}
-                      onClick={() => setNewProject(prev => ({ ...prev, type: type.id }))}
+                      onClick={() => setNewProject(prev => ({ ...prev, type: type.id as 'social' | 'promo' | 'tutorial' | 'story' }))}
                       className={`p-4 border-2 rounded-lg text-left transition-all ${
                         newProject.type === type.id
                           ? 'border-[#00F5FF] bg-[#00F5FF]/10'

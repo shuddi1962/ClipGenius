@@ -194,7 +194,7 @@ export async function POST(request: NextRequest) {
 
     // Update leads in database
     if (qualifiedLeads.length > 0) {
-      const updates = qualifiedLeads.map(lead => ({
+      const updates = qualifiedLeads.map((lead: any) => ({
         id: lead.id,
         score: lead.score,
         tier: lead.tier,

@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Prepare personalized emails
-    const messages = validLeads.map(lead => {
+    const messages = validLeads.map((lead: any) => {
       // Replace variables in subject and content
       let subject = template.subject || 'Campaign Email'
       let html = template.body_html || template.body_text || ''
@@ -150,7 +150,7 @@ export async function POST(request: NextRequest) {
       .eq('id', campaignId)
 
     // Create campaign logs
-    const logEntries = validLeads.map(lead => ({
+    const logEntries = validLeads.map((lead: any) => ({
       campaign_id: campaignId,
       lead_id: lead.id,
       channel: 'email',

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Sparkles, FileText, Copy, Download, RefreshCw, Wand2, Target, Users, TrendingUp } from 'lucide-react'
+import { Sparkles, FileText, Copy, Download, RefreshCw, Wand2, Target, Users, TrendingUp, Mail } from 'lucide-react'
 
 interface GeneratedContent {
   id: string
@@ -161,7 +161,7 @@ DM to learn how we can transform your business!`
                 return (
                   <button
                     key={type.id}
-                    onClick={() => setContentType(type.id)}
+                    onClick={() => setContentType(type.id as 'post' | 'email' | 'ad' | 'bio')}
                     className={`p-4 border-2 rounded-lg text-left transition-all ${
                       contentType === type.id
                         ? 'border-[#00F5FF] bg-[#00F5FF]/10'

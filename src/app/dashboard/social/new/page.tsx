@@ -123,7 +123,7 @@ export default function NewSocialPostPage() {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.FormEvent
+    e.preventDefault()
     if (formData.platforms.length === 0) {
       alert('Please select at least one platform')
       return

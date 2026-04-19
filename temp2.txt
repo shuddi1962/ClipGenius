@@ -1,0 +1,10 @@
+    }
+
+    let sentCount = 0
+    let failedCount = 0
+
+    // Send WhatsApp messages (with rate limiting to avoid spam)
+    for (const lead of validLeads) {
+      try {
+        // Personalize message
+        let message = template.body_text || 'Hello from ClipGenius!'

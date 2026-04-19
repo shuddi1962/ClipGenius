@@ -28,6 +28,7 @@ export interface DatabaseTable extends Promise<{ data: any, error: any }> {
   select: (columns?: string) => DatabaseTable
   insert: (data: any) => DatabaseTable
   update: (data: any) => DatabaseTable
+  upsert: (data: any) => DatabaseTable
   delete: () => DatabaseTable
   eq: (column: string, value: any) => DatabaseTable
   gte: (column: string, value: any) => DatabaseTable
@@ -100,11 +101,12 @@ class MockInsForgeClient {
 }
 
 class MockDatabaseTable {
-  private queryType: 'select' | 'insert' | 'update' | 'delete' = 'select'
+  private queryType: 'select' | 'insert' | 'update' | 'upsert' | 'delete' = 'select'
   private isSingle = false
   private filters: any = {}
   private insertData: any = null
   private updateData: any = null
+  private upsertData: any = null
   private promise: Promise<{ data: any, error: any }>
 
   constructor(private table: string) {
@@ -125,6 +127,12 @@ class MockDatabaseTable {
   update(data: any): MockDatabaseTable {
     this.queryType = 'update'
     this.updateData = data
+    return this
+  }
+
+  upsert(data: any): MockDatabaseTable {
+    this.queryType = 'upsert'
+    this.upsertData = data
     return this
   }
 
@@ -190,6 +198,9 @@ class MockDatabaseTable {
           break
         case 'update':
           result = this.updateData
+          break
+        case 'upsert':
+          result = { ...this.upsertData, id: `${this.table}_${Date.now()}` }
           break
         case 'delete':
           result = null

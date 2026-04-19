@@ -1,0 +1,10 @@
+    })
+
+  } catch (error) {
+    console.error('WhatsApp campaign send error:', error)
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Send failed' },
+      { status: 500 }
+    )
+  }
+}

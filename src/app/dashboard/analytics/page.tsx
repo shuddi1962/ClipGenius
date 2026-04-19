@@ -73,13 +73,13 @@ export default function AnalyticsPage() {
       // Process data
       const analyticsData: AnalyticsData = {
         totalLeads: leads?.length || 0,
-        qualifiedLeads: leads?.filter(l => l.score && l.score > 50).length || 0,
+        qualifiedLeads: leads?.filter((l: any) => l.score && l.score > 50).length || 0,
         conversionRate: 0,
         campaignsSent: campaigns?.length || 0,
-        emailOpens: campaigns?.reduce((sum, c) => sum + (c.stats?.opened || 0), 0) || 0,
-        emailClicks: campaigns?.reduce((sum, c) => sum + (c.stats?.clicked || 0), 0) || 0,
-        whatsappSent: campaigns?.filter(c => c.type === 'whatsapp').reduce((sum, c) => sum + (c.stats?.sent || 0), 0) || 0,
-        smsSent: campaigns?.filter(c => c.type === 'sms').reduce((sum, c) => sum + (c.stats?.sent || 0), 0) || 0,
+        emailOpens: campaigns?.reduce((sum: number, c: any) => sum + (c.stats?.opened || 0), 0) || 0,
+        emailClicks: campaigns?.reduce((sum: number, c: any) => sum + (c.stats?.clicked || 0), 0) || 0,
+        whatsappSent: campaigns?.filter((c: any) => c.type === 'whatsapp').reduce((sum: number, c: any) => sum + (c.stats?.sent || 0), 0) || 0,
+        smsSent: campaigns?.filter((c: any) => c.type === 'sms').reduce((sum: number, c: any) => sum + (c.stats?.sent || 0), 0) || 0,
         voiceCalls: 0, // Would come from call logs
         totalRevenue: 0, // Would come from subscriptions/payments
         recentActivity: [],
@@ -95,7 +95,7 @@ export default function AnalyticsPage() {
 
       // Process lead sources
       const sourceCounts: { [key: string]: number } = {}
-      leads?.forEach(lead => {
+      leads?.forEach((lead: any) => {
         sourceCounts[lead.source] = (sourceCounts[lead.source] || 0) + 1
       })
       analyticsData.leadSources = Object.entries(sourceCounts).map(([source, count]) => ({
@@ -106,10 +106,10 @@ export default function AnalyticsPage() {
 
       // Process top campaigns
       analyticsData.topPerformingCampaigns = campaigns
-        ?.filter(c => c.stats?.sent > 0)
-        .sort((a, b) => (b.stats?.opened || 0) - (a.stats?.opened || 0))
+        ?.filter((c: any) => c.stats?.sent > 0)
+        .sort((a: any, b: any) => (b.stats?.opened || 0) - (a.stats?.opened || 0))
         .slice(0, 5)
-        .map(c => ({
+        .map((c: any) => ({
           name: c.name,
           type: c.type,
           sent: c.stats?.sent || 0,
@@ -120,13 +120,13 @@ export default function AnalyticsPage() {
 
       // Recent activity (last 10 items)
       const activities = [
-        ...(leads?.slice(-5).map(l => ({
+        ...(leads?.slice(-5).map((l: any) => ({
           type: 'lead',
           description: `New lead: ${l.first_name || ''} ${l.last_name || ''}`.trim() || 'Unknown lead',
           timestamp: l.created_at,
           icon: Users
         })) || []),
-        ...(campaigns?.slice(-5).map(c => ({
+        ...(campaigns?.slice(-5).map((c: any) => ({
           type: 'campaign',
           description: `Campaign sent: ${c.name}`,
           timestamp: c.created_at,

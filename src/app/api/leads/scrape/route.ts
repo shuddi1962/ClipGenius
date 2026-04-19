@@ -267,13 +267,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Filter out duplicates and invalid entries
-    const validLeads = leads.filter(lead =>
+    const validLeads = leads.filter((lead: any) =>
       lead.company || lead.email || lead.phone || lead.website
     )
 
     // Remove duplicates based on email/phone/company
-    const uniqueLeads = validLeads.filter((lead, index, self) =>
-      index === self.findIndex(l =>
+    const uniqueLeads = validLeads.filter((lead: any, index: number, self: any[]) =>
+      index === self.findIndex((l: any) =>
         (l.email && l.email === lead.email) ||
         (l.phone && l.phone === lead.phone) ||
         (l.company && l.company === lead.company)

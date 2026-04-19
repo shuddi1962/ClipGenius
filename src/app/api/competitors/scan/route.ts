@@ -70,11 +70,11 @@ export async function POST(request: NextRequest) {
 async function analyzeCompetitor(competitor: any) {
   const analysis = {
     posting_frequency: 0,
-    top_hashtags: [],
-    content_themes: [],
+    top_hashtags: [] as string[],
+    content_themes: [] as string[],
     social_followers: {},
-    website_keywords: [],
-    competitor_insights: [],
+    website_keywords: [] as string[],
+    competitor_insights: [] as string[],
     last_updated: new Date().toISOString()
   }
 
