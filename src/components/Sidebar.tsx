@@ -45,18 +45,23 @@ import {
 interface SidebarProps {
   isCollapsed?: boolean
   onToggle?: () => void
+  userRole?: 'client' | 'admin'
 }
 
-export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps) {
+export default function Sidebar({ isCollapsed = false, onToggle, userRole: propUserRole }: SidebarProps) {
   const pathname = usePathname()
   const [userRole, setUserRole] = useState<'client' | 'admin'>('client')
 
-  // Mock user role detection - in real app, get from auth context
+  // Get user role from props or fallback to pathname detection
   useEffect(() => {
-    // This would normally come from your auth context
-    const mockRole = pathname.includes('/admin') ? 'admin' : 'client'
-    setUserRole(mockRole)
-  }, [pathname])
+    if (propUserRole) {
+      setUserRole(propUserRole)
+    } else {
+      // Fallback to pathname detection for backward compatibility
+      const mockRole = pathname.includes('/admin') ? 'admin' : 'client'
+      setUserRole(mockRole)
+    }
+  }, [propUserRole, pathname])
 
   const clientNavigation = [
     { name: 'Dashboard', href: '/dashboard', icon: Home, description: 'Overview & insights', color: 'text-blue-400' },
@@ -83,7 +88,6 @@ export default function Sidebar({ isCollapsed = false, onToggle }: SidebarProps)
 
     // Business Tools
     { name: 'Products', href: '/dashboard/products', icon: ShoppingBag, description: 'Manage product catalog', color: 'text-amber-400' },
-    { name: 'Analytics', href: '/dashboard/analytics', icon: PieChart, description: 'Performance metrics', color: 'text-lime-400' },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings, description: 'Account & preferences', color: 'text-slate-400' }
   ]
 

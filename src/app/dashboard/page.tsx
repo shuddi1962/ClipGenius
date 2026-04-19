@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
-import { TrendingUp, FileText, Video, Bookmark, Sparkles, RefreshCw, Star, Calendar, Users } from 'lucide-react'
+import { TrendingUp, FileText, Video, Bookmark, Sparkles, RefreshCw, Star, Calendar, Users, Send } from 'lucide-react'
 import { useSettings } from '@/lib/hooks'
 import { AIService } from '@/lib/ai-service'
 import { toast } from 'sonner'
@@ -299,7 +299,7 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
         </Card>
       </div>
 
-      {/* Metrics Cards */}
+      {/* User Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <Card className="text-center bg-gray-800 border-gray-700">
           <div className="flex items-center justify-center w-12 h-12 bg-green-900/50 rounded-lg mx-auto mb-3">
@@ -321,19 +321,19 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
 
         <Card className="text-center bg-gray-800 border-gray-700">
           <div className="flex items-center justify-center w-12 h-12 bg-purple-900/50 rounded-lg mx-auto mb-3">
-            <Video className="w-6 h-6 text-purple-400" />
+            <Users className="w-6 h-6 text-purple-400" />
           </div>
-          <div className="text-2xl font-bold text-white mb-1">12</div>
-          <div className="text-sm text-gray-400">Videos Scripted</div>
-          <div className="text-xs text-purple-400 mt-1">+15% this week</div>
+          <div className="text-2xl font-bold text-white mb-1">156</div>
+          <div className="text-sm text-gray-400">Active Leads</div>
+          <div className="text-xs text-purple-400 mt-1">+12% this week</div>
         </Card>
 
         <Card className="text-center bg-gray-800 border-gray-700">
           <div className="flex items-center justify-center w-12 h-12 bg-orange-900/50 rounded-lg mx-auto mb-3">
-            <TrendingUp className="w-6 h-6 text-orange-400" />
+            <Send className="w-6 h-6 text-orange-400" />
           </div>
           <div className="text-2xl font-bold text-white mb-1">8</div>
-          <div className="text-sm text-gray-400">Trending Topics</div>
+          <div className="text-sm text-gray-400">Campaigns Sent</div>
           <div className="text-xs text-orange-400 mt-1">+25% this week</div>
         </Card>
       </div>
@@ -341,8 +341,8 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
       {/* Quick Actions */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link href="/dashboard/content">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link href="/dashboard/content-generator">
             <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-blue-500 bg-gray-800 border-gray-700">
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
@@ -356,15 +356,15 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
             </Card>
           </Link>
 
-          <Link href="/dashboard/scheduler">
+          <Link href="/dashboard/social">
             <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-blue-500 bg-gray-800 border-gray-700">
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
                   <Calendar className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">Schedule Posts</h3>
-                  <p className="text-sm text-gray-400">Social media automation</p>
+                  <h3 className="font-semibold text-white">Social Media</h3>
+                  <p className="text-sm text-gray-400">Schedule & manage posts</p>
                 </div>
               </div>
             </Card>
@@ -379,6 +379,20 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
                 <div>
                   <h3 className="font-semibold text-white">Manage Leads</h3>
                   <p className="text-sm text-gray-400">View and qualify prospects</p>
+                </div>
+              </div>
+            </Card>
+          </Link>
+
+          <Link href="/dashboard/campaigns">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-blue-500 bg-gray-800 border-gray-700">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                  <Send className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-white">Run Campaigns</h3>
+                  <p className="text-sm text-gray-400">Email, SMS & WhatsApp</p>
                 </div>
               </div>
             </Card>
