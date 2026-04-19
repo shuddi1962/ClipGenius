@@ -200,30 +200,23 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
   })
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="p-6 lg:p-8">
       {/* Header */}
-      <div className="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700/50 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-[#00F5FF] via-[#FFB800] to-[#FF6B6B] bg-clip-text text-transparent">
-                Welcome back, {user?.name || 'User'}
-              </h1>
-              <p className="text-gray-400 text-sm mt-1">{currentDate}</p>
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-[#00F5FF] via-[#FFB800] to-[#FF6B6B] bg-clip-text text-transparent">
+              Welcome back, {user?.name || 'Demo User'}
+            </h1>
+            <p className="text-gray-400">{currentDate}</p>
+          </div>
+          <div className="hidden lg:block">
+            <div className="w-16 h-16 bg-gradient-to-r from-[#00F5FF] to-[#FFB800] rounded-full flex items-center justify-center shadow-lg">
+              <Sparkles className="w-8 h-8 text-white" />
             </div>
-            <div className="flex items-center gap-4">
-              <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-gray-700/50 rounded-lg">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span className="text-sm text-gray-300">All Systems Operational</span>
-              </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-[#00F5FF] to-[#FFB800] rounded-xl flex items-center justify-center shadow-lg">
-                <Sparkles className="w-6 h-6 text-white" />
+          </div>
         </div>
       </div>
-    </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
         {/* Welcome Banner for New Users */}
         {showWelcome && user && (
           <Card className="mb-8 border-l-4 border-l-[#00F5FF] bg-gradient-to-r from-[#00F5FF]/10 to-[#FFB800]/10 border-[#00F5FF]/50">
@@ -698,7 +691,6 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
             </Card>
           </div>
         </div>
-      </div>
     </div>
   )
 }
