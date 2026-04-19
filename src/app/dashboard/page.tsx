@@ -200,53 +200,175 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
   })
 
   return (
-    <div className="p-6 lg:p-8">
-      {/* Hero Section */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-3xl lg:text-4xl font-bold text-white mb-2">
-              Good morning, {user?.name || 'John'}
-            </h1>
-            <p className="text-gray-400">{currentDate}</p>
-          </div>
-          <div className="hidden lg:block">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-              <Sparkles className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gray-900">
+      {/* Header */}
+      <div className="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700/50 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-[#00F5FF] via-[#FFB800] to-[#FF6B6B] bg-clip-text text-transparent">
+                Welcome back, {user?.name || 'User'}
+              </h1>
+              <p className="text-gray-400 text-sm mt-1">{currentDate}</p>
             </div>
-          </div>
-        </div>
-
-      {/* Welcome Banner for New Users */}
-      {showWelcome && user && (
-        <Card className="mb-6 border-l-4 border-l-green-500 bg-gradient-to-r from-green-900/20 to-blue-900/20 border-green-500/50">
-          <div className="flex items-start">
-            <div className="flex-shrink-0">
-              <Star className="w-6 h-6 text-green-400" />
-            </div>
-            <div className="ml-3 flex-1">
-              <h3 className="text-lg font-semibold text-green-400 mb-1">
-                🎉 Welcome to ClipGenius, {user.name || 'User'}!
-              </h3>
-              <p className="text-green-300 mb-3">
-                Your AI-powered marketing automation platform is ready. Start growing your business with intelligent lead generation, content creation, and automated outreach.
-              </p>
-              <div className="flex gap-3">
-                <Link href="/dashboard/settings">
-                  <Button size="sm" className="bg-green-600 hover:bg-green-700">
-                    Configure Settings
-                  </Button>
-                </Link>
-                <Button size="sm" variant="outline" onClick={() => setShowWelcome(false)}>
-                  Dismiss
-                </Button>
+            <div className="flex items-center gap-4">
+              <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-gray-700/50 rounded-lg">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-sm text-gray-300">All Systems Operational</span>
+              </div>
+              <div className="w-12 h-12 bg-gradient-to-br from-[#00F5FF] to-[#FFB800] rounded-xl flex items-center justify-center shadow-lg">
+                <Sparkles className="w-6 h-6 text-white" />
               </div>
             </div>
           </div>
-        </Card>
-      )}
+        </div>
+      </div>
 
-      {/* Today's Top Content Idea */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+        {/* Welcome Banner for New Users */}
+        {showWelcome && user && (
+          <Card className="mb-8 border-l-4 border-l-[#00F5FF] bg-gradient-to-r from-[#00F5FF]/10 to-[#FFB800]/10 border-[#00F5FF]/50">
+            <div className="flex items-start">
+              <div className="flex-shrink-0">
+                <Star className="w-8 h-8 text-[#00F5FF]" />
+              </div>
+              <div className="ml-4 flex-1">
+                <h3 className="text-xl font-bold text-[#00F5FF] mb-2">
+                  🚀 Welcome to ClipGenius Pro!
+                </h3>
+                <p className="text-gray-300 mb-4">
+                  Your AI-powered marketing automation platform is ready. Start growing your business with intelligent lead generation, content creation, and automated outreach.
+                </p>
+                <div className="flex gap-3">
+                  <Link href="/dashboard/business">
+                    <Button className="bg-gradient-to-r from-[#00F5FF] to-[#FFB800] hover:from-[#00F5FF]/80 hover:to-[#FFB800]/80">
+                      Setup Business Profile
+                    </Button>
+                  </Link>
+                  <Button variant="outline" onClick={() => setShowWelcome(false)} className="border-gray-600 text-gray-300 hover:bg-gray-700">
+                    Skip for Now
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Card>
+        )}
+
+        {/* Quick Stats Overview */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <Card className="bg-gradient-to-br from-blue-900/20 to-blue-800/20 border-blue-500/30">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-3xl font-bold text-blue-400 mb-1">{stats.totalContent}</div>
+                <div className="text-sm text-gray-400">Content Created</div>
+                <div className="text-xs text-blue-300 mt-1">+{stats.thisWeek} this week</div>
+              </div>
+              <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                <FileText className="w-6 h-6 text-blue-400" />
+              </div>
+            </div>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-green-900/20 to-green-800/20 border-green-500/30">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-3xl font-bold text-green-400 mb-1">156</div>
+                <div className="text-sm text-gray-400">Active Leads</div>
+                <div className="text-xs text-green-300 mt-1">+12 qualified</div>
+              </div>
+              <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+                <Users className="w-6 h-6 text-green-400" />
+              </div>
+            </div>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-900/20 to-purple-800/20 border-purple-500/30">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-3xl font-bold text-purple-400 mb-1">8</div>
+                <div className="text-sm text-gray-400">Campaigns Sent</div>
+                <div className="text-xs text-purple-300 mt-1">92% open rate</div>
+              </div>
+              <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                <Send className="w-6 h-6 text-purple-400" />
+              </div>
+            </div>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-orange-900/20 to-orange-800/20 border-orange-500/30">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-3xl font-bold text-orange-400 mb-1">23</div>
+                <div className="text-sm text-gray-400">Ideas Saved</div>
+                <div className="text-xs text-orange-300 mt-1">Ready to use</div>
+              </div>
+              <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                <Bookmark className="w-6 h-6 text-orange-400" />
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* AI Content Idea of the Day */}
+        <Card className="mb-8 bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-600/50">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-1">🎯 AI Content Idea of the Day</h2>
+              <p className="text-gray-400">Fresh content suggestion powered by AI</p>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={refreshTodayIdea}
+              disabled={isLoadingIdea}
+              className="border-gray-600 text-gray-300 hover:bg-gray-700"
+            >
+              <RefreshCw className={`w-4 h-4 mr-2 ${isLoadingIdea ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
+          </div>
+
+          {isLoadingIdea ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00F5FF]"></div>
+            </div>
+          ) : todayIdea ? (
+            <div className="bg-gradient-to-r from-gray-700/50 to-gray-600/50 p-6 rounded-xl border border-gray-600/30">
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <h3 className="text-xl font-bold text-white">{todayIdea.title}</h3>
+                    <span className="px-3 py-1 bg-[#00F5FF]/20 text-[#00F5FF] text-sm rounded-full border border-[#00F5FF]/30">
+                      {todayIdea.format}
+                    </span>
+                  </div>
+                  <p className="text-gray-300 text-lg mb-4">{todayIdea.hook}</p>
+                  <p className="text-gray-400 text-sm mb-4 line-clamp-3">{todayIdea.caption}</p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {todayIdea.hashtags?.slice(0, 5).map((hashtag: string, index: number) => (
+                  <span key={index} className="px-3 py-1 bg-gray-700 text-gray-300 text-sm rounded-lg">
+                    {hashtag}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex gap-3">
+                <Button className="bg-gradient-to-r from-[#00F5FF] to-[#FFB800] hover:from-[#00F5FF]/80 hover:to-[#FFB800]/80">
+                  Use This Idea
+                </Button>
+                <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
+                  Save to Library
+                </Button>
+                <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
+                  Schedule Post
+                </Button>
+              </div>
+            </div>
+          ) : null}
+        </Card>
         <Card className="mb-6 border-l-4 border-l-roshanal-blue">
           <div className="flex items-start justify-between mb-4">
             <div>
@@ -338,105 +460,247 @@ Response format: JSON object with keys: title, format, hook, caption, hashtags (
         </Card>
       </div>
 
-      {/* Quick Actions */}
-      <div className="mb-8">
-        <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Link href="/dashboard/content-generator">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-blue-500 bg-gray-800 border-gray-700">
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
-                  <FileText className="w-6 h-6 text-white" />
+        {/* Main Feature Grid */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-white mb-6">🚀 Marketing Automation Suite</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Content Creation */}
+            <Link href="/dashboard/content-generator">
+              <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 hover:border-[#00F5FF] bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-700 hover:from-[#00F5FF]/5 hover:to-[#FFB800]/5">
+                <div className="p-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <FileText className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#00F5FF] transition-colors">Content Generator</h3>
+                  <p className="text-gray-400 mb-4">AI-powered content creation for blogs, social media, emails, and more</p>
+                  <div className="flex items-center text-sm text-gray-500">
+                    <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded">AI-Powered</span>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-white">Generate Content</h3>
-                  <p className="text-sm text-gray-400">AI-powered content creation</p>
-                </div>
-              </div>
-            </Card>
-          </Link>
+              </Card>
+            </Link>
 
-          <Link href="/dashboard/social">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-blue-500 bg-gray-800 border-gray-700">
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
-                  <Calendar className="w-6 h-6 text-white" />
+            {/* Social Media Management */}
+            <Link href="/dashboard/social">
+              <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 hover:border-[#FFB800] bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-700 hover:from-[#FFB800]/5 hover:to-[#00F5FF]/5">
+                <div className="p-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Instagram className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#FFB800] transition-colors">Social Media Hub</h3>
+                  <p className="text-gray-400 mb-4">Schedule posts, manage multiple platforms, and track engagement</p>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded">Multi-Platform</span>
+                    <span className="px-2 py-1 bg-pink-500/20 text-pink-400 rounded">Auto-Schedule</span>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-white">Social Media</h3>
-                  <p className="text-sm text-gray-400">Schedule & manage posts</p>
-                </div>
-              </div>
-            </Card>
-          </Link>
+              </Card>
+            </Link>
 
-          <Link href="/dashboard/leads">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-blue-500 bg-gray-800 border-gray-700">
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
-                  <Users className="w-6 h-6 text-white" />
+            {/* Lead Management */}
+            <Link href="/dashboard/leads">
+              <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 hover:border-green-500 bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-700 hover:from-green-500/5 hover:to-blue-500/5">
+                <div className="p-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Users className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">Lead Intelligence</h3>
+                  <p className="text-gray-400 mb-4">AI-powered lead generation, qualification, and management</p>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded">AI Scoring</span>
+                    <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded">Auto-Import</span>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-white">Manage Leads</h3>
-                  <p className="text-sm text-gray-400">View and qualify prospects</p>
-                </div>
-              </div>
-            </Card>
-          </Link>
+              </Card>
+            </Link>
 
-          <Link href="/dashboard/campaigns">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-blue-500 bg-gray-800 border-gray-700">
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
-                  <Send className="w-6 h-6 text-white" />
+            {/* Campaign Automation */}
+            <Link href="/dashboard/campaigns">
+              <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 hover:border-red-500 bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-700 hover:from-red-500/5 hover:to-orange-500/5">
+                <div className="p-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Send className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">Campaign Engine</h3>
+                  <p className="text-gray-400 mb-4">Automated email, SMS, and WhatsApp campaigns with A/B testing</p>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded">Multi-Channel</span>
+                    <span className="px-2 py-1 bg-orange-500/20 text-orange-400 rounded">A/B Testing</span>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-white">Run Campaigns</h3>
-                  <p className="text-sm text-gray-400">Email, SMS & WhatsApp</p>
+              </Card>
+            </Link>
+
+            {/* Voice AI Agent */}
+            <Link href="/dashboard/voice">
+              <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 hover:border-cyan-500 bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-700 hover:from-cyan-500/5 hover:to-blue-500/5">
+                <div className="p-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Phone className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Voice AI Agent</h3>
+                  <p className="text-gray-400 mb-4">Automated phone calls with AI conversation and lead qualification</p>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded">Conversational AI</span>
+                    <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded">24/7 Available</span>
+                  </div>
                 </div>
-              </div>
-            </Card>
-          </Link>
+              </Card>
+            </Link>
+
+            {/* Analytics & Insights */}
+            <Link href="/dashboard/analytics">
+              <Card className="group hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 hover:border-yellow-500 bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-700 hover:from-yellow-500/5 hover:to-orange-500/5">
+                <div className="p-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <TrendingUp className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors">Analytics Dashboard</h3>
+                  <p className="text-gray-400 mb-4">Comprehensive insights into campaign performance and ROI</p>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded">Real-time</span>
+                    <span className="px-2 py-1 bg-orange-500/20 text-orange-400 rounded">ROI Tracking</span>
+                  </div>
+                </div>
+              </Card>
+            </Link>
+          </div>
         </div>
-      </div>
 
-      {/* Trending in Your Niche */}
-      <Card className="bg-gray-800 border-gray-700">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-white">Trending in Your Niche</h2>
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={refreshTrendingTopics}
-            className="flex items-center border-gray-600 text-gray-300 hover:bg-gray-700"
-          >
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Refresh
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {trendingTopics.map((topic, index) => (
-            <div key={index} className="p-4 border border-gray-600 rounded-lg hover:border-blue-500 transition-colors bg-gray-700">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="font-semibold text-white text-sm">{topic.title}</h3>
-                <span className="text-xs font-medium text-green-400">{topic.trend}</span>
+        {/* Bottom Section - Trending Topics & Recent Activity */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Trending Topics */}
+          <Card className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-600/50">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-xl font-bold text-white mb-1">📈 Trending in Your Niche</h2>
+                <p className="text-gray-400 text-sm">AI-powered trend analysis</p>
               </div>
-              <p className="text-xs text-gray-300 mb-3">{topic.reason}</p>
-              <Button size="sm" variant="outline" className="w-full border-gray-600 text-gray-300 hover:bg-gray-600">
-                Create Content
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={refreshTrendingTopics}
+                className="border-gray-600 text-gray-300 hover:bg-gray-700"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Refresh
               </Button>
             </div>
-          ))}
-        </div>
 
-        <div className="mt-4 p-3 bg-gray-700 rounded-lg border border-gray-600">
-          <p className="text-sm text-gray-300">
-            <strong>💡 Pro Tip:</strong> Content about trending topics gets 3x more engagement.
-            Use our AI to create posts about these rising trends in your industry.
-          </p>
+            <div className="space-y-4">
+              {trendingTopics.map((topic, index) => (
+                <div key={index} className="p-4 bg-gray-700/50 rounded-lg border border-gray-600/30 hover:border-[#00F5FF]/30 transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-semibold text-white text-sm line-clamp-1">{topic.title}</h3>
+                    <span className="text-xs font-medium text-[#00F5FF] bg-[#00F5FF]/10 px-2 py-1 rounded">
+                      {topic.trend}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-300 mb-3 line-clamp-2">{topic.reason}</p>
+                  <Button size="sm" className="w-full bg-gradient-to-r from-[#00F5FF]/20 to-[#FFB800]/20 hover:from-[#00F5FF]/30 hover:to-[#FFB800]/30 border border-[#00F5FF]/30 text-white">
+                    Create Content
+                  </Button>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-4 p-3 bg-gradient-to-r from-[#00F5FF]/5 to-[#FFB800]/5 rounded-lg border border-[#00F5FF]/20">
+              <p className="text-sm text-gray-300">
+                <strong className="text-[#00F5FF]">💡 AI Insight:</strong> Content about trending topics gets 3x more engagement.
+                Our AI analyzes millions of social signals to find rising trends in your industry.
+              </p>
+            </div>
+          </Card>
+
+          {/* Recent Activity & Quick Actions */}
+          <div className="space-y-6">
+            {/* Recent Activity */}
+            <Card className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-600/50">
+              <h2 className="text-xl font-bold text-white mb-6">⚡ Recent Activity</h2>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg">
+                  <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                    <Users className="w-4 h-4 text-green-400" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-white font-medium">New lead qualified</p>
+                    <p className="text-xs text-gray-400">Sarah Johnson - Hot lead</p>
+                  </div>
+                  <span className="text-xs text-gray-500">2m ago</span>
+                </div>
+
+                <div className="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg">
+                  <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                    <Send className="w-4 h-4 text-blue-400" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-white font-medium">Campaign sent</p>
+                    <p className="text-xs text-gray-400">Welcome Series - 45 recipients</p>
+                  </div>
+                  <span className="text-xs text-gray-500">15m ago</span>
+                </div>
+
+                <div className="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg">
+                  <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                    <FileText className="w-4 h-4 text-purple-400" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-white font-medium">Content generated</p>
+                    <p className="text-xs text-gray-400">Social media post - 3 variants</p>
+                  </div>
+                  <span className="text-xs text-gray-500">1h ago</span>
+                </div>
+
+                <div className="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg">
+                  <div className="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="w-4 h-4 text-orange-400" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-white font-medium">Analytics updated</p>
+                    <p className="text-xs text-gray-400">Campaign performance report</p>
+                  </div>
+                  <span className="text-xs text-gray-500">2h ago</span>
+                </div>
+              </div>
+            </Card>
+
+            {/* Quick Settings */}
+            <Card className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-600/50">
+              <h2 className="text-xl font-bold text-white mb-6">⚙️ Quick Settings</h2>
+              <div className="space-y-3">
+                <Link href="/dashboard/business">
+                  <Button variant="outline" className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-700">
+                    <Building className="w-4 h-4 mr-3" />
+                    Update Business Profile
+                  </Button>
+                </Link>
+
+                <Link href="/dashboard/settings">
+                  <Button variant="outline" className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-700">
+                    <Settings className="w-4 h-4 mr-3" />
+                    Account Settings
+                  </Button>
+                </Link>
+
+                <Link href="/dashboard/competitors">
+                  <Button variant="outline" className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-700">
+                    <Target className="w-4 h-4 mr-3" />
+                    Competitor Analysis
+                  </Button>
+                </Link>
+
+                <Link href="/dashboard/workflows">
+                  <Button variant="outline" className="w-full justify-start border-gray-600 text-gray-300 hover:bg-gray-700">
+                    <Workflow className="w-4 h-4 mr-3" />
+                    Automation Workflows
+                  </Button>
+                </Link>
+              </div>
+            </Card>
+          </div>
         </div>
-      </Card>
+      </div>
+    </div>
     </div>
   )
 }
