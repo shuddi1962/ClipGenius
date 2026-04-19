@@ -11,9 +11,9 @@ interface AdminStats {
   activeSubscriptions: number
   totalLeads: number
   totalCampaigns: number
-  apiUsage: any
+  apiUsage: Record<string, number>
   recentSignups: any[]
-  systemHealth: any
+  systemHealth: Record<string, string>
 }
 
 export default function AdminDashboard() {

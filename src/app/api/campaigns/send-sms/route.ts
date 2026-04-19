@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Filter leads with phone numbers
-    const validLeads = leads.filter(lead => lead.phone)
+    const validLeads = leads.filter((lead: any) => lead.phone)
     if (validLeads.length === 0) {
       return NextResponse.json({ error: 'No leads with phone numbers' }, { status: 400 })
     }
