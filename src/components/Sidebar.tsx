@@ -43,7 +43,8 @@ import {
   DollarSign,
   Wand2,
   BookOpen,
-  Brain
+  Brain,
+  Key
 } from 'lucide-react'
 
 interface SidebarProps {
