@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
 import {
   BarChart3,
@@ -161,49 +160,46 @@ export default function AdsReporting() {
           <div className="flex flex-wrap gap-4">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-gray-400" />
-              <Select value={dateRange} onValueChange={setDateRange}>
-                <SelectTrigger className="w-48 bg-gray-700 border-gray-600 text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-800 border-gray-600">
-                  <SelectItem value="last_7_days">Last 7 days</SelectItem>
-                  <SelectItem value="last_30_days">Last 30 days</SelectItem>
-                  <SelectItem value="last_90_days">Last 90 days</SelectItem>
-                  <SelectItem value="this_month">This month</SelectItem>
-                  <SelectItem value="last_month">Last month</SelectItem>
-                </SelectContent>
-              </Select>
+              <select
+                value={dateRange}
+                onChange={(e) => setDateRange(e.target.value)}
+                className="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white"
+              >
+                <option value="last_7_days">Last 7 days</option>
+                <option value="last_30_days">Last 30 days</option>
+                <option value="last_90_days">Last 90 days</option>
+                <option value="this_month">This month</option>
+                <option value="last_month">Last month</option>
+              </select>
             </div>
 
             <div className="flex items-center gap-2">
               <Target className="w-4 h-4 text-gray-400" />
-              <Select value={platformFilter} onValueChange={setPlatformFilter}>
-                <SelectTrigger className="w-40 bg-gray-700 border-gray-600 text-white">
-                  <SelectValue placeholder="All Platforms" />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-800 border-gray-600">
-                  <SelectItem value="all">All Platforms</SelectItem>
-                  <SelectItem value="facebook">Facebook</SelectItem>
-                  <SelectItem value="instagram">Instagram</SelectItem>
-                  <SelectItem value="google">Google</SelectItem>
-                  <SelectItem value="tiktok">TikTok</SelectItem>
-                </SelectContent>
-              </Select>
+              <select
+                value={platformFilter}
+                onChange={(e) => setPlatformFilter(e.target.value)}
+                className="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white"
+              >
+                <option value="all">All Platforms</option>
+                <option value="facebook">Facebook</option>
+                <option value="instagram">Instagram</option>
+                <option value="google">Google</option>
+                <option value="tiktok">TikTok</option>
+              </select>
             </div>
 
             <div className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4 text-gray-400" />
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-32 bg-gray-700 border-gray-600 text-white">
-                  <SelectValue placeholder="All Status" />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-800 border-gray-600">
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="paused">Paused</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
-                </SelectContent>
-              </Select>
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white"
+              >
+                <option value="all">All Status</option>
+                <option value="active">Active</option>
+                <option value="paused">Paused</option>
+                <option value="completed">Completed</option>
+              </select>
             </div>
           </div>
         </CardContent>

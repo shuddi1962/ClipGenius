@@ -21,7 +21,8 @@ import {
   PenTool,
   Image,
   Video,
-  MessageSquare
+  MessageSquare,
+  ShoppingCart
 } from 'lucide-react'
 
 interface ContentSuggestion {

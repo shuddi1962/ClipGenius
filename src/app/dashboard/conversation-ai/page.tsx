@@ -330,7 +330,7 @@ export default function ConversationAI() {
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <selectedModeData?.icon className="w-5 h-5" />
+                  {selectedModeData?.icon && <selectedModeData.icon className="w-5 h-5" />}
                   {selectedModeData?.name}
                 </CardTitle>
                 <div className="text-gray-400 text-sm mt-1">

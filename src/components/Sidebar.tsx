@@ -40,7 +40,10 @@ import {
   Cpu,
   Layers,
   Rocket,
-  DollarSign
+  DollarSign,
+  Wand2,
+  BookOpen,
+  Brain
 } from 'lucide-react'
 
 interface SidebarProps {

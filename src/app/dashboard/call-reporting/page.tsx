@@ -30,7 +30,7 @@ interface Call {
   recipient: string
   direction: 'inbound' | 'outbound'
   duration: number
-  status: 'completed' | 'missed' | 'voicemail' | 'busy'
+  status: 'completed' | 'missed' | 'voicemail' | 'busy' | 'no_answer'
   outcome: 'sale' | 'follow_up' | 'no_answer' | 'not_interested' | 'qualified' | null
   timestamp: string
   recordingUrl: string | null
