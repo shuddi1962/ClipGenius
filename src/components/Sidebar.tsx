@@ -87,6 +87,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Content AI', href: '/dashboard/content-ai', icon: Sparkles, description: 'AI-powered content creation', color: 'text-violet-400' },
     { name: 'Content Generator', href: '/dashboard/content-generator', icon: Wand2, description: 'AI content creation', color: 'text-indigo-400' },
     { name: 'Courses & Memberships', href: '/dashboard/courses-memberships', icon: BookOpen, description: 'Learning management system', color: 'text-blue-400' },
+    { name: 'Email Builder', href: '/dashboard/email-builder', icon: Mail, description: 'Create email campaigns', color: 'text-cyan-400' },
     { name: 'Video Studio', href: '/dashboard/video-studio', icon: Video, description: 'AI video script generation', color: 'text-orange-400' },
     { name: 'Social Media', href: '/dashboard/social', icon: Instagram, description: 'Social posting & scheduling', color: 'text-rose-400' },
 
@@ -110,6 +111,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Compliance', href: '/dashboard/compliance', icon: Shield, description: 'Manage regulatory compliance', color: 'text-red-400' },
     { name: 'CRM', href: '/dashboard/crm', icon: UserCheck, description: 'Customer relationship management', color: 'text-rose-400' },
     { name: 'Custom Providers', href: '/dashboard/custom-providers', icon: Settings, description: 'Configure integrations', color: 'text-violet-400' },
+    { name: 'Document Management', href: '/dashboard/document-management', icon: FileText, description: 'Organize and share documents', color: 'text-sky-400' },
     { name: 'Products', href: '/dashboard/products', icon: ShoppingBag, description: 'Manage product catalog', color: 'text-amber-400' },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings, description: 'Account & preferences', color: 'text-slate-400' }
   ]
@@ -141,13 +143,13 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
       ['Campaigns', 'Voice Agent'].includes(item.name)
     )
     const contentSection = navigation.filter(item =>
-      ['Blogging', 'Content AI', 'Content Generator', 'Courses & Memberships', 'Video Studio', 'Social Media'].includes(item.name)
+      ['Blogging', 'Content AI', 'Content Generator', 'Courses & Memberships', 'Email Builder', 'Video Studio', 'Social Media'].includes(item.name)
     )
     const intelligenceSection = navigation.filter(item =>
       ['Conversation AI', 'Conversations with', 'Competitor Analysis', 'AI Agents', 'Workflows'].includes(item.name)
     )
     const businessSection = navigation.filter(item =>
-      ['API Access', 'Ads Reporting', 'Affiliate Manager', 'App Marketplace', 'Attribution Reporting', 'Audit Logs', 'Call Reporting', 'Communities', 'Company Object', 'Compliance', 'CRM', 'Custom Providers', 'Products', 'Analytics', 'Settings'].includes(item.name)
+      ['API Access', 'Ads Reporting', 'Affiliate Manager', 'App Marketplace', 'Attribution Reporting', 'Audit Logs', 'Call Reporting', 'Communities', 'Company Object', 'Compliance', 'CRM', 'Custom Providers', 'Document Management', 'Products', 'Analytics', 'Settings'].includes(item.name)
     )
 
     return [overviewSection, leadSection, outreachSection, contentSection, intelligenceSection, businessSection]
