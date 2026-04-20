@@ -39,7 +39,8 @@ import {
   Globe,
   Cpu,
   Layers,
-  Rocket
+  Rocket,
+  DollarSign
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -77,6 +78,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Voice Agent', href: '/dashboard/voice', icon: Phone, description: 'AI phone call automation', color: 'text-pink-400' },
 
     // Content Section
+    { name: 'Blogging', href: '/dashboard/blogging', icon: FileText, description: 'Create and manage blog posts', color: 'text-emerald-400' },
     { name: 'Content Generator', href: '/dashboard/content-generator', icon: Sparkles, description: 'AI content creation', color: 'text-indigo-400' },
     { name: 'Video Studio', href: '/dashboard/video-studio', icon: Video, description: 'AI video script generation', color: 'text-orange-400' },
     { name: 'Social Media', href: '/dashboard/social', icon: Instagram, description: 'Social posting & scheduling', color: 'text-rose-400' },
@@ -87,6 +89,14 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Workflows', href: '/dashboard/workflows', icon: Workflow, description: 'Automation workflows', color: 'text-teal-400' },
 
     // Business Tools
+    { name: 'API Access', href: '/dashboard/api-access', icon: Key, description: 'Manage API keys and docs', color: 'text-cyan-400' },
+    { name: 'App Marketplace', href: '/dashboard/app-marketplace', icon: Zap, description: 'Browse and install apps', color: 'text-yellow-400' },
+    { name: 'Ads Reporting', href: '/dashboard/ads-reporting', icon: BarChart3, description: 'Monitor ad performance', color: 'text-blue-400' },
+    { name: 'Affiliate Manager', href: '/dashboard/affiliate-manager', icon: DollarSign, description: 'Manage affiliate program', color: 'text-green-400' },
+    { name: 'Attribution Reporting', href: '/dashboard/attribution-reporting', icon: TrendingUp, description: 'Analyze conversion attribution', color: 'text-indigo-400' },
+    { name: 'Audit Logs', href: '/dashboard/audit-logs', icon: Database, description: 'View system activity logs', color: 'text-orange-400' },
+    { name: 'Call Reporting', href: '/dashboard/call-reporting', icon: Phone, description: 'Monitor call performance', color: 'text-pink-400' },
+    { name: 'Compliance', href: '/dashboard/compliance', icon: Shield, description: 'Manage regulatory compliance', color: 'text-red-400' },
     { name: 'Products', href: '/dashboard/products', icon: ShoppingBag, description: 'Manage product catalog', color: 'text-amber-400' },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings, description: 'Account & preferences', color: 'text-slate-400' }
   ]
@@ -118,13 +128,13 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
       ['Campaigns', 'Voice Agent'].includes(item.name)
     )
     const contentSection = navigation.filter(item =>
-      ['Content Generator', 'Video Studio', 'Social Media'].includes(item.name)
+      ['Blogging', 'Content Generator', 'Video Studio', 'Social Media'].includes(item.name)
     )
     const intelligenceSection = navigation.filter(item =>
       ['Competitor Analysis', 'AI Agents', 'Workflows'].includes(item.name)
     )
     const businessSection = navigation.filter(item =>
-      ['Products', 'Analytics', 'Settings'].includes(item.name)
+      ['API Access', 'App Marketplace', 'Ads Reporting', 'Affiliate Manager', 'Attribution Reporting', 'Audit Logs', 'Call Reporting', 'Compliance', 'Products', 'Analytics', 'Settings'].includes(item.name)
     )
 
     return [overviewSection, leadSection, outreachSection, contentSection, intelligenceSection, businessSection]
