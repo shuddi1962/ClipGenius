@@ -44,7 +44,8 @@ import {
   Wand2,
   BookOpen,
   Brain,
-  Key
+  Key,
+  UserCheck
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -98,14 +99,16 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
 
     // Business Tools
     { name: 'API Access', href: '/dashboard/api-access', icon: Key, description: 'Manage API keys and docs', color: 'text-cyan-400' },
-    { name: 'App Marketplace', href: '/dashboard/app-marketplace', icon: Zap, description: 'Browse and install apps', color: 'text-yellow-400' },
     { name: 'Ads Reporting', href: '/dashboard/ads-reporting', icon: BarChart3, description: 'Monitor ad performance', color: 'text-blue-400' },
     { name: 'Affiliate Manager', href: '/dashboard/affiliate-manager', icon: DollarSign, description: 'Manage affiliate program', color: 'text-green-400' },
+    { name: 'App Marketplace', href: '/dashboard/app-marketplace', icon: Zap, description: 'Browse and install apps', color: 'text-yellow-400' },
     { name: 'Attribution Reporting', href: '/dashboard/attribution-reporting', icon: TrendingUp, description: 'Analyze conversion attribution', color: 'text-indigo-400' },
     { name: 'Audit Logs', href: '/dashboard/audit-logs', icon: Database, description: 'View system activity logs', color: 'text-orange-400' },
     { name: 'Call Reporting', href: '/dashboard/call-reporting', icon: Phone, description: 'Monitor call performance', color: 'text-pink-400' },
+    { name: 'Communities', href: '/dashboard/communities', icon: Users, description: 'Community forums and discussions', color: 'text-emerald-400' },
     { name: 'Company Object', href: '/dashboard/company-object', icon: Building, description: 'Manage company profiles', color: 'text-teal-400' },
     { name: 'Compliance', href: '/dashboard/compliance', icon: Shield, description: 'Manage regulatory compliance', color: 'text-red-400' },
+    { name: 'CRM', href: '/dashboard/crm', icon: UserCheck, description: 'Customer relationship management', color: 'text-rose-400' },
     { name: 'Custom Providers', href: '/dashboard/custom-providers', icon: Settings, description: 'Configure integrations', color: 'text-violet-400' },
     { name: 'Products', href: '/dashboard/products', icon: ShoppingBag, description: 'Manage product catalog', color: 'text-amber-400' },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings, description: 'Account & preferences', color: 'text-slate-400' }
@@ -144,7 +147,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
       ['Conversation AI', 'Conversations with', 'Competitor Analysis', 'AI Agents', 'Workflows'].includes(item.name)
     )
     const businessSection = navigation.filter(item =>
-      ['API Access', 'App Marketplace', 'Ads Reporting', 'Affiliate Manager', 'Attribution Reporting', 'Audit Logs', 'Call Reporting', 'Company Object', 'Compliance', 'Custom Providers', 'Products', 'Analytics', 'Settings'].includes(item.name)
+      ['API Access', 'Ads Reporting', 'Affiliate Manager', 'App Marketplace', 'Attribution Reporting', 'Audit Logs', 'Call Reporting', 'Communities', 'Company Object', 'Compliance', 'CRM', 'Custom Providers', 'Products', 'Analytics', 'Settings'].includes(item.name)
     )
 
     return [overviewSection, leadSection, outreachSection, contentSection, intelligenceSection, businessSection]
