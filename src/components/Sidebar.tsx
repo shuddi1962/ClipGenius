@@ -79,11 +79,15 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
 
     // Content Section
     { name: 'Blogging', href: '/dashboard/blogging', icon: FileText, description: 'Create and manage blog posts', color: 'text-emerald-400' },
-    { name: 'Content Generator', href: '/dashboard/content-generator', icon: Sparkles, description: 'AI content creation', color: 'text-indigo-400' },
+    { name: 'Content AI', href: '/dashboard/content-ai', icon: Sparkles, description: 'AI-powered content creation', color: 'text-violet-400' },
+    { name: 'Content Generator', href: '/dashboard/content-generator', icon: Wand2, description: 'AI content creation', color: 'text-indigo-400' },
+    { name: 'Courses & Memberships', href: '/dashboard/courses-memberships', icon: BookOpen, description: 'Learning management system', color: 'text-blue-400' },
     { name: 'Video Studio', href: '/dashboard/video-studio', icon: Video, description: 'AI video script generation', color: 'text-orange-400' },
     { name: 'Social Media', href: '/dashboard/social', icon: Instagram, description: 'Social posting & scheduling', color: 'text-rose-400' },
 
     // Intelligence Section
+    { name: 'Conversation AI', href: '/dashboard/conversation-ai', icon: Brain, description: 'Advanced AI conversations', color: 'text-purple-400' },
+    { name: 'Conversations with', href: '/dashboard/conversations-with', icon: MessageSquare, description: 'AI-powered conversations', color: 'text-cyan-400' },
     { name: 'Competitor Analysis', href: '/dashboard/competitors', icon: Target, description: 'Monitor competitors', color: 'text-emerald-400' },
     { name: 'AI Agents', href: '/dashboard/agents', icon: Bot, description: 'Configure AI assistants', color: 'text-violet-400' },
     { name: 'Workflows', href: '/dashboard/workflows', icon: Workflow, description: 'Automation workflows', color: 'text-teal-400' },
@@ -96,7 +100,9 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Attribution Reporting', href: '/dashboard/attribution-reporting', icon: TrendingUp, description: 'Analyze conversion attribution', color: 'text-indigo-400' },
     { name: 'Audit Logs', href: '/dashboard/audit-logs', icon: Database, description: 'View system activity logs', color: 'text-orange-400' },
     { name: 'Call Reporting', href: '/dashboard/call-reporting', icon: Phone, description: 'Monitor call performance', color: 'text-pink-400' },
+    { name: 'Company Object', href: '/dashboard/company-object', icon: Building, description: 'Manage company profiles', color: 'text-teal-400' },
     { name: 'Compliance', href: '/dashboard/compliance', icon: Shield, description: 'Manage regulatory compliance', color: 'text-red-400' },
+    { name: 'Custom Providers', href: '/dashboard/custom-providers', icon: Settings, description: 'Configure integrations', color: 'text-violet-400' },
     { name: 'Products', href: '/dashboard/products', icon: ShoppingBag, description: 'Manage product catalog', color: 'text-amber-400' },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings, description: 'Account & preferences', color: 'text-slate-400' }
   ]
@@ -128,13 +134,13 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
       ['Campaigns', 'Voice Agent'].includes(item.name)
     )
     const contentSection = navigation.filter(item =>
-      ['Blogging', 'Content Generator', 'Video Studio', 'Social Media'].includes(item.name)
+      ['Blogging', 'Content AI', 'Content Generator', 'Courses & Memberships', 'Video Studio', 'Social Media'].includes(item.name)
     )
     const intelligenceSection = navigation.filter(item =>
-      ['Competitor Analysis', 'AI Agents', 'Workflows'].includes(item.name)
+      ['Conversation AI', 'Conversations with', 'Competitor Analysis', 'AI Agents', 'Workflows'].includes(item.name)
     )
     const businessSection = navigation.filter(item =>
-      ['API Access', 'App Marketplace', 'Ads Reporting', 'Affiliate Manager', 'Attribution Reporting', 'Audit Logs', 'Call Reporting', 'Compliance', 'Products', 'Analytics', 'Settings'].includes(item.name)
+      ['API Access', 'App Marketplace', 'Ads Reporting', 'Affiliate Manager', 'Attribution Reporting', 'Audit Logs', 'Call Reporting', 'Company Object', 'Compliance', 'Custom Providers', 'Products', 'Analytics', 'Settings'].includes(item.name)
     )
 
     return [overviewSection, leadSection, outreachSection, contentSection, intelligenceSection, businessSection]
