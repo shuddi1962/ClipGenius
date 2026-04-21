@@ -53,6 +53,44 @@ export default function SocialSchedulerPage() {
     }
   }
 
+  const postNow = async (postId: string) => {
+    const post = posts.find(p => p.id === postId)
+    if (!post) return
+
+    try {
+      const response = await fetch('/api/social/post', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          platform: post.platform,
+          content: post.content,
+          mediaUrls: post.media_urls,
+          accountId: post.account_id
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to post')
+      }
+
+      const result = await response.json()
+
+      // Update post status
+      setPosts(posts.map(p =>
+        p.id === postId ? {
+          ...p,
+          status: 'published',
+          published_at: new Date().toISOString()
+        } : p
+      ))
+
+      alert('Post published successfully!')
+    } catch (error) {
+      console.error('Error posting:', error)
+      alert('Failed to publish post. Please try again.')
+    }
+  }
+
   const filteredPosts = posts.filter(post => {
     if (filter === 'all') return true
     return post.status === filter
@@ -164,6 +202,15 @@ export default function SocialSchedulerPage() {
                     </div>
                   </div>
                   <div className="flex gap-2">
+                    {post.status === 'scheduled' && (
+                      <button
+                        onClick={() => postNow(post.id)}
+                        className="text-green-400 hover:text-green-300 transition-colors"
+                        title="Post now"
+                      >
+                        <Send className="w-4 h-4" />
+                      </button>
+                    )}
                     <button className="text-gray-400 hover:text-white transition-colors">
                       <Eye className="w-4 h-4" />
                     </button>

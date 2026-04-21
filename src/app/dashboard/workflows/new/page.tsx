@@ -72,6 +72,77 @@ export default function NewWorkflowPage() {
     }
   }
 
+  const testWorkflow = async () => {
+    try {
+      // Create a mock workflow for testing
+      const testWorkflow = {
+        name: `${formData.name} (Test)`,
+        description: formData.description,
+        trigger_type: formData.trigger_type,
+        trigger_config: formData.trigger_config,
+        steps_json: formData.steps,
+        active: false
+      }
+
+      // Save test workflow temporarily
+      const { data: userData } = await insforge.auth.getUser()
+      if (!userData?.user) return
+
+      const { data: workspace } = await insforge
+        .from('workspaces')
+        .select('id')
+        .eq('user_id', userData.user.id)
+        .single()
+
+      if (!workspace) return
+
+      const { data: savedWorkflow, error } = await insforge
+        .from('workflows')
+        .insert({
+          ...testWorkflow,
+          workspace_id: workspace.id
+        })
+        .select()
+        .single()
+
+      if (error) throw error
+
+      // Execute the test workflow
+      const response = await fetch('/api/workflows/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          workflowId: savedWorkflow.id,
+          triggerType: formData.trigger_type,
+          eventData: {
+            leadId: 'test_lead_123',
+            leadEmail: 'test@example.com',
+            leadName: 'Test User',
+            score: 75
+          }
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Workflow execution failed')
+      }
+
+      const result = await response.json()
+
+      // Clean up test workflow
+      await insforge
+        .from('workflows')
+        .delete()
+        .eq('id', savedWorkflow.id)
+
+      alert(`Workflow test completed! ${result.results[0]?.stepsExecuted || 0} steps executed successfully.`)
+
+    } catch (error) {
+      console.error('Error testing workflow:', error)
+      alert('Workflow test failed. Check the console for details.')
+    }
+  }
+
   const addStep = (type: WorkflowStep['type']) => {
     const newStep: WorkflowStep = {
       id: `step_${Date.now()}`,
@@ -483,6 +554,15 @@ export default function NewWorkflowPage() {
           >
             Cancel
           </Link>
+          <button
+            type="button"
+            onClick={testWorkflow}
+            disabled={!formData.name || formData.steps.length === 0}
+            className="px-6 py-3 border border-blue-600 text-blue-400 rounded-lg hover:bg-blue-600 hover:text-white transition-colors disabled:opacity-50 flex items-center"
+          >
+            <Zap className="w-5 h-5 mr-2" />
+            Test Workflow
+          </button>
           <button
             type="submit"
             disabled={loading || !formData.name || formData.steps.length === 0}
