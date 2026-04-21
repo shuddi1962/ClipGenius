@@ -20,6 +20,7 @@ export default function ContentGeneratorPage() {
   const [platform, setPlatform] = useState<string>('instagram')
   const [tone, setTone] = useState('professional')
   const [targetAudience, setTargetAudience] = useState('')
+  const [keywords, setKeywords] = useState('')
   const [generating, setGenerating] = useState(false)
   const [generatedContent, setGeneratedContent] = useState<GeneratedContent[]>([])
 
@@ -280,6 +281,20 @@ DM to learn how we can transform your business!`
                 value={targetAudience}
                 onChange={(e) => setTargetAudience(e.target.value)}
                 placeholder="e.g., Small business owners, Tech professionals, Marketing managers"
+                className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-[#00F5FF] focus:ring-[#00F5FF]"
+              />
+            </div>
+
+            {/* Keywords */}
+            <div className="mt-4">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Keywords (Optional)
+              </label>
+              <input
+                type="text"
+                value={keywords}
+                onChange={(e) => setKeywords(e.target.value)}
+                placeholder="e.g., marketing, automation, leads, growth, sales (comma-separated)"
                 className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-[#00F5FF] focus:ring-[#00F5FF]"
               />
             </div>
