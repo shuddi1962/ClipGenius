@@ -16,7 +16,7 @@ import {
   Image,
   Type,
   Link,
-  MousePointer as ButtonIcon,
+  MousePointer,
   Settings,
   Layout,
   Move,
@@ -159,7 +159,7 @@ export default function EmailBuilder() {
   const elementTypes = [
     { type: 'text', name: 'Text Block', icon: Type, description: 'Add formatted text content' },
     { type: 'image', name: 'Image', icon: Image, description: 'Insert images and graphics' },
-    { type: 'button', name: 'Button', icon: ButtonIcon, description: 'Add call-to-action buttons' },
+    { type: 'button', name: 'Button', icon: MousePointer, description: 'Add call-to-action buttons' },
     { type: 'divider', name: 'Divider', icon: Move, description: 'Add section separators' },
     { type: 'spacer', name: 'Spacer', icon: Move, description: 'Add white space between elements' }
   ]
