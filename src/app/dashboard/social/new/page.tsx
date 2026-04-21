@@ -144,14 +144,23 @@ export default function NewSocialPostPage() {
       if (!workspace) return
 
       // Create posts for each selected platform
-      const postsToCreate = formData.platforms.map(platform => ({
-        workspace_id: workspace.id,
-        platform,
-        content: formData.content,
-        media_urls: formData.media_urls.filter(url => url.trim()),
-        scheduled_at: formData.scheduled_at || new Date().toISOString(),
-        status: formData.scheduled_at ? 'scheduled' : 'draft'
-      }))
+      const postsToCreate = formData.platforms.map(platform => {
+        // Find connected account for this platform
+        const account = connectedAccounts.find(acc => acc.platform === platform)
+        if (!account) {
+          throw new Error(`No connected account found for ${platform}`)
+        }
+
+        return {
+          workspace_id: workspace.id,
+          platform,
+          content: formData.content,
+          media_urls: formData.media_urls.filter(url => url.trim()),
+          scheduled_at: formData.scheduled_at || new Date().toISOString(),
+          status: formData.scheduled_at ? 'scheduled' : 'draft',
+          account_id: account.id
+        }
+      })
 
       const { error } = await insforge
         .from('scheduled_posts')

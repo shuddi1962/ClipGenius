@@ -14,6 +14,7 @@ interface ScheduledPost {
   status: 'draft' | 'scheduled' | 'published' | 'failed'
   published_at?: string
   created_at: string
+  account_id: string
 }
 
 export default function SocialSchedulerPage() {
