@@ -24,7 +24,8 @@ import {
   Eye,
   MousePointer,
   Clock,
-  Award
+  Award,
+  AlertTriangle
 } from 'lucide-react'
 import { insforge } from '@/lib/insforge'
 
