@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get user settings for AI service
-    const settings = await getSettings()
+    const settings = getSettings()
 
     const aiService = new AIService(settings)
 

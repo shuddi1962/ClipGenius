@@ -112,8 +112,9 @@ async function analyzeWebsite(url: string) {
     const mockThemes = ['Lead Generation', 'Marketing Automation', 'Sales Funnels', 'Customer Success']
 
     // Generate AI insights about the website
-    const { AIService, getSettings } = await import('@/lib/ai-service')
-    const settings = await getSettings()
+    const { AIService } = await import('@/lib/ai-service')
+    const { getSettings } = await import('@/lib/hooks')
+    const settings = getSettings()
     const aiService = new AIService(settings)
 
     const insightsPrompt = `Based on a competitor website at ${url}, analyze what kind of business they run and their main value propositions. Generate 3-5 key themes and 5-7 relevant keywords for their industry.`
@@ -171,8 +172,9 @@ async function analyzeSocialMedia(socialHandles: any) {
 
 async function generateInsights(analysis: any) {
   try {
-    const { AIService, getSettings } = await import('@/lib/ai-service')
-    const settings = await getSettings()
+    const { AIService } = await import('@/lib/ai-service')
+    const { getSettings } = await import('@/lib/hooks')
+    const settings = getSettings()
     const aiService = new AIService(settings)
 
     const insightsPrompt = `Based on this competitor analysis data:
