@@ -16,19 +16,18 @@ import {
   Image,
   Type,
   Link,
-  Button as ButtonIcon,
+  MousePointer as ButtonIcon,
   Settings,
-  Palette,
   Layout,
   Move,
-  RotateCcw,
   Download,
   Upload,
   Zap,
   Target,
   BarChart3,
   Users,
-  Calendar
+  Calendar,
+  MoreHorizontal
 } from 'lucide-react'
 
 interface EmailTemplate {

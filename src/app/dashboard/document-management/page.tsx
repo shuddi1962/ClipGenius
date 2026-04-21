@@ -30,7 +30,8 @@ import {
   StarOff,
   Grid,
   List,
-  FolderPlus
+  FolderPlus,
+  Clock
 } from 'lucide-react'
 
 interface Document {
