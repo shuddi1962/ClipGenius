@@ -11,6 +11,8 @@ interface VideoProject {
   duration: number
   thumbnail?: string
   created_at: string
+  script?: string
+  style?: string
 }
 
 export default function VideoStudioPage() {
@@ -86,7 +88,9 @@ export default function VideoStudioPage() {
       type: newProject.type,
       status: 'rendering',
       duration: Math.floor(Math.random() * 60) + 15,
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
+      script: newProject.script,
+      style: newProject.style
     }
 
     setProjects(prev => [project, ...prev])
