@@ -201,38 +201,49 @@ export default function ComprehensiveAnalyticsPage() {
   }
 
   const generateTrendData = (days: number, type: string) => {
-    const data = []
     const now = new Date()
 
-    for (let i = days - 1; i >= 0; i--) {
-      const date = new Date(now)
-      date.setDate(date.getDate() - i)
-
-      let value = 0
-      if (type === 'leads') {
-        value = Math.floor(Math.random() * 20) + 10
-      } else if (type === 'revenue') {
-        value = Math.floor(Math.random() * 500) + 200
-      } else if (type === 'campaigns') {
-        value = {
+    if (type === 'campaigns') {
+      const data: Array<{ date: string; sent: number; opened: number; clicked: number }> = []
+      for (let i = days - 1; i >= 0; i--) {
+        const date = new Date(now)
+        date.setDate(date.getDate() - i)
+        data.push({
           date: date.toISOString().split('T')[0],
           sent: Math.floor(Math.random() * 50) + 20,
           opened: Math.floor(Math.random() * 30) + 10,
           clicked: Math.floor(Math.random() * 10) + 2
-        }
-        data.push(value)
-        continue
+        })
       }
-
-      data.push({
-        date: date.toISOString().split('T')[0],
-        [type === 'leads' ? 'leads' : type === 'revenue' ? 'revenue' : 'value']: value,
-        ...(type === 'leads' ? { qualified: Math.floor(value * 0.6) } : {}),
-        ...(type === 'revenue' ? { target: 350 } : {})
-      })
+      return data
+    } else if (type === 'leads') {
+      const data: Array<{ date: string; leads: number; qualified: number }> = []
+      for (let i = days - 1; i >= 0; i--) {
+        const date = new Date(now)
+        date.setDate(date.getDate() - i)
+        const leads = Math.floor(Math.random() * 20) + 10
+        data.push({
+          date: date.toISOString().split('T')[0],
+          leads,
+          qualified: Math.floor(leads * 0.6)
+        })
+      }
+      return data
+    } else if (type === 'revenue') {
+      const data: Array<{ date: string; revenue: number; target: number }> = []
+      for (let i = days - 1; i >= 0; i--) {
+        const date = new Date(now)
+        date.setDate(date.getDate() - i)
+        data.push({
+          date: date.toISOString().split('T')[0],
+          revenue: Math.floor(Math.random() * 500) + 200,
+          target: 350
+        })
+      }
+      return data
     }
 
-    return data
+    return []
   }
 
   const exportReport = () => {
