@@ -149,9 +149,9 @@ export default function ComprehensiveAnalyticsPage() {
           })) || []
         },
         trends: {
-          leadGrowth: generateTrendData(days, 'leads'),
-          revenueGrowth: generateTrendData(days, 'revenue'),
-          campaignTrends: generateTrendData(days, 'campaigns')
+          leadGrowth: generateTrendData(days, 'leads') as Array<{ date: string; leads: number; qualified: number }>,
+          revenueGrowth: generateTrendData(days, 'revenue') as Array<{ date: string; revenue: number; target: number }>,
+          campaignTrends: generateTrendData(days, 'campaigns') as Array<{ date: string; sent: number; opened: number; clicked: number }>
         },
         insights: [
           {
