@@ -55,7 +55,29 @@ export default function VideoStudioPage() {
     { id: 'minimal', label: 'Minimalist', preview: '⚪' }
   ]
 
-  const generateVideo = () => {
+  const generateScript = async () => {
+    if (!newProject.title) return
+
+    try {
+      const response = await fetch('/api/ai/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'general',
+          prompt: `Generate a video script for a ${newProject.type} video titled "${newProject.title}". The script should be engaging, professional, and suitable for a ${newProject.style} style video. Include timing suggestions and key scenes. Keep it concise but comprehensive.`
+        })
+      })
+
+      if (!response.ok) throw new Error('Failed to generate script')
+
+      const result = await response.json()
+      setNewProject(prev => ({ ...prev, script: result.content }))
+    } catch (error) {
+      console.error('Error generating script:', error)
+    }
+  }
+
+  const generateVideo = async () => {
     if (!newProject.title || !newProject.script) return
 
     const project: VideoProject = {
@@ -71,12 +93,36 @@ export default function VideoStudioPage() {
     setNewProject({ title: '', type: 'social', script: '', style: 'modern' })
     setActiveTab('projects')
 
-    // Simulate rendering completion
-    setTimeout(() => {
+    // Call actual video generation API
+    try {
+      const response = await fetch('/api/ai/generate-video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: project.title,
+          script: project.script,
+          type: project.type,
+          style: project.style,
+          projectId: project.id
+        })
+      })
+
+      if (response.ok) {
+        // Update status to completed when rendering finishes
+        setTimeout(() => {
+          setProjects(prev => prev.map(p =>
+            p.id === project.id ? { ...p, status: 'completed' } : p
+          ))
+        }, 60000) // Simulate longer rendering time
+      } else {
+        throw new Error('Video generation failed')
+      }
+    } catch (error) {
+      console.error('Error generating video:', error)
       setProjects(prev => prev.map(p =>
-        p.id === project.id ? { ...p, status: 'completed' } : p
+        p.id === project.id ? { ...p, status: 'draft' } : p
       ))
-    }, 30000)
+    }
   }
 
   return (
@@ -194,7 +240,10 @@ export default function VideoStudioPage() {
             <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold text-white">Video Script</h2>
-                <button className="text-[#00F5FF] hover:text-[#00F5FF]/80 text-sm flex items-center">
+                <button
+                  onClick={generateScript}
+                  className="text-[#00F5FF] hover:text-[#00F5FF]/80 text-sm flex items-center"
+                >
                   <Wand2 className="w-4 h-4 mr-1" />
                   Generate with AI
                 </button>

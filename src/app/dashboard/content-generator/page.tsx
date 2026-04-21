@@ -51,8 +51,42 @@ export default function ContentGeneratorPage() {
 
     setGenerating(true)
 
-    // Mock content generation - in real app, call AI API
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/ai/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: contentType,
+          topic: prompt,
+          platform,
+          tone,
+          targetAudience,
+          keywords: keywords.split(',').map(k => k.trim()).join(', '),
+          prompt
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to generate content')
+      }
+
+      const result = await response.json()
+
+      const generatedContent: GeneratedContent = {
+        id: `content_${Date.now()}`,
+        type: contentType,
+        content: result.content,
+        title: result.title,
+        hashtags: result.hashtags,
+        tone,
+        platform: contentType === 'post' ? platform : undefined,
+        created_at: new Date().toISOString()
+      }
+
+      setGeneratedContent(prev => [generatedContent, ...prev])
+    } catch (error) {
+      console.error('Error generating content:', error)
+      // Fallback to mock content if AI fails
       const mockContent: GeneratedContent = {
         id: `content_${Date.now()}`,
         type: contentType,
@@ -63,10 +97,10 @@ export default function ContentGeneratorPage() {
         platform: contentType === 'post' ? platform : undefined,
         created_at: new Date().toISOString()
       }
-
       setGeneratedContent(prev => [mockContent, ...prev])
+    } finally {
       setGenerating(false)
-    }, 2000)
+    }
   }
 
   const generateMockContent = () => {

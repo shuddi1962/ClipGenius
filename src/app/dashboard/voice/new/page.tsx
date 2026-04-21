@@ -118,6 +118,31 @@ export default function NewVoiceAgentPage() {
     }))
   }
 
+  const generateAnswer = async (index: number) => {
+    const faq = formData.faq_answers[index]
+    if (!faq.question.trim()) return
+
+    try {
+      const response = await fetch('/api/ai/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'general',
+          prompt: `Generate a helpful, ${formData.personality} answer for this customer service question: "${faq.question}". The answer should be relevant to a business that offers ${formData.goal.toLowerCase()}. Keep it concise and professional.`
+        })
+      })
+
+      if (!response.ok) throw new Error('Failed to generate answer')
+
+      const result = await response.json()
+
+      updateFaq(index, 'answer', result.content)
+    } catch (error) {
+      console.error('Error generating answer:', error)
+      // Keep existing answer or show error
+    }
+  }
+
   return (
     <div className="max-w-4xl mx-auto p-6">
       {/* Header */}
@@ -250,13 +275,23 @@ export default function NewVoiceAgentPage() {
                     <label className="block text-sm font-medium text-gray-300 mb-2">
                       Question
                     </label>
-                    <input
-                      type="text"
-                      value={faq.question}
-                      onChange={(e) => updateFaq(index, 'question', e.target.value)}
-                      className="w-full px-3 py-2 bg-gray-800/50 border border-gray-600 rounded text-white placeholder-gray-400 focus:border-[#00F5FF] focus:ring-[#00F5FF]"
-                      placeholder="What is your return policy?"
-                    />
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={faq.question}
+                        onChange={(e) => updateFaq(index, 'question', e.target.value)}
+                        className="flex-1 px-3 py-2 bg-gray-800/50 border border-gray-600 rounded text-white placeholder-gray-400 focus:border-[#00F5FF] focus:ring-[#00F5FF]"
+                        placeholder="What is your return policy?"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => generateAnswer(index)}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm transition-colors flex items-center"
+                        title="Generate answer with AI"
+                      >
+                        <Target className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                   <div className="flex items-end">
                     <button
