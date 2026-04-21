@@ -107,10 +107,6 @@ async function analyzeCompetitor(competitor: any) {
 
 async function analyzeWebsite(url: string) {
   try {
-    // Use web search to get website content
-    const { codesearch } = await import('@/lib/ai-service')
-    const searchQuery = `website content analysis for ${url} - extract main keywords, themes, and business focus`
-
     // For now, use mock data enhanced with AI insights
     const mockKeywords = ['marketing', 'automation', 'leads', 'growth', 'sales']
     const mockThemes = ['Lead Generation', 'Marketing Automation', 'Sales Funnels', 'Customer Success']

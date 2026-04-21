@@ -98,3 +98,25 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T)
 
   return [storedValue, setValue]
 }
+
+// Server-side settings function for API routes
+export function getSettings(): Settings {
+  return {
+    aiProvider: process.env.AI_PROVIDER || 'openrouter',
+    openrouterKey: process.env.OPENROUTER_API_KEY || '',
+    kieKey: process.env.KIE_API_KEY || '',
+    searchKey: process.env.TAVILY_API_KEY || '',
+    searchProvider: 'tavily',
+    selectedModel: process.env.AI_MODEL || 'anthropic/claude-3.5-sonnet',
+    kieModel: process.env.KIE_MODEL || 'kie/grok-2-1212',
+    companyName: 'Roshanal Infotech Limited',
+    niche: 'Security Systems, Marine Equipment, Solar Installation',
+    location: 'Port Harcourt, Rivers State, Nigeria',
+    tone: 'Professional, trustworthy, solution-focused',
+    targetAudience: 'Oil & gas companies, boat owners, homes, businesses, Niger Delta region',
+    products: 'CCTV, Smart Locks, Car Trackers, Solar, Outboard Engines, Fiberglass Boats, Marine Accessories',
+    whatsapp: '08109522432',
+    website: 'www.roshanalinfotech.com',
+    address: 'No 18A Rumuola/Rumuadaolu Road, Adjacent Rumuadaolu Town Hall, Port Harcourt, Rivers State'
+  }
+}

@@ -1,4 +1,4 @@
-import { CreditCard, DollarSign, Users, TrendingUp, Calendar, Download, Filter, Search, BarChart3, PieChart, Activity, AlertTriangle } from 'lucide-react'
+import { CreditCard, DollarSign, Users, TrendingUp, Calendar, Download, Filter, Search, BarChart3, PieChart, Activity, AlertTriangle, Settings } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
