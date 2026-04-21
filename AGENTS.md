@@ -41,8 +41,9 @@
 - **Lead Management UI** - Kanban board + table views ✅
 - **Lead Scoring** - AI-powered qualification system ✅
 - **CRM** - Customer relationship management ✅
-- **Opportunities & Pipelines** - Sales pipeline management (Basic) ⚠️
+- **Opportunities & Pipelines** - Sales pipeline management ✅
 - **Smartlists & Bulk Actions** - Advanced filtering (Partial) ⚠️
+- **Forms & Surveys** - Lead capture forms ✅
 
 ### Marketing & Outreach ✅
 - **Email Campaigns** - Campaign builder with SendGrid ✅
@@ -52,6 +53,7 @@
 - **Content Generator** - AI-powered content creation ✅
 - **Email Builder** - Template builder ✅
 - **Video Studio** - AI video generation ✅
+- **Task Management** - Project tasks ✅
 
 ### Communication & Engagement ✅
 - **Voice Agent Setup** - AI voice agents ✅
@@ -188,6 +190,10 @@
 18. `/dashboard/business` - Business management ✅
 19. `/dashboard/products` - Product catalog ✅
 20. `/dashboard/competitors` - Competitor analysis ✅
+21. `/dashboard/payments` - Payment processing ✅
+22. `/dashboard/forms` - Forms & surveys ✅
+23. `/dashboard/opportunities` - Opportunities & pipelines ✅
+24. `/dashboard/tasks` - Task management ✅
 
 ### Communication
 21. `/dashboard/email-builder` - Email template builder ✅
@@ -264,6 +270,8 @@
 10. `/api/ai/generate` - AI content generation ✅
 11. `/api/ai/generate-video` - Video generation ✅
 12. `/api/social/post` - Social media posting ✅
+13. `/api/payments/create` - Payment processing ✅
+14. `/api/forms/submit` - Form submissions ✅
 
 ### Missing ❌
 13. `/api/forms` - Form submissions
