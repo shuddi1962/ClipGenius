@@ -29,6 +29,12 @@ interface GeneratedImage {
   created_at: string
 }
 
+interface ImageRecord {
+  id: string
+  images: GeneratedImage[]
+  created_at: string
+}
+
 export default function ImageAIPage() {
   const [activeTab, setActiveTab] = useState<'generate' | 'gallery' | 'favorites'>('generate')
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([])
@@ -72,7 +78,7 @@ export default function ImageAIPage() {
       if (error) throw error
 
       // Flatten the images array from all records
-      const allImages = data?.flatMap(record =>
+      const allImages = data?.flatMap((record: ImageRecord) =>
         record.images?.map((img: any) => ({
           ...img,
           recordId: record.id
