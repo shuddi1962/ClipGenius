@@ -84,6 +84,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Lead Scraping', href: '/dashboard/leads/scrape', icon: Search, description: 'Import from multiple sources', color: 'text-green-400' },
     { name: 'Lead Management', href: '/dashboard/leads', icon: Users, description: 'View & manage all leads', color: 'text-cyan-400' },
     { name: 'AI Qualification', href: '/dashboard/leads/qualify', icon: Zap, description: 'Score leads automatically', color: 'text-yellow-400' },
+    { name: 'Smart Lists', href: '/dashboard/smart-lists', icon: Users, description: 'Advanced lead segmentation', color: 'text-cyan-400' },
 
     // Outreach Section
     { name: 'Campaigns', href: '/dashboard/campaigns', icon: Send, description: 'Email, WhatsApp & SMS campaigns', color: 'text-red-400' },
@@ -100,6 +101,8 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Website Builder', href: '/dashboard/website-builder', icon: Globe, description: 'Drag-and-drop website creation', color: 'text-green-400' },
     { name: 'Courses & Memberships', href: '/dashboard/courses-memberships', icon: BookOpen, description: 'Learning management system', color: 'text-blue-400' },
     { name: 'Email Builder', href: '/dashboard/email-builder', icon: Mail, description: 'Create email campaigns', color: 'text-cyan-400' },
+    { name: 'Email Templates', href: '/dashboard/email-templates', icon: Mail, description: 'Manage email template library', color: 'text-cyan-400' },
+    { name: 'Funnel Templates', href: '/dashboard/funnel-templates', icon: Target, description: 'Pre-built sales funnel templates', color: 'text-emerald-400' },
     { name: 'Video Studio', href: '/dashboard/video-studio', icon: Video, description: 'AI video script generation', color: 'text-orange-400' },
     { name: 'Social Media', href: '/dashboard/social', icon: Instagram, description: 'Social posting & scheduling', color: 'text-rose-400' },
     { name: 'Social Scheduler', href: '/dashboard/social/scheduler', icon: Calendar, description: 'Schedule social media posts', color: 'text-rose-400' },
@@ -109,6 +112,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Image AI', href: '/dashboard/image-ai', icon: Image, description: 'AI image generation', color: 'text-lime-400' },
     { name: 'Split Testing', href: '/dashboard/split-testing', icon: Split, description: 'A/B testing for campaigns', color: 'text-fuchsia-400' },
     { name: 'Reputation', href: '/dashboard/reputation', icon: Star, description: 'Reviews & reputation management', color: 'text-yellow-400' },
+    { name: 'Review Widget', href: '/dashboard/review-widget', icon: Star, description: 'Embeddable review widgets', color: 'text-yellow-400' },
 
     // Intelligence Section
     { name: 'Conversation AI', href: '/dashboard/conversation-ai', icon: Brain, description: 'Advanced AI conversations', color: 'text-purple-400' },
