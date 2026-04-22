@@ -13,6 +13,7 @@ import {
   Target,
   MessageSquare,
   Phone,
+  Plus,
   Instagram,
   Calendar,
   Database,
