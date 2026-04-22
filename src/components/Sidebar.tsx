@@ -133,7 +133,8 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Dashboard', href: '/admin', icon: BarChart3, description: 'System overview', color: 'text-blue-400' },
     { name: 'User Management', href: '/admin/users', icon: Users, description: 'Manage all users', color: 'text-green-400' },
     { name: 'API Management', href: '/admin/api-keys', icon: Shield, description: 'Third-party API keys', color: 'text-purple-400' },
-    { name: 'Billing', href: '/admin/billing', icon: CreditCard, description: 'Subscriptions & payments', color: 'text-yellow-400' },
+    { name: 'Pricing Tiers', href: '/dashboard/pricing-tiers', icon: Crown, description: 'Manage subscription plans', color: 'text-yellow-400' },
+    { name: 'Billing', href: '/admin/billing', icon: CreditCard, description: 'Subscriptions & payments', color: 'text-green-400' },
     { name: 'Content Moderation', href: '/admin/content', icon: FileText, description: 'Review user content', color: 'text-red-400' },
     { name: 'System Health', href: '/admin/system', icon: Activity, description: 'Platform monitoring', color: 'text-cyan-400' },
     { name: 'Audit Logs', href: '/admin/logs', icon: Database, description: 'Activity tracking', color: 'text-orange-400' }

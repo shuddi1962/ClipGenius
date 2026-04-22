@@ -484,6 +484,78 @@ class MockDatabaseTable {
             workspace_id: 'workspace_1'
           }
         ]
+      case 'pricing_tiers':
+        return [
+          {
+            id: 'tier_1',
+            name: 'Starter',
+            description: 'Perfect for small businesses getting started',
+            price: 49,
+            interval: 'monthly',
+            features: [
+              'Up to 1,000 leads',
+              '5 email campaigns/month',
+              'Basic analytics',
+              'Email support'
+            ],
+            limits: {
+              leads: 1000,
+              campaigns: 5,
+              users: 3,
+              storage_gb: 5
+            },
+            is_popular: false,
+            is_active: true,
+            created_at: new Date().toISOString()
+          },
+          {
+            id: 'tier_2',
+            name: 'Professional',
+            description: 'Advanced features for growing businesses',
+            price: 99,
+            interval: 'monthly',
+            features: [
+              'Up to 10,000 leads',
+              'Unlimited campaigns',
+              'Advanced analytics',
+              'Priority support',
+              'Custom integrations'
+            ],
+            limits: {
+              leads: 10000,
+              campaigns: -1,
+              users: 10,
+              storage_gb: 50
+            },
+            is_popular: true,
+            is_active: true,
+            created_at: new Date().toISOString()
+          },
+          {
+            id: 'tier_3',
+            name: 'Enterprise',
+            description: 'Complete solution for large organizations',
+            price: 199,
+            interval: 'monthly',
+            features: [
+              'Unlimited leads',
+              'Unlimited campaigns',
+              'White-label options',
+              'Dedicated support',
+              'API access',
+              'Custom development'
+            ],
+            limits: {
+              leads: -1,
+              campaigns: -1,
+              users: -1,
+              storage_gb: 500
+            },
+            is_popular: false,
+            is_active: true,
+            created_at: new Date().toISOString()
+          }
+        ]
       default:
         return null
     }
