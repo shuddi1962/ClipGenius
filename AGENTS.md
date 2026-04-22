@@ -43,10 +43,13 @@
 - **CRM** - Customer relationship management ✅
 - **Opportunities & Pipelines** - Sales pipeline management ✅
 - **Smartlists & Bulk Actions** - Advanced filtering ✅
+- **Smart Lists** - Advanced lead segmentation ✅
 - **Forms & Surveys** - Lead capture forms ✅
 
 ### Marketing & Outreach ✅
 - **Email Campaigns** - Campaign builder with SendGrid ✅
+- **Email Templates** - Template library management ✅
+- **Funnel Templates** - Pre-built sales funnels ✅
 - **WhatsApp Campaigns** - Twilio integration ✅
 - **SMS Campaigns** - Bulk messaging ✅
 - **Social Media Automation** - Multi-platform posting ✅
@@ -110,22 +113,18 @@
 - **Manual Actions** - Manual lead processing
 
 ### Advanced Marketing
-- **Funnel Templates** - Pre-built sales funnels
-- **Email Templates** - Template library management
 - **Social Media Templates** - Social post templates
 - **Social Media Templates** - Social post templates
 - **Website & Funnel Builder** - Drag-and-drop website creation
 - **Website Templates** - Pre-built website designs
 - **Reputation Management** - Online reputation monitoring
 - **Review Requests** - Automated review collection
-- **Review Widget** - Review display widgets
 - **Reviews AI** - AI-powered review management
 
 ### Communication & Collaboration
 - **Gmail & Outlook Integration** - Email client integration
 - **Smart Webchat Widget** - Advanced chat widgets
 - **Text and Email Snippets** - Quick response templates
-- **Online Scheduling** - Appointment booking
 - **WordPress Hosting & Reselling** - WordPress management
 
 ### Business Operations
