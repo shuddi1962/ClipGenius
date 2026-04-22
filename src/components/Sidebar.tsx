@@ -107,6 +107,8 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'AI Agents', href: '/dashboard/agents', icon: Bot, description: 'Configure AI assistants', color: 'text-violet-400' },
     { name: 'Workflows', href: '/dashboard/workflows', icon: Workflow, description: 'Automation workflows', color: 'text-teal-400' },
     { name: 'Task Management', href: '/dashboard/tasks', icon: CheckSquare, description: 'Project task tracking', color: 'text-orange-400' },
+    { name: 'Live Chat', href: '/dashboard/live-chat', icon: MessageSquare, description: 'Real-time customer support', color: 'text-purple-400' },
+    { name: 'Scheduling', href: '/dashboard/scheduling', icon: Calendar, description: 'Online appointment booking', color: 'text-cyan-400' },
 
     // Business Tools
     { name: 'Payments', href: '/dashboard/payments', icon: CreditCard, description: 'Payment processing & invoicing', color: 'text-green-400' },
@@ -157,7 +159,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
       ['Blogging', 'Content AI', 'Content Generator', 'Courses & Memberships', 'Email Builder', 'Video Studio', 'Social Media', 'Image AI', 'Split Testing', 'Reputation'].includes(item.name)
     )
     const intelligenceSection = navigation.filter(item =>
-      ['Conversation AI', 'Conversations with', 'Competitor Analysis', 'AI Agents', 'Workflows', 'Task Management'].includes(item.name)
+      ['Conversation AI', 'Conversations with', 'Competitor Analysis', 'AI Agents', 'Workflows', 'Task Management', 'Live Chat', 'Scheduling'].includes(item.name)
     )
     const businessSection = navigation.filter(item =>
       ['API Access', 'Ads Reporting', 'Affiliate Manager', 'App Marketplace', 'Attribution Reporting', 'Audit Logs', 'Call Reporting', 'Communities', 'Company Object', 'Compliance', 'CRM', 'Custom Providers', 'Document Management', 'Products', 'Payments', 'Analytics', 'Settings'].includes(item.name)
