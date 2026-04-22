@@ -76,6 +76,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
 
   const clientNavigation = [
     { name: 'Dashboard', href: '/dashboard', icon: Home, description: 'Overview & insights', color: 'text-blue-400' },
+    { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3, description: 'Performance metrics & insights', color: 'text-blue-400' },
     { name: 'Business Profile', href: '/dashboard/business', icon: Building, description: 'Company details & products', color: 'text-purple-400' },
 
     // Lead Management Section
@@ -85,7 +86,9 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
 
     // Outreach Section
     { name: 'Campaigns', href: '/dashboard/campaigns', icon: Send, description: 'Email, WhatsApp & SMS campaigns', color: 'text-red-400' },
+    { name: 'New Campaign', href: '/dashboard/campaigns/new', icon: Plus, description: 'Create new marketing campaign', color: 'text-red-400' },
     { name: 'Voice Agent', href: '/dashboard/voice', icon: Phone, description: 'AI phone call automation', color: 'text-pink-400' },
+    { name: 'New Voice Agent', href: '/dashboard/voice/new', icon: Plus, description: 'Create new voice agent', color: 'text-pink-400' },
     { name: 'Forms & Surveys', href: '/dashboard/forms', icon: FileText, description: 'Create lead capture forms', color: 'text-amber-400' },
     { name: 'Opportunities', href: '/dashboard/opportunities', icon: Target, description: 'Sales pipeline management', color: 'text-emerald-400' },
 
@@ -98,6 +101,10 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Email Builder', href: '/dashboard/email-builder', icon: Mail, description: 'Create email campaigns', color: 'text-cyan-400' },
     { name: 'Video Studio', href: '/dashboard/video-studio', icon: Video, description: 'AI video script generation', color: 'text-orange-400' },
     { name: 'Social Media', href: '/dashboard/social', icon: Instagram, description: 'Social posting & scheduling', color: 'text-rose-400' },
+    { name: 'Social Scheduler', href: '/dashboard/social/scheduler', icon: Calendar, description: 'Schedule social media posts', color: 'text-rose-400' },
+    { name: 'New Social Post', href: '/dashboard/social/new', icon: Plus, description: 'Create new social media post', color: 'text-rose-400' },
+    { name: 'Facebook', href: '/dashboard/facebook', icon: Instagram, description: 'Facebook management', color: 'text-blue-600' },
+    { name: 'Instagram', href: '/dashboard/instagram', icon: Instagram, description: 'Instagram management', color: 'text-pink-500' },
     { name: 'Image AI', href: '/dashboard/image-ai', icon: Image, description: 'AI image generation', color: 'text-lime-400' },
     { name: 'Split Testing', href: '/dashboard/split-testing', icon: Split, description: 'A/B testing for campaigns', color: 'text-fuchsia-400' },
     { name: 'Reputation', href: '/dashboard/reputation', icon: Star, description: 'Reviews & reputation management', color: 'text-yellow-400' },
@@ -108,6 +115,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Competitor Analysis', href: '/dashboard/competitors', icon: Target, description: 'Monitor competitors', color: 'text-emerald-400' },
     { name: 'AI Agents', href: '/dashboard/agents', icon: Bot, description: 'Configure AI assistants', color: 'text-violet-400' },
     { name: 'Workflows', href: '/dashboard/workflows', icon: Workflow, description: 'Automation workflows', color: 'text-teal-400' },
+    { name: 'New Workflow', href: '/dashboard/workflows/new', icon: Plus, description: 'Create new automation workflow', color: 'text-teal-400' },
     { name: 'Task Management', href: '/dashboard/tasks', icon: CheckSquare, description: 'Project task tracking', color: 'text-orange-400' },
     { name: 'Live Chat', href: '/dashboard/live-chat', icon: MessageSquare, description: 'Real-time customer support', color: 'text-purple-400' },
     { name: 'Scheduling', href: '/dashboard/scheduling', icon: Calendar, description: 'Online appointment booking', color: 'text-cyan-400' },
@@ -122,6 +130,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Attribution Reporting', href: '/dashboard/attribution-reporting', icon: TrendingUp, description: 'Analyze conversion attribution', color: 'text-indigo-400' },
     { name: 'Audit Logs', href: '/dashboard/audit-logs', icon: Database, description: 'View system activity logs', color: 'text-orange-400' },
     { name: 'Call Reporting', href: '/dashboard/call-reporting', icon: Phone, description: 'Monitor call performance', color: 'text-pink-400' },
+    { name: 'Comprehensive Analytics', href: '/dashboard/comprehensive-analytics', icon: BarChart3, description: 'Advanced performance analytics', color: 'text-purple-400' },
     { name: 'Communities', href: '/dashboard/communities', icon: Users, description: 'Community forums and discussions', color: 'text-emerald-400' },
     { name: 'Company Object', href: '/dashboard/company-object', icon: Building, description: 'Manage company profiles', color: 'text-teal-400' },
     { name: 'Compliance', href: '/dashboard/compliance', icon: Shield, description: 'Manage regulatory compliance', color: 'text-red-400' },
