@@ -21,7 +21,8 @@ import {
   Mail,
   MessageSquare,
   Phone,
-  Clock
+  Clock,
+  Zap
 } from 'lucide-react'
 import { insforge } from '@/lib/insforge'
 
