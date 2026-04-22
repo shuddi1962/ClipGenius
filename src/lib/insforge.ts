@@ -484,6 +484,85 @@ class MockDatabaseTable {
             workspace_id: 'workspace_1'
           }
         ]
+      case 'email_accounts':
+        return [
+          {
+            id: 'account_1',
+            user_id: 'user_1',
+            provider: 'gmail',
+            email: 'user@gmail.com',
+            display_name: 'Personal Gmail',
+            status: 'connected',
+            last_sync: new Date().toISOString(),
+            sync_frequency: 15,
+            is_active: true,
+            settings: {
+              auto_sync: true,
+              sync_labels: ['INBOX', 'IMPORTANT'],
+              archive_after_sync: false
+            },
+            created_at: new Date().toISOString()
+          },
+          {
+            id: 'account_2',
+            user_id: 'user_1',
+            provider: 'outlook',
+            email: 'user@company.com',
+            display_name: 'Work Outlook',
+            status: 'connected',
+            last_sync: new Date(Date.now() - 3600000).toISOString(),
+            sync_frequency: 30,
+            is_active: true,
+            settings: {
+              auto_sync: true,
+              sync_labels: ['INBOX'],
+              archive_after_sync: true
+            },
+            created_at: new Date().toISOString()
+          }
+        ]
+      case 'email_messages':
+        return [
+          {
+            id: 'msg_1',
+            account_id: 'account_1',
+            message_id: 'gmail_12345',
+            subject: 'Welcome to ClipGenius Premium!',
+            sender: 'billing@clipgenius.com',
+            recipient: 'user@gmail.com',
+            body: 'Thank you for upgrading to ClipGenius Premium! Here are the new features you now have access to...',
+            received_at: new Date(Date.now() - 1800000).toISOString(),
+            is_read: false,
+            labels: ['INBOX', 'IMPORTANT'],
+            thread_id: 'thread_123'
+          },
+          {
+            id: 'msg_2',
+            account_id: 'account_1',
+            message_id: 'gmail_12346',
+            subject: 'Your weekly lead generation report',
+            sender: 'reports@clipgenius.com',
+            recipient: 'user@gmail.com',
+            body: 'This week you generated 247 new leads across all campaigns. Here\'s a breakdown...',
+            received_at: new Date(Date.now() - 7200000).toISOString(),
+            is_read: true,
+            labels: ['INBOX'],
+            thread_id: 'thread_124'
+          },
+          {
+            id: 'msg_3',
+            account_id: 'account_2',
+            message_id: 'outlook_67890',
+            subject: 'Team meeting tomorrow at 2 PM',
+            sender: 'boss@company.com',
+            recipient: 'user@company.com',
+            body: 'Hi team, let\'s meet tomorrow at 2 PM to discuss the new project timeline...',
+            received_at: new Date(Date.now() - 10800000).toISOString(),
+            is_read: false,
+            labels: ['INBOX', 'MEETING'],
+            thread_id: 'thread_125'
+          }
+        ]
       case 'websites':
         return [
           {

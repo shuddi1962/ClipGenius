@@ -110,6 +110,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Task Management', href: '/dashboard/tasks', icon: CheckSquare, description: 'Project task tracking', color: 'text-orange-400' },
     { name: 'Live Chat', href: '/dashboard/live-chat', icon: MessageSquare, description: 'Real-time customer support', color: 'text-purple-400' },
     { name: 'Scheduling', href: '/dashboard/scheduling', icon: Calendar, description: 'Online appointment booking', color: 'text-cyan-400' },
+    { name: 'Email Integration', href: '/dashboard/email-integration', icon: Mail, description: 'Gmail & Outlook sync', color: 'text-blue-400' },
 
     // Business Tools
     { name: 'Payments', href: '/dashboard/payments', icon: CreditCard, description: 'Payment processing & invoicing', color: 'text-green-400' },
