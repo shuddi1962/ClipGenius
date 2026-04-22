@@ -33,6 +33,7 @@ export interface DatabaseTable extends Promise<{ data: any, error: any }> {
   eq: (column: string, value: any) => DatabaseTable
   gte: (column: string, value: any) => DatabaseTable
   in: (column: string, values: any[]) => DatabaseTable
+  or: (filter: string) => DatabaseTable
   single: () => Promise<{ data: any, error: any }>
   order: (column: string, options?: any) => DatabaseTable
   limit: (count: number) => DatabaseTable
@@ -166,6 +167,12 @@ class MockDatabaseTable {
 
   in(column: string, values: any[]): MockDatabaseTable {
     this.filters[column] = { op: 'in', value: values }
+    return this
+  }
+
+  or(filter: string): MockDatabaseTable {
+    // Mock OR filter - in real implementation this would parse the filter string
+    this.filters._or = filter
     return this
   }
 
@@ -341,6 +348,113 @@ class MockDatabaseTable {
         return null
       case 'call_logs':
         return null
+      case 'email_templates':
+        return [
+          {
+            id: 'template_1',
+            name: 'Welcome Email',
+            subject: 'Welcome to {{company_name}}!',
+            content: 'Hi {{first_name}},\n\nWelcome to {{company_name}}! We\'re excited to have you on board.',
+            category: 'welcome',
+            variables: ['first_name', 'company_name'],
+            is_public: false,
+            usage_count: 5,
+            created_at: new Date().toISOString(),
+            workspace_id: 'workspace_1'
+          },
+          {
+            id: 'template_2',
+            name: 'Newsletter',
+            subject: '{{month}} Newsletter',
+            content: 'Here\'s what\'s new this month...',
+            category: 'newsletter',
+            variables: ['month'],
+            is_public: true,
+            usage_count: 12,
+            created_at: new Date().toISOString(),
+            workspace_id: 'workspace_1'
+          }
+        ]
+      case 'funnel_templates':
+        return [
+          {
+            id: 'funnel_1',
+            name: 'Lead Nurture Funnel',
+            description: 'Automated lead nurturing sequence',
+            category: 'lead-generation',
+            steps: [
+              {
+                id: 'step_1',
+                name: 'Welcome Email',
+                type: 'email',
+                delay: 0,
+                content: 'Welcome to our service!'
+              },
+              {
+                id: 'step_2',
+                name: 'Follow-up',
+                type: 'email',
+                delay: 1440,
+                content: 'How are you enjoying our service?'
+              }
+            ],
+            is_public: false,
+            usage_count: 3,
+            conversion_rate: 25.5,
+            created_at: new Date().toISOString(),
+            workspace_id: 'workspace_1'
+          }
+        ]
+      case 'smart_lists':
+        return [
+          {
+            id: 'list_1',
+            name: 'Hot Leads',
+            filters: { score: { min: 80 }, status: 'qualified' },
+            lead_count: 25,
+            is_public: false,
+            created_at: new Date().toISOString(),
+            workspace_id: 'workspace_1'
+          }
+        ]
+      case 'live_chat_sessions':
+        return [
+          {
+            id: 'chat_1',
+            visitor_id: 'visitor_123',
+            messages: [
+              { id: 'msg_1', sender: 'visitor', content: 'Hello', timestamp: new Date().toISOString() },
+              { id: 'msg_2', sender: 'agent', content: 'Hi there! How can I help?', timestamp: new Date().toISOString() }
+            ],
+            status: 'active',
+            created_at: new Date().toISOString(),
+            workspace_id: 'workspace_1'
+          }
+        ]
+      case 'review_widgets':
+        return [
+          {
+            id: 'widget_1',
+            name: 'Main Review Widget',
+            settings: { theme: 'dark', position: 'bottom-right' },
+            is_active: true,
+            created_at: new Date().toISOString(),
+            workspace_id: 'workspace_1'
+          }
+        ]
+      case 'scheduling_events':
+        return [
+          {
+            id: 'event_1',
+            title: 'Consultation Call',
+            start_time: new Date().toISOString(),
+            end_time: new Date(Date.now() + 3600000).toISOString(),
+            attendee_email: 'client@example.com',
+            status: 'confirmed',
+            created_at: new Date().toISOString(),
+            workspace_id: 'workspace_1'
+          }
+        ]
       default:
         return null
     }
