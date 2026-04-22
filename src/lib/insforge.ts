@@ -422,13 +422,42 @@ class MockDatabaseTable {
           {
             id: 'chat_1',
             visitor_id: 'visitor_123',
-            messages: [
-              { id: 'msg_1', sender: 'visitor', content: 'Hello', timestamp: new Date().toISOString() },
-              { id: 'msg_2', sender: 'agent', content: 'Hi there! How can I help?', timestamp: new Date().toISOString() }
-            ],
+            customer_name: 'John Doe',
+            customer_email: 'john@example.com',
             status: 'active',
+            started_at: new Date().toISOString(),
+            last_message_at: new Date().toISOString(),
+            message_count: 5,
+            assigned_agent: 'Support Agent',
             created_at: new Date().toISOString(),
             workspace_id: 'workspace_1'
+          }
+        ]
+      case 'chat_messages':
+        return [
+          {
+            id: 'msg_1',
+            session_id: 'chat_1',
+            sender: 'user',
+            content: 'Hello, I need help with my order',
+            timestamp: new Date().toISOString(),
+            sender_name: 'John Doe'
+          },
+          {
+            id: 'msg_2',
+            session_id: 'chat_1',
+            sender: 'agent',
+            content: 'Hi John! I\'d be happy to help you with your order. Can you please provide your order number?',
+            timestamp: new Date(Date.now() + 60000).toISOString(),
+            sender_name: 'Support Agent'
+          },
+          {
+            id: 'msg_3',
+            session_id: 'chat_1',
+            sender: 'user',
+            content: 'Sure, it\'s #12345',
+            timestamp: new Date(Date.now() + 120000).toISOString(),
+            sender_name: 'John Doe'
           }
         ]
       case 'review_widgets':

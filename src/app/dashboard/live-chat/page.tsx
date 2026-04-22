@@ -25,11 +25,12 @@ import { insforge } from '@/lib/insforge'
 
 interface ChatMessage {
   id: string
+  session_id: string
   sender: 'user' | 'agent' | 'system'
   content: string
   timestamp: string
-  senderName?: string
-  senderAvatar?: string
+  sender_name?: string
+  sender_avatar?: string
 }
 
 interface ChatSession {
@@ -123,7 +124,7 @@ export default function LiveChatPage() {
 
       const messageData = {
         session_id: selectedSession,
-        sender: 'agent',
+        sender: 'agent' as const,
         content: newMessage,
         timestamp: new Date().toISOString(),
         sender_name: 'Support Agent' // Could be dynamic based on user
