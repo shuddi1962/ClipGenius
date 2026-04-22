@@ -2,12 +2,25 @@ import { NextRequest, NextResponse } from 'next/server'
 import { insforge } from '@/lib/insforge'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2026-03-25.dahlia',
-})
+// Initialize Stripe only when secret key is available
+let stripe: Stripe | null = null
+
+if (process.env.STRIPE_SECRET_KEY) {
+  stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2026-03-25.dahlia',
+  })
+}
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if Stripe is configured
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Payment processing is not configured. Please contact support.' },
+        { status: 503 }
+      )
+    }
+
     const { amount, currency, description, customerEmail, metadata } = await request.json()
 
     if (!amount || !currency || !description) {
@@ -86,6 +99,14 @@ export async function POST(request: NextRequest) {
 // Webhook handler for Stripe events
 export async function PUT(request: NextRequest) {
   try {
+    // Check if Stripe is configured
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Payment processing is not configured.' },
+        { status: 503 }
+      )
+    }
+
     const body = await request.text()
     const sig = request.headers.get('stripe-signature')
 
@@ -127,6 +148,12 @@ export async function PUT(request: NextRequest) {
 
 async function handlePaymentSuccess(paymentIntent: Stripe.PaymentIntent) {
   try {
+    // Check if database is available
+    if (!insforge) {
+      console.error('Database not available for payment success handling')
+      return
+    }
+
     // Update payment record
     const { error } = await insforge
       .from('payments')
@@ -149,6 +176,12 @@ async function handlePaymentSuccess(paymentIntent: Stripe.PaymentIntent) {
 
 async function handlePaymentFailure(paymentIntent: Stripe.PaymentIntent) {
   try {
+    // Check if database is available
+    if (!insforge) {
+      console.error('Database not available for payment failure handling')
+      return
+    }
+
     // Update payment record
     const { error } = await insforge
       .from('payments')
