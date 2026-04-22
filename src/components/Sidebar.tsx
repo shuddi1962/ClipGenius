@@ -18,6 +18,7 @@ import {
   Database,
   Shield,
   CreditCard,
+  Crown,
   Activity,
   Home,
   ChevronLeft,
