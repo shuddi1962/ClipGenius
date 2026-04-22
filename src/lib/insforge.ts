@@ -484,6 +484,61 @@ class MockDatabaseTable {
             workspace_id: 'workspace_1'
           }
         ]
+      case 'websites':
+        return [
+          {
+            id: 'website_1',
+            user_id: 'user_1',
+            name: 'My Website',
+            domain: 'mywebsite.clipgenius.com',
+            pages_json: JSON.stringify([
+              {
+                id: 'page_1',
+                name: 'Home',
+                elements: [
+                  {
+                    id: 'element_1',
+                    type: 'heading',
+                    content: 'Welcome to My Website',
+                    style: {
+                      x: 100,
+                      y: 100,
+                      width: 400,
+                      height: 60,
+                      color: '#000000',
+                      fontSize: 32,
+                      fontWeight: 'bold',
+                      textAlign: 'center'
+                    }
+                  },
+                  {
+                    id: 'element_2',
+                    type: 'text',
+                    content: 'This is a sample website created with ClipGenius website builder.',
+                    style: {
+                      x: 100,
+                      y: 180,
+                      width: 400,
+                      height: 40,
+                      color: '#666666',
+                      fontSize: 16,
+                      textAlign: 'center'
+                    }
+                  }
+                ],
+                settings: {
+                  backgroundColor: '#ffffff',
+                  fontFamily: 'Inter',
+                  metaTitle: 'My Website',
+                  metaDescription: 'Welcome to my website'
+                }
+              }
+            ]),
+            is_published: false,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          }
+        ]
       case 'pricing_tiers':
         return [
           {

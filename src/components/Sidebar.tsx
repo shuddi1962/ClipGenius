@@ -92,6 +92,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Blogging', href: '/dashboard/blogging', icon: FileText, description: 'Create and manage blog posts', color: 'text-emerald-400' },
     { name: 'Content AI', href: '/dashboard/content-ai', icon: Sparkles, description: 'AI-powered content creation', color: 'text-violet-400' },
     { name: 'Content Generator', href: '/dashboard/content-generator', icon: Wand2, description: 'AI content creation', color: 'text-indigo-400' },
+    { name: 'Website Builder', href: '/dashboard/website-builder', icon: Globe, description: 'Drag-and-drop website creation', color: 'text-green-400' },
     { name: 'Courses & Memberships', href: '/dashboard/courses-memberships', icon: BookOpen, description: 'Learning management system', color: 'text-blue-400' },
     { name: 'Email Builder', href: '/dashboard/email-builder', icon: Mail, description: 'Create email campaigns', color: 'text-cyan-400' },
     { name: 'Video Studio', href: '/dashboard/video-studio', icon: Video, description: 'AI video script generation', color: 'text-orange-400' },
