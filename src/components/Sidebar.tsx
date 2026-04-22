@@ -129,14 +129,14 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Custom Providers', href: '/dashboard/custom-providers', icon: Settings, description: 'Configure integrations', color: 'text-violet-400' },
     { name: 'Document Management', href: '/dashboard/document-management', icon: FileText, description: 'Organize and share documents', color: 'text-sky-400' },
     { name: 'Products', href: '/dashboard/products', icon: ShoppingBag, description: 'Manage product catalog', color: 'text-amber-400' },
-    { name: 'Settings', href: '/dashboard/settings', icon: Settings, description: 'Account & preferences', color: 'text-slate-400' }
+    { name: 'Settings', href: '/dashboard/settings', icon: Settings, description: 'Account & preferences', color: 'text-slate-400' },
+    { name: 'Pricing Tiers', href: '/dashboard/pricing-tiers', icon: Crown, description: 'View subscription plans', color: 'text-yellow-400' }
   ]
 
   const adminNavigation = [
     { name: 'Dashboard', href: '/admin', icon: BarChart3, description: 'System overview', color: 'text-blue-400' },
     { name: 'User Management', href: '/admin/users', icon: Users, description: 'Manage all users', color: 'text-green-400' },
     { name: 'API Management', href: '/admin/api-keys', icon: Shield, description: 'Third-party API keys', color: 'text-purple-400' },
-    { name: 'Pricing Tiers', href: '/dashboard/pricing-tiers', icon: Crown, description: 'Manage subscription plans', color: 'text-yellow-400' },
     { name: 'Billing', href: '/admin/billing', icon: CreditCard, description: 'Subscriptions & payments', color: 'text-green-400' },
     { name: 'Content Moderation', href: '/admin/content', icon: FileText, description: 'Review user content', color: 'text-red-400' },
     { name: 'System Health', href: '/admin/system', icon: Activity, description: 'Platform monitoring', color: 'text-cyan-400' },
