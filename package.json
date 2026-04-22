@@ -16,6 +16,7 @@
     "@anthropic-ai/sdk": "^0.90.0",
     "@base-ui/react": "^1.4.0",
     "@insforge/sdk": "^1.2.4",
+    "@radix-ui/react-select": "^2.2.6",
     "@remotion/cli": "^4.0.448",
     "@remotion/player": "^4.0.448",
     "@remotion/zod-types": "^4.0.448",
