@@ -273,18 +273,18 @@ export default function SplitTestingPage() {
   const calculateWinner = (test: ABTest): string | undefined => {
     if (test.testType === 'subject_line' || test.testType === 'content') {
       // Find variant with highest click rate
-      return test.variants.reduce((winner, variant) =>
-        variant.clickRate > winner.clickRate ? variant.id : winner.id,
-        test.variants[0].id
+      const winner = test.variants.reduce((best, current) =>
+        current.clickRate > best.clickRate ? current : best
       )
+      return winner.id
     } else if (test.testType === 'send_time') {
       // Find variant with highest open rate
-      return test.variants.reduce((winner, variant) =>
-        variant.openRate > winner.openRate ? variant.id : winner.id,
-        test.variants[0].id
+      const winner = test.variants.reduce((best, current) =>
+        current.openRate > best.openRate ? current : best
       )
+      return winner.id
     }
-    return test.variants[0].id
+    return test.variants[0]?.id
   }
 
   const tabs = [
