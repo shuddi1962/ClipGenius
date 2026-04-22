@@ -84,6 +84,7 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Lead Scraping', href: '/dashboard/leads/scrape', icon: Search, description: 'Import from multiple sources', color: 'text-green-400' },
     { name: 'Lead Management', href: '/dashboard/leads', icon: Users, description: 'View & manage all leads', color: 'text-cyan-400' },
     { name: 'AI Qualification', href: '/dashboard/leads/qualify', icon: Zap, description: 'Score leads automatically', color: 'text-yellow-400' },
+    { name: 'Manual Actions', href: '/dashboard/manual-actions', icon: Users, description: 'Process leads manually with calls and follow-ups', color: 'text-purple-400' },
     { name: 'Smart Lists', href: '/dashboard/smart-lists', icon: Users, description: 'Advanced lead segmentation', color: 'text-cyan-400' },
 
     // Outreach Section
@@ -99,12 +100,14 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Content AI', href: '/dashboard/content-ai', icon: Sparkles, description: 'AI-powered content creation', color: 'text-violet-400' },
     { name: 'Content Generator', href: '/dashboard/content-generator', icon: Wand2, description: 'AI content creation', color: 'text-indigo-400' },
     { name: 'Website Builder', href: '/dashboard/website-builder', icon: Globe, description: 'Drag-and-drop website creation', color: 'text-green-400' },
+    { name: 'Website Templates', href: '/dashboard/website-templates', icon: Globe, description: 'Pre-built website templates', color: 'text-green-400' },
     { name: 'Courses & Memberships', href: '/dashboard/courses-memberships', icon: BookOpen, description: 'Learning management system', color: 'text-blue-400' },
     { name: 'Email Builder', href: '/dashboard/email-builder', icon: Mail, description: 'Create email campaigns', color: 'text-cyan-400' },
     { name: 'Email Templates', href: '/dashboard/email-templates', icon: Mail, description: 'Manage email template library', color: 'text-cyan-400' },
     { name: 'Funnel Templates', href: '/dashboard/funnel-templates', icon: Target, description: 'Pre-built sales funnel templates', color: 'text-emerald-400' },
     { name: 'Video Studio', href: '/dashboard/video-studio', icon: Video, description: 'AI video script generation', color: 'text-orange-400' },
     { name: 'Social Media', href: '/dashboard/social', icon: Instagram, description: 'Social posting & scheduling', color: 'text-rose-400' },
+    { name: 'Social Templates', href: '/dashboard/social-templates', icon: Instagram, description: 'Pre-built social media post templates', color: 'text-rose-400' },
     { name: 'Social Scheduler', href: '/dashboard/social/scheduler', icon: Calendar, description: 'Schedule social media posts', color: 'text-rose-400' },
     { name: 'New Social Post', href: '/dashboard/social/new', icon: Plus, description: 'Create new social media post', color: 'text-rose-400' },
     { name: 'Facebook', href: '/dashboard/facebook', icon: Instagram, description: 'Facebook management', color: 'text-blue-600' },
