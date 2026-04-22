@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import {
-  Funnel,
+  Filter,
   Plus,
   Copy,
   Edit,
@@ -20,7 +20,8 @@ import {
   TrendingUp,
   Mail,
   MessageSquare,
-  Phone
+  Phone,
+  Clock
 } from 'lucide-react'
 import { insforge } from '@/lib/insforge'
 
@@ -259,7 +260,7 @@ export default function FunnelTemplatesPage() {
   ]
 
   const tabs = [
-    { id: 'templates', name: 'Templates', icon: Funnel },
+    { id: 'templates', name: 'Templates', icon: Filter },
     { id: 'create', name: 'Create Template', icon: Plus },
     { id: 'analytics', name: 'Analytics', icon: BarChart3 }
   ]
@@ -401,7 +402,7 @@ export default function FunnelTemplatesPage() {
 
             {filteredTemplates.length === 0 && (
               <div className="col-span-full text-center py-12">
-                <Funnel className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+                <Filter className="w-16 h-16 text-gray-500 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-white mb-2">No funnel templates found</h3>
                 <p className="text-gray-400 mb-6">
                   {selectedCategory === 'all'
@@ -425,7 +426,7 @@ export default function FunnelTemplatesPage() {
           <Card className="bg-gray-800/50 backdrop-blur-sm border border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Funnel className="w-5 h-5" />
+                <Filter className="w-5 h-5" />
                 Create Funnel Template
               </CardTitle>
             </CardHeader>
@@ -576,7 +577,7 @@ export default function FunnelTemplatesPage() {
 
                 {newTemplate.steps.length === 0 && (
                   <div className="text-center py-8 text-gray-400">
-                    <Funnel className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                    <Filter className="w-12 h-12 mx-auto mb-4 opacity-50" />
                     <p>No steps added yet. Click the buttons above to add funnel steps.</p>
                   </div>
                 )}
@@ -616,7 +617,7 @@ export default function FunnelTemplatesPage() {
                   Cancel
                 </Button>
                 <Button onClick={createTemplate} disabled={!newTemplate.name || newTemplate.steps.length === 0} className="bg-blue-600 hover:bg-blue-700">
-                  <Funnel className="w-4 h-4 mr-2" />
+                  <Filter className="w-4 h-4 mr-2" />
                   Create Template
                 </Button>
               </div>
