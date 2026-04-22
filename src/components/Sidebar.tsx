@@ -45,7 +45,11 @@ import {
   BookOpen,
   Brain,
   Key,
-  UserCheck
+  UserCheck,
+  CheckSquare,
+  Image,
+  Split,
+  Star
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -81,6 +85,8 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     // Outreach Section
     { name: 'Campaigns', href: '/dashboard/campaigns', icon: Send, description: 'Email, WhatsApp & SMS campaigns', color: 'text-red-400' },
     { name: 'Voice Agent', href: '/dashboard/voice', icon: Phone, description: 'AI phone call automation', color: 'text-pink-400' },
+    { name: 'Forms & Surveys', href: '/dashboard/forms', icon: FileText, description: 'Create lead capture forms', color: 'text-amber-400' },
+    { name: 'Opportunities', href: '/dashboard/opportunities', icon: Target, description: 'Sales pipeline management', color: 'text-emerald-400' },
 
     // Content Section
     { name: 'Blogging', href: '/dashboard/blogging', icon: FileText, description: 'Create and manage blog posts', color: 'text-emerald-400' },
@@ -90,6 +96,9 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Email Builder', href: '/dashboard/email-builder', icon: Mail, description: 'Create email campaigns', color: 'text-cyan-400' },
     { name: 'Video Studio', href: '/dashboard/video-studio', icon: Video, description: 'AI video script generation', color: 'text-orange-400' },
     { name: 'Social Media', href: '/dashboard/social', icon: Instagram, description: 'Social posting & scheduling', color: 'text-rose-400' },
+    { name: 'Image AI', href: '/dashboard/image-ai', icon: Image, description: 'AI image generation', color: 'text-lime-400' },
+    { name: 'Split Testing', href: '/dashboard/split-testing', icon: Split, description: 'A/B testing for campaigns', color: 'text-fuchsia-400' },
+    { name: 'Reputation', href: '/dashboard/reputation', icon: Star, description: 'Reviews & reputation management', color: 'text-yellow-400' },
 
     // Intelligence Section
     { name: 'Conversation AI', href: '/dashboard/conversation-ai', icon: Brain, description: 'Advanced AI conversations', color: 'text-purple-400' },
@@ -97,8 +106,10 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
     { name: 'Competitor Analysis', href: '/dashboard/competitors', icon: Target, description: 'Monitor competitors', color: 'text-emerald-400' },
     { name: 'AI Agents', href: '/dashboard/agents', icon: Bot, description: 'Configure AI assistants', color: 'text-violet-400' },
     { name: 'Workflows', href: '/dashboard/workflows', icon: Workflow, description: 'Automation workflows', color: 'text-teal-400' },
+    { name: 'Task Management', href: '/dashboard/tasks', icon: CheckSquare, description: 'Project task tracking', color: 'text-orange-400' },
 
     // Business Tools
+    { name: 'Payments', href: '/dashboard/payments', icon: CreditCard, description: 'Payment processing & invoicing', color: 'text-green-400' },
     { name: 'API Access', href: '/dashboard/api-access', icon: Key, description: 'Manage API keys and docs', color: 'text-cyan-400' },
     { name: 'Ads Reporting', href: '/dashboard/ads-reporting', icon: BarChart3, description: 'Monitor ad performance', color: 'text-blue-400' },
     { name: 'Affiliate Manager', href: '/dashboard/affiliate-manager', icon: DollarSign, description: 'Manage affiliate program', color: 'text-green-400' },
@@ -140,16 +151,16 @@ export default function Sidebar({ isCollapsed = false, onToggle, userRole: propU
       ['Lead Scraping', 'Lead Management', 'AI Qualification'].includes(item.name)
     )
     const outreachSection = navigation.filter(item =>
-      ['Campaigns', 'Voice Agent'].includes(item.name)
+      ['Campaigns', 'Voice Agent', 'Forms & Surveys', 'Opportunities'].includes(item.name)
     )
     const contentSection = navigation.filter(item =>
-      ['Blogging', 'Content AI', 'Content Generator', 'Courses & Memberships', 'Email Builder', 'Video Studio', 'Social Media'].includes(item.name)
+      ['Blogging', 'Content AI', 'Content Generator', 'Courses & Memberships', 'Email Builder', 'Video Studio', 'Social Media', 'Image AI', 'Split Testing', 'Reputation'].includes(item.name)
     )
     const intelligenceSection = navigation.filter(item =>
-      ['Conversation AI', 'Conversations with', 'Competitor Analysis', 'AI Agents', 'Workflows'].includes(item.name)
+      ['Conversation AI', 'Conversations with', 'Competitor Analysis', 'AI Agents', 'Workflows', 'Task Management'].includes(item.name)
     )
     const businessSection = navigation.filter(item =>
-      ['API Access', 'Ads Reporting', 'Affiliate Manager', 'App Marketplace', 'Attribution Reporting', 'Audit Logs', 'Call Reporting', 'Communities', 'Company Object', 'Compliance', 'CRM', 'Custom Providers', 'Document Management', 'Products', 'Analytics', 'Settings'].includes(item.name)
+      ['API Access', 'Ads Reporting', 'Affiliate Manager', 'App Marketplace', 'Attribution Reporting', 'Audit Logs', 'Call Reporting', 'Communities', 'Company Object', 'Compliance', 'CRM', 'Custom Providers', 'Document Management', 'Products', 'Payments', 'Analytics', 'Settings'].includes(item.name)
     )
 
     return [overviewSection, leadSection, outreachSection, contentSection, intelligenceSection, businessSection]
