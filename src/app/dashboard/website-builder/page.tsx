@@ -28,6 +28,7 @@ import {
   AlignCenter,
   AlignRight,
   Bold,
+  File,
   Italic,
   Underline,
   Link,

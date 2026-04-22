@@ -47,12 +47,26 @@ export default function PricingTiersPage() {
   const [showNewForm, setShowNewForm] = useState(false)
 
   // New tier form
-  const [newTier, setNewTier] = useState({
+  const [newTier, setNewTier] = useState<{
+    name: string;
+    description: string;
+    price: number;
+    interval: 'monthly' | 'yearly';
+    features: string[];
+    limits: {
+      leads: number;
+      campaigns: number;
+      users: number;
+      storage_gb: number;
+    };
+    is_popular: boolean;
+    featureInput: string;
+  }>({
     name: '',
     description: '',
     price: 0,
-    interval: 'monthly' as const,
-    features: [] as string[],
+    interval: 'monthly',
+    features: [],
     limits: {
       leads: 1000,
       campaigns: 10,
