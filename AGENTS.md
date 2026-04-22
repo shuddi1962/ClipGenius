@@ -114,10 +114,10 @@
 - **Manual Actions** - Manual lead processing ✅
 
 ### Advanced Marketing
-- **Social Media Templates** - Social post templates
-- **Social Media Templates** - Social post templates
+- **Social Media Templates** - Social post templates ✅
+- **Social Media Templates** - Social post templates ✅
 - **Website & Funnel Builder** - Drag-and-drop website creation ✅
-- **Website Templates** - Pre-built website designs
+- **Website Templates** - Pre-built website designs ✅
 - **Reputation Management** - Online reputation monitoring
 - **Review Requests** - Automated review collection
 - **Reviews AI** - AI-powered review management
