@@ -162,7 +162,7 @@ export default function LoginPage() {
         >
           <p className="text-nexus-text-secondary">
             Don't have an account?{' '}
-            <Link href="/register" className="text-nexus-blue hover:text-nexus-accent transition-colors font-medium">
+            <Link href="/marketing/register" className="text-nexus-blue hover:text-nexus-accent transition-colors font-medium">
               Sign up for free
             </Link>
           </p>

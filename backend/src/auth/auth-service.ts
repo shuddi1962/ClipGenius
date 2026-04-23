@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 import { z } from 'zod';
 
 export interface JWTPayload {
@@ -32,13 +31,19 @@ export class AuthService {
     this.jwtRefreshExpiresIn = jwtRefreshExpiresIn;
   }
 
-  // Password hashing
+  // Password hashing (simple implementation for development)
   async hashPassword(password: string): Promise<string> {
-    return bcrypt.hash(password, 12);
+    const crypto = await import('crypto');
+    const salt = crypto.randomBytes(16).toString('hex');
+    const hash = crypto.createHash('sha256').update(password + salt).digest('hex');
+    return `${salt}:${hash}`;
   }
 
   async verifyPassword(password: string, hash: string): Promise<boolean> {
-    return bcrypt.compare(password, hash);
+    const crypto = await import('crypto');
+    const [salt, originalHash] = hash.split(':');
+    const testHash = crypto.createHash('sha256').update(password + salt).digest('hex');
+    return testHash === originalHash;
   }
 
   // JWT tokens

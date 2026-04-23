@@ -152,7 +152,7 @@ export default function AdsManagementSection() {
 
             {/* CTA */}
             <Link
-              href="/register"
+              href="/marketing/register"
               className="inline-flex items-center gap-2 bg-nexus-blue hover:bg-nexus-accent px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
             >
               Start Managing Ads

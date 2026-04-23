@@ -276,7 +276,7 @@ export default function PricingPage() {
                   </div>
 
                   <Link
-                    href="/register"
+                    href="/marketing/register"
                     className={`w-full btn ${
                       plan.popular
                         ? 'btn-primary'

@@ -228,7 +228,7 @@ export default function HeroSection() {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
         >
           <Link
-            href="/register"
+            href="/marketing/register"
             className="btn btn-primary text-lg px-8 py-4 h-auto flex items-center gap-2"
           >
             Start Free 14-Day Trial

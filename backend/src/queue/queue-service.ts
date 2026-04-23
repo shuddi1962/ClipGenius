@@ -1,4 +1,4 @@
-import { Queue, Worker, QueueScheduler } from 'bullmq';
+import { Queue, Worker } from 'bullmq';
 import { insforgeClient } from '../database/insforge.js';
 
 export interface JobData {
@@ -8,10 +8,11 @@ export interface JobData {
 export class QueueService {
   private queues: Map<string, Queue> = new Map();
   private workers: Map<string, Worker> = new Map();
-  private schedulers: Map<string, QueueScheduler> = new Map();
 
-  constructor(redisUrl: string) {
-    this.initializeQueues(redisUrl);
+  constructor(redisUrl?: string) {
+    if (redisUrl) {
+      this.initializeQueues(redisUrl);
+    }
   }
 
   private initializeQueues(redisUrl: string) {
@@ -59,9 +60,6 @@ export class QueueService {
       },
     });
 
-    // Create scheduler for delayed jobs
-    const scheduler = new QueueScheduler(name, { connection: { url: redisUrl } });
-
     // Create worker
     const worker = new Worker(name, processor, {
       connection: { url: redisUrl },
@@ -78,7 +76,6 @@ export class QueueService {
 
     this.queues.set(name, queue);
     this.workers.set(name, worker);
-    this.schedulers.set(name, scheduler);
   }
 
   // Add job to queue
@@ -236,10 +233,6 @@ export class QueueService {
 
     for (const [name, worker] of this.workers) {
       await worker.close();
-    }
-
-    for (const [name, scheduler] of this.schedulers) {
-      await scheduler.close();
     }
   }
 }

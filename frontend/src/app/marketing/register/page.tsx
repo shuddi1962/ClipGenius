@@ -296,7 +296,7 @@ export default function RegisterPage() {
         >
           <p className="text-nexus-text-secondary">
             Already have an account?{' '}
-            <Link href="/login" className="text-nexus-blue hover:text-nexus-accent transition-colors font-medium">
+            <Link href="/marketing/login" className="text-nexus-blue hover:text-nexus-accent transition-colors font-medium">
               Sign in
             </Link>
           </p>

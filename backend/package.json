@@ -13,7 +13,13 @@
     "lint": "eslint src/**/*.ts",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": ["saas", "platform", "ai", "business", "automation"],
+  "keywords": [
+    "saas",
+    "platform",
+    "ai",
+    "business",
+    "automation"
+  ],
   "author": "Nexus Team",
   "license": "ISC",
   "dependencies": {
@@ -23,10 +29,10 @@
     "@fastify/rate-limit": "^9.1.0",
     "@mozilla/readability": "^0.5.0",
     "axios": "^1.6.8",
-    "bcrypt": "^5.1.1",
     "bullmq": "^5.4.2",
     "canvas": "^2.11.2",
     "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^17.4.2",
     "fastify": "^5.0.0",
     "got": "^14.2.1",
     "jsonwebtoken": "^9.0.2",
@@ -41,14 +47,13 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.11.30",
     "@types/nodemailer": "^6.4.14",
     "@types/supertest": "^6.0.2",
     "eslint": "^8.57.0",
     "pino-pretty": "^11.0.0",
-    "tsx": "^4.7.1",
+    "tsx": "^4.21.0",
     "typescript": "^5.4.3"
   },
   "engines": {

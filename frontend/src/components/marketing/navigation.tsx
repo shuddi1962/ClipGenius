@@ -121,7 +121,7 @@ export default function Navigation() {
                 </div>
               </div>
 
-              <Link href="/pricing" className="text-nexus-text-primary hover:text-nexus-accent px-3 py-2 text-sm font-medium transition-colors">
+              <Link href="/marketing/pricing" className="text-nexus-text-primary hover:text-nexus-accent px-3 py-2 text-sm font-medium transition-colors">
                 Pricing
               </Link>
 
@@ -133,10 +133,10 @@ export default function Navigation() {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/login" className="text-nexus-text-primary hover:text-nexus-accent px-3 py-2 text-sm font-medium transition-colors">
+            <Link href="/marketing/login" className="text-nexus-text-primary hover:text-nexus-accent px-3 py-2 text-sm font-medium transition-colors">
               Login
             </Link>
-            <Link href="/register" className="btn btn-primary">
+            <Link href="/marketing/register" className="btn btn-primary">
               Start Free Trial
             </Link>
           </div>
@@ -163,17 +163,17 @@ export default function Navigation() {
             <a href="#" className="block px-3 py-2 text-base font-medium text-nexus-text-primary hover:bg-nexus-bg-secondary rounded-md">
               Solutions
             </a>
-            <a href="/pricing" className="block px-3 py-2 text-base font-medium text-nexus-text-primary hover:bg-nexus-bg-secondary rounded-md">
+            <a href="/marketing/pricing" className="block px-3 py-2 text-base font-medium text-nexus-text-primary hover:bg-nexus-bg-secondary rounded-md">
               Pricing
             </a>
             <a href="#" className="block px-3 py-2 text-base font-medium text-nexus-text-primary hover:bg-nexus-bg-secondary rounded-md">
               Resources
             </a>
             <div className="pt-4 pb-3 border-t border-nexus-border">
-              <a href="/login" className="block px-3 py-2 text-base font-medium text-nexus-text-primary hover:bg-nexus-bg-secondary rounded-md">
+              <a href="/marketing/login" className="block px-3 py-2 text-base font-medium text-nexus-text-primary hover:bg-nexus-bg-secondary rounded-md">
                 Login
               </a>
-              <a href="/register" className="block px-3 py-2 mt-2 btn btn-primary text-center">
+              <a href="/marketing/register" className="block px-3 py-2 mt-2 btn btn-primary text-center">
                 Start Free Trial
               </a>
             </div>
