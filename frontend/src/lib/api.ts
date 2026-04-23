@@ -5,7 +5,7 @@ class ApiClient {
 
   constructor() {
     this.client = createClient({
-      url: process.env.NEXT_PUBLIC_INSFORGE_URL || 'https://wk49fyqm.us-east.insforge.app',
+      baseUrl: process.env.NEXT_PUBLIC_INSFORGE_URL || 'https://wk49fyqm.us-east.insforge.app',
       anonKey: process.env.NEXT_PUBLIC_INSFORGE_ANON_KEY || 'ik_1234567890abcdef',
     });
   }
