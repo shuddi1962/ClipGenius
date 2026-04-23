@@ -42,7 +42,26 @@ class ApiClient {
     if (error) {
       throw new Error(error.message);
     }
-    return user;
+
+    // Get additional user data from our users table
+    let userProfile = null;
+    if (user?.id) {
+      const { data: profile } = await this.client
+        .from('users')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      userProfile = profile;
+    }
+
+    return {
+      user: {
+        ...user,
+        ...userProfile,
+        name: userProfile?.full_name || user.email?.split('@')[0] || 'User'
+      }
+    };
   }
 
   async register(email: string, password: string, metadata?: any) {

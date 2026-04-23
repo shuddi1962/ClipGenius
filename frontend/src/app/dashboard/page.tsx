@@ -33,10 +33,23 @@ interface Organization {
   domain?: string;
 }
 
+interface DashboardStats {
+  contacts: number;
+  articles: number;
+  adAccounts: number;
+  campaigns: number;
+}
+
 export default function DashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [organization, setOrganization] = useState<Organization | null>(null);
+  const [stats, setStats] = useState<DashboardStats>({
+    contacts: 0,
+    articles: 0,
+    adAccounts: 0,
+    campaigns: 0
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -50,7 +63,22 @@ export default function DashboardPage() {
       try {
         const userData = await apiClient.getCurrentUser();
         setUser(userData.user);
-        setOrganization(userData.organization);
+
+        // Load dashboard stats
+        const [contactsData, articlesData, adAccountsData, campaignsData] = await Promise.all([
+          apiClient.getContacts(),
+          apiClient.getArticles(),
+          apiClient.getAdAccounts(),
+          apiClient.getAdCampaigns()
+        ]);
+
+        setStats({
+          contacts: contactsData?.length || 0,
+          articles: articlesData?.length || 0,
+          adAccounts: adAccountsData?.length || 0,
+          campaigns: campaignsData?.length || 0
+        });
+
       } catch (error) {
         console.error('Auth check failed:', error);
         localStorage.removeItem('accessToken');
@@ -140,7 +168,7 @@ export default function DashboardPage() {
                 <Users className="w-5 h-5 text-nexus-blue" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-nexus-text-primary">0</p>
+                <p className="text-2xl font-bold text-nexus-text-primary">{stats.contacts}</p>
                 <p className="text-sm text-nexus-text-secondary">Contacts</p>
               </div>
             </div>
@@ -152,7 +180,7 @@ export default function DashboardPage() {
                 <Target className="w-5 h-5 text-nexus-green" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-nexus-text-primary">0</p>
+                <p className="text-2xl font-bold text-nexus-text-primary">{stats.campaigns}</p>
                 <p className="text-sm text-nexus-text-secondary">Campaigns</p>
               </div>
             </div>
@@ -164,8 +192,8 @@ export default function DashboardPage() {
                 <Mail className="w-5 h-5 text-nexus-violet" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-nexus-text-primary">0</p>
-                <p className="text-sm text-nexus-text-secondary">Emails Sent</p>
+                <p className="text-2xl font-bold text-nexus-text-primary">{stats.articles}</p>
+                <p className="text-sm text-nexus-text-secondary">Articles</p>
               </div>
             </div>
           </div>
@@ -176,8 +204,8 @@ export default function DashboardPage() {
                 <TrendingUp className="w-5 h-5 text-nexus-amber" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-nexus-text-primary">0%</p>
-                <p className="text-sm text-nexus-text-secondary">Growth</p>
+                <p className="text-2xl font-bold text-nexus-text-primary">{stats.adAccounts}</p>
+                <p className="text-sm text-nexus-text-secondary">Ad Accounts</p>
               </div>
             </div>
           </div>
