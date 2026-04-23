@@ -121,6 +121,9 @@ await apiKeysRoutes(server, vaultService);
 // Register admin routes
 await adminRoutes(server, authService);
 
+// Register API auth routes
+await apiAuthRoutes(server, authService);
+
 // Model API routes (public for authenticated users)
 server.get('/api/models/:type', { preHandler: requireAuth }, async (request, reply) => {
   const { type } = request.params as { type: 'llm' | 'image' | 'video' | 'music' };

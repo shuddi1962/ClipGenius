@@ -2,19 +2,44 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, ArrowLeft, Zap } from 'lucide-react';
+import { apiClient } from '@/lib/api';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement login logic
-    console.log('Login:', { email, password, rememberMe });
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const response = await apiClient.login(email, password);
+
+      // Store tokens
+      localStorage.setItem('accessToken', response.accessToken);
+      localStorage.setItem('refreshToken', response.refreshToken);
+
+      // Redirect based on user role
+      if (response.user.role === 'admin') {
+        router.push('/admin');
+      } else {
+        router.push('/dashboard');
+      }
+    } catch (err: any) {
+      console.error('Login error:', err);
+      setError(err.response?.data?.error || 'Login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -54,6 +79,12 @@ export default function LoginPage() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="bg-white rounded-2xl border border-nexus-border p-8 shadow-sm"
         >
+          {error && (
+            <div className="bg-nexus-red/10 border border-nexus-red/20 rounded-lg p-4 mb-6">
+              <p className="text-nexus-red text-sm">{error}</p>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-nexus-text-primary mb-2">
@@ -115,9 +146,10 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="btn btn-primary w-full"
+              disabled={isLoading}
+              className="btn btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Sign in
+              {isLoading ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
 

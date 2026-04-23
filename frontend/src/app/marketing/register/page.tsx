@@ -2,10 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, ArrowLeft, Zap, Check } from 'lucide-react';
+import { apiClient } from '@/lib/api';
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -17,6 +20,8 @@ export default function RegisterPage() {
     agreeToTerms: false,
   });
   const [step, setStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const passwordRequirements = [
     { text: 'At least 8 characters', met: formData.password.length >= 8 },
@@ -31,22 +36,64 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
 
     if (step === 1) {
       // Validate step 1
-      if (!formData.email || !formData.password || !formData.name) return;
-      if (formData.password !== formData.confirmPassword) return;
-      if (!passwordRequirements.every(req => req.met)) return;
+      if (!formData.email || !formData.password || !formData.name) {
+        setError('Please fill in all required fields');
+        return;
+      }
+      if (formData.password !== formData.confirmPassword) {
+        setError('Passwords do not match');
+        return;
+      }
+      if (!passwordRequirements.every(req => req.met)) {
+        setError('Password does not meet requirements');
+        return;
+      }
 
       setStep(2);
       return;
     }
 
     // Step 2 - Final submission
-    if (!formData.agreeToTerms) return;
+    if (!formData.agreeToTerms) {
+      setError('Please agree to the terms and conditions');
+      return;
+    }
 
-    // TODO: Implement registration logic
-    console.log('Register:', formData);
+    setIsLoading(true);
+    try {
+      // Call registration API
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          name: formData.name,
+          orgName: formData.orgName || undefined,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Registration failed');
+      }
+
+      const data = await response.json();
+
+      // Registration successful - redirect to login with success message
+      router.push('/marketing/login?registered=true');
+    } catch (err: any) {
+      console.error('Registration error:', err);
+      setError(err.message || 'Registration failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -106,6 +153,12 @@ export default function RegisterPage() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="bg-white rounded-2xl border border-nexus-border p-8 shadow-sm"
         >
+          {error && (
+            <div className="bg-nexus-red/10 border border-nexus-red/20 rounded-lg p-4 mb-6">
+              <p className="text-nexus-red text-sm">{error}</p>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-6">
             {step === 1 ? (
               // Step 1: Account Details
@@ -204,15 +257,15 @@ export default function RegisterPage() {
                   )}
                 </div>
 
-                <button
-                  type="submit"
-                  className="btn btn-primary w-full"
-                  disabled={!formData.email || !formData.password || !formData.name ||
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isLoading || !formData.email || !formData.password || !formData.name ||
                            formData.password !== formData.confirmPassword ||
                            !passwordRequirements.every(req => req.met)}
-                >
-                  Continue
-                </button>
+                  >
+                    {isLoading ? 'Processing...' : 'Continue'}
+                  </button>
               </>
             ) : (
               // Step 2: Organization & Terms
@@ -276,10 +329,10 @@ export default function RegisterPage() {
                   </button>
                   <button
                     type="submit"
-                    className="btn btn-primary flex-1"
-                    disabled={!formData.agreeToTerms}
+                    className="btn btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isLoading || !formData.agreeToTerms}
                   >
-                    Create Account
+                    {isLoading ? 'Creating Account...' : 'Create Account'}
                   </button>
                 </div>
               </>
