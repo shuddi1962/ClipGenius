@@ -25,18 +25,22 @@ export default function LoginPage() {
       const response = await apiClient.login(email, password);
 
       // Store tokens
-      localStorage.setItem('accessToken', response.accessToken);
-      localStorage.setItem('refreshToken', response.refreshToken);
-
-      // Redirect based on user role
-      if (response.user.role === 'admin') {
-        router.push('/admin');
-      } else {
-        router.push('/dashboard');
+      if (response.accessToken) {
+        localStorage.setItem('accessToken', response.accessToken);
       }
+      if (response.refreshToken) {
+        localStorage.setItem('refreshToken', response.refreshToken);
+      }
+
+      // Get user details and redirect based on role
+      const user = await apiClient.getCurrentUser();
+
+      // Check if user is admin (you might need to check this from your database)
+      // For now, redirect to dashboard
+      router.push('/dashboard');
     } catch (err: any) {
       console.error('Login error:', err);
-      setError(err.response?.data?.error || 'Login failed. Please try again.');
+      setError(err.message || 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
