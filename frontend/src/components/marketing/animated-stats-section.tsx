@@ -83,7 +83,7 @@ export default function AnimatedStatsSection() {
               className="text-center"
             >
               <div className={`text-5xl md:text-6xl font-bold ${stat.color} mb-2`}>
-                <AnimatedCounter endValue={stat.value} />
+                {useAnimatedCounter(stat.value, 2000)}
                 {stat.suffix}
               </div>
               <div className="text-nexus-text-secondary font-medium">

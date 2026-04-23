@@ -377,29 +377,29 @@ export default function PricingPage() {
                           </td>
                           <td className="p-4 text-center">
                             <span className={`text-sm ${
-                              featureMatrix.Starter[feature] === '✓' ? 'text-nexus-green font-semibold' :
-                              featureMatrix.Starter[feature] === '✗' ? 'text-nexus-red' :
+                              (featureMatrix.Starter as any)[feature] === '✓' ? 'text-nexus-green font-semibold' :
+                              (featureMatrix.Starter as any)[feature] === '✗' ? 'text-nexus-red' :
                               'text-nexus-text-primary'
                             }`}>
-                              {featureMatrix.Starter[feature]}
+                              {(featureMatrix.Starter as any)[feature]}
                             </span>
                           </td>
                           <td className="p-4 text-center">
                             <span className={`text-sm ${
-                              featureMatrix.Pro[feature] === '✓' ? 'text-nexus-green font-semibold' :
-                              featureMatrix.Pro[feature] === '✗' ? 'text-nexus-red' :
+                              (featureMatrix.Pro as any)[feature] === '✓' ? 'text-nexus-green font-semibold' :
+                              (featureMatrix.Pro as any)[feature] === '✗' ? 'text-nexus-red' :
                               'text-nexus-text-primary'
                             }`}>
-                              {featureMatrix.Pro[feature]}
+                              {(featureMatrix.Pro as any)[feature]}
                             </span>
                           </td>
                           <td className="p-4 text-center">
                             <span className={`text-sm ${
-                              featureMatrix.Agency[feature] === '✓' ? 'text-nexus-green font-semibold' :
-                              featureMatrix.Agency[feature] === '✗' ? 'text-nexus-red' :
+                              (featureMatrix.Agency as any)[feature] === '✓' ? 'text-nexus-green font-semibold' :
+                              (featureMatrix.Agency as any)[feature] === '✗' ? 'text-nexus-red' :
                               'text-nexus-text-primary'
                             }`}>
-                              {featureMatrix.Agency[feature]}
+                              {(featureMatrix.Agency as any)[feature]}
                             </span>
                           </td>
                         </tr>
