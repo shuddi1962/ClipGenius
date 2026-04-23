@@ -1,0 +1,7 @@
+# Exclude backend files from Vercel deployment
+backend/
+agents1.md
+*.md
+.git/
+.github/
+docs/
