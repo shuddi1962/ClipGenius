@@ -1,0 +1,26 @@
+{
+  "name": "@clipgenius/shared",
+  "version": "1.0.0",
+  "description": "Shared types and utilities for ClipGenius",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./types/*": "./types/*",
+    "./utils/*": "./utils/*",
+    "./insforge": "./lib/insforge.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@insforge/sdk": "^1.2.4",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "typescript": "^5"
+  }
+}
