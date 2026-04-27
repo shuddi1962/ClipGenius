@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Save, Send, Eye, Mail, Users, Clock, Target } from 'lucide-react'
 import Link from 'next/link'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface Template {
   id: string

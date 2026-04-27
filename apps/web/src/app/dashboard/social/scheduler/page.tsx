@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Plus, Calendar, Clock, Facebook, Instagram, Linkedin, Twitter, Youtube, Send, Eye, Edit } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface ScheduledPost {
   id: string

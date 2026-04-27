@@ -19,7 +19,7 @@ import {
   Filter,
   Search
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface Task {
   id: string

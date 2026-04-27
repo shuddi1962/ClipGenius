@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { User, Shield, Bell, Palette, Database, Save, Key, Mail, Smartphone } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface UserSettings {
   id?: string

@@ -23,7 +23,7 @@ import {
   Users,
   BarChart3
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface EmailAccount {
   id: string

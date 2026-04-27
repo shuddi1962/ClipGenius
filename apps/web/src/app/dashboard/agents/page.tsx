@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Bot, Plus, Settings, Play, Pause, Trash2, MessageSquare, Phone, Mail, Zap } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface AIAgent {
   id: string

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { BarChart3, TrendingUp, Users, Mail, MessageCircle, Phone, Eye, MousePointer, DollarSign, Calendar } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface AnalyticsData {
   totalLeads: number

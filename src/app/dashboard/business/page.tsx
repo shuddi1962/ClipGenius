@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Building, Globe, Phone, Mail, MapPin, Users, DollarSign, FileText, Upload, Save } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface BusinessProfile {
   name: string

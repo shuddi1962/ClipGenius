@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Plus, Edit, Trash2, DollarSign, Package, Image as ImageIcon, Save } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface Product {
   id: string

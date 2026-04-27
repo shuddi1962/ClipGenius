@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Card from '@/components/Card'
 import { Users, DollarSign, BarChart3, Shield, CreditCard, Activity, FileText, Send, Instagram, Phone } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface AdminStats {
   totalUsers: number

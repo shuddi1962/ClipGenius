@@ -24,7 +24,7 @@ import {
   Clock,
   Zap
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface FunnelTemplate {
   id: string

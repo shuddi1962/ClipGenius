@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Save, Mic, MessageSquare, Target } from 'lucide-react'
 import Link from 'next/link'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface AgentForm {
   name: string

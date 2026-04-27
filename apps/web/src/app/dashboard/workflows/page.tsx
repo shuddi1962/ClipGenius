@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Plus, Play, Pause, Edit, Trash2, GitBranch, Clock, Mail, MessageCircle, Phone } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface Workflow {
   id: string

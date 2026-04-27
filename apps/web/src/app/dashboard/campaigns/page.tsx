@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Plus, Mail, Send, Eye, Edit, Trash2, BarChart3, Clock, Users, CheckCircle } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface Campaign {
   id: string

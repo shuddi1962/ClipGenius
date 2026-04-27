@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 import { Eye, EyeOff, Mail, Lock, User, MapPin } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 export default function Register() {
   const [formData, setFormData] = useState({

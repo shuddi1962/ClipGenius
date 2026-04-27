@@ -696,7 +696,9 @@ class MockDatabaseTable {
   }
 }
 
-export const insforge = new MockInsForgeClient()
+const insforge = new MockInsForgeClient()
+
+export default insforge
 
 // Server client for API routes
 export function createServerClient() {

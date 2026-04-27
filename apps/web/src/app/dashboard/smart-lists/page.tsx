@@ -23,7 +23,7 @@ import {
   BarChart3,
   CheckSquare
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface SmartList {
   id: string

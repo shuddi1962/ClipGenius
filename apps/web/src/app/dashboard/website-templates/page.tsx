@@ -22,7 +22,7 @@ import {
   Zap,
   Filter
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface WebsiteTemplate {
   id: string

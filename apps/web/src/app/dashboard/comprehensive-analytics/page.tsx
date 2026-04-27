@@ -27,7 +27,7 @@ import {
   Award,
   AlertTriangle
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface ComprehensiveAnalytics {
   overview: {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube, Link, Unlink, Settings } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface ConnectedAccount {
   id: string

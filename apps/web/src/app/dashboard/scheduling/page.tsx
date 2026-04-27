@@ -21,7 +21,7 @@ import {
   Mail,
   Globe
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface Appointment {
   id: string

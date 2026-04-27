@@ -21,7 +21,7 @@ import {
   Eye,
   Download
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface ChatMessage {
   id: string

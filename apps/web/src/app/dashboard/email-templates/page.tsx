@@ -21,7 +21,7 @@ import {
   Palette,
   Sparkles
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface EmailTemplate {
   id: string

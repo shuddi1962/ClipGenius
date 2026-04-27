@@ -40,7 +40,7 @@ import {
   Monitor,
   Tablet
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface WebsiteElement {
   id: string

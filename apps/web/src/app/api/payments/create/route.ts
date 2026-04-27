@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 import Stripe from 'stripe'
 
 // Initialize Stripe only when secret key is available

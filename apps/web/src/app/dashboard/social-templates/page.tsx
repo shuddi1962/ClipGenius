@@ -25,7 +25,7 @@ import {
   Users,
   TrendingUp
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface SocialTemplate {
   id: string

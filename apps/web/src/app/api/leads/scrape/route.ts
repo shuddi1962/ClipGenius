@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 import { VibeProspectingAPI } from '@/lib/vibeprospecting'
 import Anthropic from '@anthropic-ai/sdk'
 

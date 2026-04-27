@@ -29,7 +29,7 @@ import {
   ThumbsUp,
   ThumbsDown
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface Lead {
   id: string

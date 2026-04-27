@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Save, Calendar, Image, Video, Link as LinkIcon, Facebook, Instagram, Linkedin, Twitter, Youtube } from 'lucide-react'
 import Link from 'next/link'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface NewPostForm {
   platforms: string[]

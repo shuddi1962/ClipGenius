@@ -19,7 +19,7 @@ import {
   Plus,
   DollarSign
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface PricingTier {
   id: string

@@ -18,7 +18,7 @@ import {
   Smartphone,
   Monitor
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface ReviewWidget {
   id: string

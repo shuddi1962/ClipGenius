@@ -22,7 +22,7 @@ import {
   Settings,
   Target
 } from 'lucide-react'
-import { insforge } from '@/lib/insforge'
+import insforge from '@/lib/insforge'
 
 interface ABTest {
   id: string

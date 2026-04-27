@@ -1,17 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html {
-    font-family: 'Cabinet Grotesk', system-ui, -apple-system, sans-serif;
-  }
+   html {
+     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Clash Display', system-ui, -apple-system, sans-serif;
-  }
+   h1, h2, h3, h4, h5, h6 {
+     font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+   }
   .theme {
     --font-heading: var(--font-sans);
     --font-sans: var(--font-sans);
@@ -103,7 +101,7 @@ html {
 }
 
 body {
-  font-family: 'Cabinet Grotesk', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Custom scrollbar for dark theme */
