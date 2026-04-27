@@ -59,35 +59,6 @@ export async function POST(request: NextRequest) {
         .eq('id', leadId)
         .single()
 
-    if (!workspace) {
-      return NextResponse.json({ error: 'Workspace not found' }, { status: 404 })
-    }
-
-    // Get voice agent
-    const { data: agent, error: agentError } = await insforge
-      .from('voice_agents')
-      .select('*')
-      .eq('id', agentId)
-      .eq('workspace_id', workspace.id)
-      .single()
-
-    if (agentError || !agent) {
-      return NextResponse.json({ error: 'Voice agent not found' }, { status: 404 })
-    }
-
-    if (!agent.active) {
-      return NextResponse.json({ error: 'Voice agent is not active' }, { status: 400 })
-    }
-
-    // Get lead info if provided
-    let leadContext = ''
-    if (leadId) {
-      const { data: lead } = await insforge
-        .from('leads')
-        .select('*')
-        .eq('id', leadId)
-        .single()
-
       if (lead) {
         leadContext = `Lead Information:
 - Name: ${lead.first_name || ''} ${lead.last_name || ''}
