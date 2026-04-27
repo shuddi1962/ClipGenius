@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import insforge from '@/lib/insforge'
 
 interface FormSubmissionRequest {
   formId: string
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get workspace from form (assuming forms are public for now)
-    const { data: form, error: formError } = await (await import('@/lib/insforge')).default
+    const { data: form, error: formError } = await insforge
       .from('forms')
       .select('workspace_id')
       .eq('id', formId)
@@ -30,7 +31,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Store submission
-    const { data: submission, error: submissionError } = await (await import('@/lib/insforge')).default
+    const { data: submission, error: submissionError } = await insforge
       .from('form_submissions')
       .insert({
         workspace_id: form.workspace_id,
@@ -49,10 +50,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Update form submission count
-    await (await import('@/lib/insforge')).default
+    await insforge
       .from('forms')
       .update({
-        submissions_count: (await (await import('@/lib/insforge')).default
+        submissions_count: (await insforge
           .from('forms')
           .select('submissions_count')
           .eq('id', formId)
@@ -98,7 +99,7 @@ async function createLeadFromSubmission(workspaceId: string, data: Record<string
     notes: `Submitted via web form. Additional data: ${JSON.stringify(data)}`
   }
 
-  await (await import('@/lib/insforge')).default
+  await insforge
     .from('leads')
     .insert(leadData)
 }

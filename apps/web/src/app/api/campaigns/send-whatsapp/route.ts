@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import twilio from 'twilio'
+import insforge from '@/lib/insforge'
 
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN
@@ -21,12 +22,12 @@ export async function POST(request: NextRequest) {
     const { campaignId } = body
 
     // Get current user and workspace
-    const { data: userData, error: userError } = await (await import('@/lib/insforge')).default.auth.getUser()
+    const { data: userData, error: userError } = await insforge.auth.getUser()
     if (userError || !userData.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { data: workspace } = await (await import('@/lib/insforge')).default
+    const { data: workspace } = await insforge
       .from('workspaces')
       .select('id')
       .eq('user_id', userData.user.id)
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get campaign
-    const { data: campaign, error: campaignError } = await (await import('@/lib/insforge')).default
+    const { data: campaign, error: campaignError } = await insforge
       .from('campaigns')
       .select('*')
       .eq('id', campaignId)
@@ -53,7 +54,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get template
-    const { data: template } = await (await import('@/lib/insforge')).default
+    const { data: template } = await insforge
       .from('templates')
       .select('*')
       .eq('id', campaign.template_id)
@@ -64,7 +65,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get lead list
-    const { data: leadList } = await (await import('@/lib/insforge')).default
+    const { data: leadList } = await insforge
       .from('lead_lists')
       .select('lead_ids')
       .eq('id', campaign.lead_list_id)
@@ -75,7 +76,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get leads with phone numbers
-    const { data: leads } = await (await import('@/lib/insforge')).default
+    const { data: leads } = await insforge
       .from('leads')
       .select('*')
       .in('id', leadList.lead_ids)
@@ -128,7 +129,7 @@ export async function POST(request: NextRequest) {
         sentCount++
 
          // Create campaign log
-         await (await import('@/lib/insforge')).default
+         await insforge
            .from('campaign_logs')
            .insert({
              campaign_id: campaignId,
@@ -146,35 +147,35 @@ export async function POST(request: NextRequest) {
          failedCount++
 
          // Log failed attempt
-         await (await import('@/lib/insforge')).default
+         await insforge
            .from('campaign_logs')
-          .insert({
-            campaign_id: campaignId,
-            lead_id: lead.id,
-            channel: 'whatsapp',
-            status: 'failed',
-            sent_at: new Date().toISOString(),
-            error_message: error instanceof Error ? error.message : 'Unknown error'
-          })
-      }
-    }
+           .insert({
+             campaign_id: campaignId,
+             lead_id: lead.id,
+             channel: 'whatsapp',
+             status: 'failed',
+             sent_at: new Date().toISOString(),
+             error_message: error instanceof Error ? error.message : 'Unknown error'
+           })
+       }
+     }
 
-    // Update campaign status
-    await (await import('@/lib/insforge')).default
-      .from('campaigns')
-      .update({
-        status: 'completed',
-        completed_at: new Date().toISOString(),
-        stats_json: {
-          sent: sentCount,
-          failed: failedCount,
-          delivered: sentCount, // WhatsApp doesn't provide delivery confirmations immediately
-          opened: 0,
-          clicked: 0,
-          replied: 0
-        }
-      })
-      .eq('id', campaignId)
+     // Update campaign status
+     await insforge
+       .from('campaigns')
+       .update({
+         status: 'completed',
+         completed_at: new Date().toISOString(),
+         stats_json: {
+           sent: sentCount,
+           failed: failedCount,
+           delivered: sentCount, // WhatsApp doesn't provide delivery confirmations immediately
+           opened: 0,
+           clicked: 0,
+           replied: 0
+         }
+       })
+       .eq('id', campaignId)
 
     return NextResponse.json({
       success: true,

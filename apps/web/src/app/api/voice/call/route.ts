@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import insforge from '@/lib/insforge'
 
 const BLAND_AI_API_KEY = process.env.BLAND_AI_API_KEY
 
@@ -18,12 +19,12 @@ export async function POST(request: NextRequest) {
     const { agentId, phoneNumber, leadId } = body
 
     // Get current user and workspace
-    const { data: userData, error: userError } = await (await import('@/lib/insforge')).default.auth.getUser()
+    const { data: userData, error: userError } = await insforge.auth.getUser()
     if (userError || !userData.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { data: workspace } = await (await import('@/lib/insforge')).default
+    const { data: workspace } = await insforge
       .from('workspaces')
       .select('id')
       .eq('user_id', userData.user.id)
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get voice agent
-    const { data: agent, error: agentError } = await (await import('@/lib/insforge')).default
+    const { data: agent, error: agentError } = await insforge
       .from('voice_agents')
       .select('*')
       .eq('id', agentId)
@@ -52,7 +53,36 @@ export async function POST(request: NextRequest) {
     // Get lead info if provided
     let leadContext = ''
     if (leadId) {
-      const { data: lead } = await (await import('@/lib/insforge')).default
+      const { data: lead } = await insforge
+        .from('leads')
+        .select('*')
+        .eq('id', leadId)
+        .single()
+
+    if (!workspace) {
+      return NextResponse.json({ error: 'Workspace not found' }, { status: 404 })
+    }
+
+    // Get voice agent
+    const { data: agent, error: agentError } = await insforge
+      .from('voice_agents')
+      .select('*')
+      .eq('id', agentId)
+      .eq('workspace_id', workspace.id)
+      .single()
+
+    if (agentError || !agent) {
+      return NextResponse.json({ error: 'Voice agent not found' }, { status: 404 })
+    }
+
+    if (!agent.active) {
+      return NextResponse.json({ error: 'Voice agent is not active' }, { status: 400 })
+    }
+
+    // Get lead info if provided
+    let leadContext = ''
+    if (leadId) {
+      const { data: lead } = await insforge
         .from('leads')
         .select('*')
         .eq('id', leadId)
@@ -108,7 +138,7 @@ export async function POST(request: NextRequest) {
     const callData = await response.json()
 
     // Log the call
-    await (await import('@/lib/insforge')).default
+    await insforge
       .from('call_logs')
       .insert({
         workspace_id: workspace.id,
