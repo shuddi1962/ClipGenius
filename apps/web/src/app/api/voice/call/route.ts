@@ -18,12 +18,12 @@ export async function POST(request: NextRequest) {
     const { agentId, phoneNumber, leadId } = body
 
     // Get current user and workspace
-    const { data: userData, error: userError } = await (await import('@/lib/insforge')).insforge.auth.getUser()
+    const { data: userData, error: userError } = await (await import('@/lib/insforge')).default.auth.getUser()
     if (userError || !userData.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { data: workspace } = await (await import('@/lib/insforge')).insforge
+    const { data: workspace } = await (await import('@/lib/insforge')).default
       .from('workspaces')
       .select('id')
       .eq('user_id', userData.user.id)
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get voice agent
-    const { data: agent, error: agentError } = await (await import('@/lib/insforge')).insforge
+    const { data: agent, error: agentError } = await (await import('@/lib/insforge')).default
       .from('voice_agents')
       .select('*')
       .eq('id', agentId)
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     // Get lead info if provided
     let leadContext = ''
     if (leadId) {
-      const { data: lead } = await (await import('@/lib/insforge')).insforge
+      const { data: lead } = await (await import('@/lib/insforge')).default
         .from('leads')
         .select('*')
         .eq('id', leadId)
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
     const callData = await response.json()
 
     // Log the call
-    await (await import('@/lib/insforge')).insforge
+    await (await import('@/lib/insforge')).default
       .from('call_logs')
       .insert({
         workspace_id: workspace.id,

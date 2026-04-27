@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get workspace from form (assuming forms are public for now)
-    const { data: form, error: formError } = await (await import('@/lib/insforge')).insforge
+    const { data: form, error: formError } = await (await import('@/lib/insforge')).default
       .from('forms')
       .select('workspace_id')
       .eq('id', formId)
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Store submission
-    const { data: submission, error: submissionError } = await (await import('@/lib/insforge')).insforge
+    const { data: submission, error: submissionError } = await (await import('@/lib/insforge')).default
       .from('form_submissions')
       .insert({
         workspace_id: form.workspace_id,
@@ -49,10 +49,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Update form submission count
-    await (await import('@/lib/insforge')).insforge
+    await (await import('@/lib/insforge')).default
       .from('forms')
       .update({
-        submissions_count: (await (await import('@/lib/insforge')).insforge
+        submissions_count: (await (await import('@/lib/insforge')).default
           .from('forms')
           .select('submissions_count')
           .eq('id', formId)
@@ -98,7 +98,7 @@ async function createLeadFromSubmission(workspaceId: string, data: Record<string
     notes: `Submitted via web form. Additional data: ${JSON.stringify(data)}`
   }
 
-  await (await import('@/lib/insforge')).insforge
+  await (await import('@/lib/insforge')).default
     .from('leads')
     .insert(leadData)
 }

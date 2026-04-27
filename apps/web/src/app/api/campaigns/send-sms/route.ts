@@ -21,12 +21,12 @@ export async function POST(request: NextRequest) {
     const { campaignId } = body
 
     // Get current user and workspace
-    const { data: userData, error: userError } = await (await import('@/lib/insforge')).insforge.auth.getUser()
+    const { data: userData, error: userError } = await (await import('@/lib/insforge')).default.auth.getUser()
     if (userError || !userData.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { data: workspace } = await (await import('@/lib/insforge')).insforge
+    const { data: workspace } = await (await import('@/lib/insforge')).default
       .from('workspaces')
       .select('id')
       .eq('user_id', userData.user.id)
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get campaign
-    const { data: campaign, error: campaignError } = await (await import('@/lib/insforge')).insforge
+    const { data: campaign, error: campaignError } = await (await import('@/lib/insforge')).default
       .from('campaigns')
       .select('*')
       .eq('id', campaignId)
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get template
-    const { data: template } = await (await import('@/lib/insforge')).insforge
+    const { data: template } = await (await import('@/lib/insforge')).default
       .from('templates')
       .select('*')
       .eq('id', campaign.template_id)
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get lead list
-    const { data: leadList } = await (await import('@/lib/insforge')).insforge
+    const { data: leadList } = await (await import('@/lib/insforge')).default
       .from('lead_lists')
       .select('lead_ids')
       .eq('id', campaign.lead_list_id)
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get leads with phone numbers
-    const { data: leads } = await (await import('@/lib/insforge')).insforge
+    const { data: leads } = await (await import('@/lib/insforge')).default
       .from('leads')
       .select('*')
       .in('id', leadList.lead_ids)
@@ -131,42 +131,42 @@ export async function POST(request: NextRequest) {
 
         sentCount++
 
-        // Create campaign log
-        await (await import('@/lib/insforge')).insforge
-          .from('campaign_logs')
-          .insert({
-            campaign_id: campaignId,
-            lead_id: lead.id,
-            channel: 'sms',
-            status: 'sent',
-            sent_at: new Date().toISOString()
-          })
+         // Create campaign log
+         await (await import('@/lib/insforge')).default
+           .from('campaign_logs')
+           .insert({
+             campaign_id: campaignId,
+             lead_id: lead.id,
+             channel: 'sms',
+             status: 'sent',
+             sent_at: new Date().toISOString()
+           })
 
-        // Rate limiting: 1 message per second
-        await new Promise(resolve => setTimeout(resolve, 1000))
+         // Rate limiting: 1 message per second
+         await new Promise(resolve => setTimeout(resolve, 1000))
 
-      } catch (error) {
-        console.error(`Failed to send SMS to ${lead.phone}:`, error)
-        failedCount++
+       } catch (error) {
+         console.error(`Failed to send SMS to ${lead.phone}:`, error)
+         failedCount++
 
-        // Log failed attempt
-        await (await import('@/lib/insforge')).insforge
-          .from('campaign_logs')
-          .insert({
-            campaign_id: campaignId,
-            lead_id: lead.id,
-            channel: 'sms',
-            status: 'failed',
-            sent_at: new Date().toISOString(),
-            error_message: error instanceof Error ? error.message : 'Unknown error'
-          })
-      }
-    }
+         // Log failed attempt
+         await (await import('@/lib/insforge')).default
+           .from('campaign_logs')
+           .insert({
+             campaign_id: campaignId,
+             lead_id: lead.id,
+             channel: 'sms',
+             status: 'failed',
+             sent_at: new Date().toISOString(),
+             error_message: error instanceof Error ? error.message : 'Unknown error'
+           })
+       }
+     }
 
-    // Update campaign status
-    await (await import('@/lib/insforge')).insforge
-      .from('campaigns')
-      .update({
+     // Update campaign status
+     await (await import('@/lib/insforge')).default
+       .from('campaigns')
+       .update({
         status: 'completed',
         completed_at: new Date().toISOString(),
         stats_json: {

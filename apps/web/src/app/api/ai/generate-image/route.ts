@@ -19,12 +19,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Get current user and workspace
-    const { data: userData, error: userError } = await (await import('@/lib/insforge')).insforge.auth.getUser()
+    const { data: userData, error: userError } = await (await import('@/lib/insforge')).default.auth.getUser()
     if (userError || !userData.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { data: workspace } = await (await import('@/lib/insforge')).insforge
+    const { data: workspace } = await (await import('@/lib/insforge')).default
       .from('workspaces')
       .select('id')
       .eq('user_id', userData.user.id)
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     const images = await generateImages(prompt, style, size, count)
 
     // Store generation record
-    const { data: record, error: recordError } = await (await import('@/lib/insforge')).insforge
+    const { data: record, error: recordError } = await (await import('@/lib/insforge')).default
       .from('ai_generated_images')
       .insert({
         workspace_id: workspace.id,

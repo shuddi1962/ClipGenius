@@ -143,12 +143,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Get current user and workspace
-    const { data: userData, error: userError } = await (await import('@/lib/insforge')).insforge.auth.getUser()
+    const { data: userData, error: userError } = await (await import('@/lib/insforge')).default.auth.getUser()
     if (userError || !userData.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { data: workspace } = await (await import('@/lib/insforge')).insforge
+    const { data: workspace } = await (await import('@/lib/insforge')).default
       .from('workspaces')
       .select('id, business_profile_json')
       .eq('user_id', userData.user.id)
@@ -172,7 +172,7 @@ export async function POST(request: NextRequest) {
       })
     } else if (body.leadIds) {
       // Qualify multiple leads
-      const { data: leads, error } = await (await import('@/lib/insforge')).insforge
+      const { data: leads, error } = await (await import('@/lib/insforge')).default
         .from('leads')
         .select('*')
         .eq('workspace_id', workspace.id)
@@ -203,7 +203,7 @@ export async function POST(request: NextRequest) {
       }))
 
       for (const update of updates) {
-        await (await import('@/lib/insforge')).insforge
+        await (await import('@/lib/insforge')).default
           .from('leads')
           .update({
             score: update.score,

@@ -10,12 +10,12 @@ export async function POST(request: NextRequest) {
     const { competitorId } = body
 
     // Get current user and workspace
-    const { data: userData, error: userError } = await (await import('@/lib/insforge')).insforge.auth.getUser()
+    const { data: userData, error: userError } = await (await import('@/lib/insforge')).default.auth.getUser()
     if (userError || !userData.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { data: workspace } = await (await import('@/lib/insforge')).insforge
+    const { data: workspace } = await (await import('@/lib/insforge')).default
       .from('workspaces')
       .select('id')
       .eq('user_id', userData.user.id)
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get competitor
-    const { data: competitor, error: competitorError } = await (await import('@/lib/insforge')).insforge
+    const { data: competitor, error: competitorError } = await (await import('@/lib/insforge')).default
       .from('competitors')
       .select('*')
       .eq('id', competitorId)
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     const analysis = await analyzeCompetitor(competitor)
 
     // Update competitor with analysis
-    const { error: updateError } = await (await import('@/lib/insforge')).insforge
+    const { error: updateError } = await (await import('@/lib/insforge')).default
       .from('competitors')
       .update({
         last_scanned: new Date().toISOString(),

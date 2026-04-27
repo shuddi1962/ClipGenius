@@ -21,12 +21,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Get current user and workspace
-    const { data: userData, error: userError } = await (await import('@/lib/insforge')).insforge.auth.getUser()
+    const { data: userData, error: userError } = await (await import('@/lib/insforge')).default.auth.getUser()
     if (userError || !userData.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { data: workspace } = await (await import('@/lib/insforge')).insforge
+    const { data: workspace } = await (await import('@/lib/insforge')).default
       .from('workspaces')
       .select('id')
       .eq('user_id', userData.user.id)
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get connected account
-    const { data: account, error: accountError } = await (await import('@/lib/insforge')).insforge
+    const { data: account, error: accountError } = await (await import('@/lib/insforge')).default
       .from('connected_accounts')
       .select('*')
       .eq('id', accountId)
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     const result = await postToPlatform(platform, content, mediaUrls, account)
 
     // Save post record
-    const { data: postRecord, error: postError } = await (await import('@/lib/insforge')).insforge
+    const { data: postRecord, error: postError } = await (await import('@/lib/insforge')).default
       .from('scheduled_posts')
       .insert({
         workspace_id: workspace.id,
