@@ -1,7 +1,7 @@
 // InsForge.dev client configuration for frontend
 // Uses public anon key for client-side operations
 
-import { createClient, InsForgeClient } from '@insforge/sdk'
+import { createClient as createInsForgeClient, InsForgeClient } from '@insforge/sdk'
 
 // Frontend uses public anon key
 const INSFORGE_URL = process.env.NEXT_PUBLIC_INSFORGE_URL
@@ -10,7 +10,7 @@ const INSFORGE_ANON_KEY = process.env.NEXT_PUBLIC_INSFORGE_ANON_KEY
 let insforge: InsForgeClient
 
 if (INSFORGE_URL && INSFORGE_ANON_KEY) {
-  insforge = createClient({
+  insforge = createInsForgeClient({
     url: INSFORGE_URL,
     apiKey: INSFORGE_ANON_KEY,
   })
@@ -44,9 +44,8 @@ if (INSFORGE_URL && INSFORGE_ANON_KEY) {
 
 export default insforge
 
-export function createClient(): InsForgeClient {
-  return insforge
-}
+// Re-export createClient from SDK for consistency
+export { createInsForgeClient as createClient }
 
 export type { InsForgeClient } from '@insforge/sdk'
 
