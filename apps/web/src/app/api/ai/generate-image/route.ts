@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get current user and workspace
-    const { data: userData, error: userError } = await insforge.auth.getUser()
+    const { data: userData, error: userError } = await insforge.auth.getCurrentUser()
     if (userError || !userData.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
